@@ -1,0 +1,11 @@
+.root {
+    flex-grow: 1;
+}
+
+.topBar {
+    flex: 1;
+}
+
+.navButtons {
+    display: flex;
+}
