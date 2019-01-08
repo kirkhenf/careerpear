@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 6
+  - "stable"
 cache:
   directories:
   - node_modules
@@ -13,7 +13,7 @@ before_install:
 script:
   - npm test
 after_success:
-  - travis_wait 40 npm run build
+  - travis_wait npm run build
   - firebase use default --token $FIREBASE_TOKEN
   - travis_wait firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
 branches:
