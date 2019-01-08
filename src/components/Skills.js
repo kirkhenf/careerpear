@@ -29,7 +29,7 @@ function findHit(array, element) {
   var didFind = false;
   element = element.toLowerCase();
   array.forEach(function (hit) {
-    if (hit.name.toLowerCase() == element) didFind = true;
+    if (hit.name.toLowerCase() === element) didFind = true;
   })
   return didFind;
 }

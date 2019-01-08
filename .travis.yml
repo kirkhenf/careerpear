@@ -13,12 +13,10 @@ before_install:
   - cd ..
 script:
   - npm test
+after_success:
   - npm run build
-deploy:
-  provider: firebase
-  skip_cleaup: true
-  token: 
-    secure: $FIREBASE_TOKEN
+  - firebase use default --token $FIREBASE_TOKEN
+  - firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
 branches:
   only:
     - master
