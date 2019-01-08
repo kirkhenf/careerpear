@@ -19,7 +19,7 @@ import {
   MenuItem
 } from '@material-ui/core';
 
-const SkillsPage = ({ }) =>
+const SkillsPage = () =>
   <div>
     <h1>Skills</h1>
     <SkillsForm />
