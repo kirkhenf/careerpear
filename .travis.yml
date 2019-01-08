@@ -7,10 +7,6 @@ cache:
   - functions/node_modules
 before_install:
   - npm install -g firebase-tools
-  - firebase init functions
-  - cd functions
-  - npm install
-  - cd ..
 script:
   - npm test
 after_success:
