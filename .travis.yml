@@ -15,7 +15,7 @@ script:
 after_success:
   - CI=false npm run build
   - firebase use default --token $FIREBASE_TOKEN
-  - firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
+  - firebase deploy --non-interactive --token $FIREBASE_TOKEN --debug
 branches:
   only:
     - master
