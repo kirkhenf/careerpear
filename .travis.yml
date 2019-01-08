@@ -6,7 +6,6 @@ cache:
   - node_modules
   - functions/node_modules
 before_install:
-  - rm -rf node_modules
   - npm install -g firebase-tools
   - cd functions
   - npm install
@@ -14,7 +13,7 @@ before_install:
 script:
   - npm test
 after_success:
-  - npm run build
+  - CI=false npm run build
   - firebase use default --token $FIREBASE_TOKEN
   - firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
 branches:
