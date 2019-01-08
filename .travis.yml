@@ -13,9 +13,9 @@ before_install:
 script:
   - npm test
 after_success:
-  - travis_wait npm run build
+  - npm run build
   - firebase use default --token $FIREBASE_TOKEN
-  - travis_wait firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
+  - firebase deploy -m "Travis deploy" --non-interactive --token $FIREBASE_TOKEN
 branches:
   only:
     - master
