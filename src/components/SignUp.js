@@ -6,6 +6,10 @@ import * as routes from '../constants/routes';
 import { firebaseConnect } from 'react-redux-firebase';
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import InputAdornment from '@material-ui/core/InputAdornment';
+import PersonOutline from '@material-ui/icons/PersonOutline';
+import MailOutline from '@material-ui/icons/MailOutline';
+import LockOutline from '@material-ui/icons/LockOutline';
 
 const SignUpPage = ({ history, firebase }) =>
   <div>
@@ -101,19 +105,59 @@ class SignUpForm extends Component {
       <div>
         <form onSubmit={this.onSubmit}>
           <div>
-            <TextField label="First Name" value={first_name} type="text" id="first_name" placeholder="" onChange={event => this.setState(byPropKey('first_name', event.target.value))} />
+            <TextField label="First Name" value={first_name} type="text" id="first_name" placeholder="" onChange={event => this.setState(byPropKey('first_name', event.target.value))}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <PersonOutline />
+                  </InputAdornment>
+                ),
+              }}
+            />
           </div>
           <div>
-            <TextField label="Last Name" value={last_name} type="text" id="last_name" placeholder="" onChange={event => this.setState(byPropKey('last_name', event.target.value))} />
+            <TextField label="Last Name" value={last_name} type="text" id="last_name" placeholder="" onChange={event => this.setState(byPropKey('last_name', event.target.value))}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <PersonOutline />
+                  </InputAdornment>
+                ),
+              }}
+            />
           </div>
           <div>
-            <TextField label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))} />
+            <TextField label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <MailOutline />
+                  </InputAdornment>
+                ),
+              }}
+            />
           </div>
           <div>
-            <TextField label="Password" value={passwordOne} type="password" id="passwordOne" placeholder="" onChange={event => this.setState(byPropKey('passwordOne', event.target.value))} />
+            <TextField label="Password" value={passwordOne} type="password" id="passwordOne" placeholder="" onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <LockOutline />
+                  </InputAdornment>
+                ),
+              }}
+            />
           </div>
           <div>
-            <TextField label="Confirm Password" value={passwordTwo} type="password" id="passwordTwo" placeholder="" onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))} />
+            <TextField label="Confirm Password" value={passwordTwo} type="password" id="passwordTwo" placeholder="" onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <LockOutline />
+                  </InputAdornment>
+                ),
+              }}
+            />
           </div>
           {/* <input
           value={first_name}

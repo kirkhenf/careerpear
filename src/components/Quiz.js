@@ -35,9 +35,10 @@ class QuizPage extends Component {
 
   testPush = () => {
     const firebase = this.props.firebase;
-    console.log("Pushed");
-    console.log(this.props);
-    firebase.push('todos', this.props.authUser.email);
+    firebase.push('todos', this.props.authUser.email).then((response) => {
+      // console.log(this.props);
+      // console.log(response);
+    })
     console.log(this.props.authUser)
   }
 

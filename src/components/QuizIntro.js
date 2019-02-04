@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import validate from './validate'
-import renderField from './renderField'
+import Button from '@material-ui/core/Button'
 
 const QuizIntro = props => {
   const { handleSubmit } = props
@@ -9,9 +9,9 @@ const QuizIntro = props => {
     <form onSubmit={handleSubmit}>
       This is the quiz intro please click button.
       <div>
-        <button type="submit" className="next">
-          Next
-        </button>
+        <Button variant="contained" type="submit" className="next">
+          Get Started
+        </Button>
       </div>
     </form>
   )
