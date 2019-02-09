@@ -1,0 +1,46 @@
+.banner {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    background: url('http://unsplash.it/1200x800');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+  }
+
+  .banner:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom right, #008489, #ff5a5f);
+    opacity: 0.65;
+  }
+
+  .banner__content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+      color: white; 
+  }
+
+  .header {
+      text-align: center;
+      padding-left: 15px;
+      padding-right: 15px;
+  }
+
+  Button {
+      background-color: white;
+      color: #008489;
+  }

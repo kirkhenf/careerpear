@@ -14,7 +14,6 @@ import store from '../store';
 import teal from '@material-ui/core/colors/teal';
 import { createMuiTheme } from '@material-ui/core/styles';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-
 import SignOutButton from './SignOut';
 import * as routes from '../constants/routes';
 
@@ -37,46 +36,49 @@ class Navigation extends React.Component {
 
     return (
       <MuiThemeProvider theme={theme}>
-        <div className="root">
-          <AppBar position="static" color="primary">
+        <div className="nav">
+          <AppBar position="static" style={{backgroundColor: 'white'}}>
             <Toolbar>
               <Typography variant="title" color="inherit" className='topBar'>
-                <Link to={routes.LANDING}>careerpear</Link>
-            </Typography>
-            {authUser
-              ?
-              < div className="navButtons">
-                <Button><Link to={routes.HOME}>Home</Link></Button>
-                <IconButton
-                  aria-owns={isModal ? 'menu-appbar' : null}
-                  aria-haspopup="true"
-                  onClick={(e) => onClickButton(e)}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={isModal}
-                  onClose={handleClose}
-                >
-                  <SignOutButton />
-                  <MenuItem onClick={(e) => onClickButton(e)}><Link to={routes.ACCOUNT}>My Account</Link></MenuItem>
-                </Menu>
-              </div>
-              : <div className="navButtons">
-                <Button><Link to={routes.SIGN_IN}>Sign In</Link></Button>
-              </div>
-            }
+                <a href={routes.LANDING}>
+                  <img className="pearLogo" src={require('../assets/careerpear-green-banner-fruit.png')} />
+                  {/* <img className="pearLogo" src={require('../assets/careerpear-white-banner.png')} /> */}
+                </a>
+              </Typography>
+              {authUser
+                ?
+                < div className="navButtons">
+                  <Button><Link to={routes.HOME}>Home</Link></Button>
+                  <IconButton
+                    aria-owns={isModal ? 'menu-appbar' : null}
+                    aria-haspopup="true"
+                    onClick={(e) => onClickButton(e)}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={isModal}
+                    onClose={handleClose}
+                  >
+                    <SignOutButton />
+                    <MenuItem onClick={(e) => onClickButton(e)}><Link to={routes.ACCOUNT}>My Account</Link></MenuItem>
+                  </Menu>
+                </div>
+                : <div className="navButtons">
+                  <Button><Link to={routes.SIGN_IN}>Sign In</Link></Button>
+                </div>
+              }
             </Toolbar>
           </AppBar>
         </div >
