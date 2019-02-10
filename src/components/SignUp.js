@@ -205,7 +205,7 @@ const SignUpLink = ({parentMethod}) =>
   <p className="signUpLink" onClick={(e) => parentMethod('signUp')}>
     Don't have an account?
     {' '}
-    <Link to="#">Sign Up</Link>
+    <Link to="#">Sign up</Link>
   </p>
 
 export default compose(

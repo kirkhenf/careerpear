@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { SignUpLink } from './SignUp';
-import { PasswordForgetLink } from './PasswordForget';
+import { Link, withRouter } from 'react-router-dom';
 import * as routes from '../constants/routes';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
@@ -140,6 +138,12 @@ class SignInForm extends Component {
   }
 }
 
+const SignInLink = ({optionalText, parentMethod}) =>
+  <p className="signInLink" onClick={(e) => parentMethod('login')}>
+    {optionalText}<Link to="#">Back to login</Link>
+  </p>
+
+
 export default compose(
   withRouter,
   firebaseConnect(), // withFirebase can also be used
@@ -148,4 +152,6 @@ export default compose(
 
 export {
   SignInForm,
+  SignInLink
 };
+

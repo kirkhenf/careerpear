@@ -19,11 +19,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MediaQuery from 'react-responsive';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import SignInForm from './SignIn';
+import { SignInForm, SignInLink } from './SignIn';
 import CloseIcon from '@material-ui/icons/Close';
 import { PasswordForgetLink, PasswordForgetForm } from './PasswordForget';
 import { SignUpForm, SignUpLink } from './SignUp';
-
 
 var ResponsiveDialog = withMobileDialog({ breakpoint: 'xs' })(Dialog);
 
@@ -42,7 +41,7 @@ class Navigation extends React.Component {
 
   handleOpen = () => {
     //putting it in the close showed the login page while closing
-    this.setState({param: 'login'});
+    this.setState({ param: 'login' });
     this.setState({ open: true });
   };
 
@@ -52,14 +51,24 @@ class Navigation extends React.Component {
         return (
           <div>
             <SignInForm />
-            <PasswordForgetLink parentMethod={this.handleModalClick}/>
-            <SignUpLink parentMethod={this.handleModalClick}/>
+            <PasswordForgetLink parentMethod={this.handleModalClick} />
+            <SignUpLink parentMethod={this.handleModalClick} />
           </div>
         )
       case 'pwForget':
-        return <PasswordForgetForm />
+        return (
+          <div>
+            <PasswordForgetForm />
+            <SignInLink parentMethod={this.handleModalClick} />
+          </div>
+        )
       default:
-        return <SignUpForm />
+        return (
+          <div>
+            <SignUpForm />
+            <SignInLink optionalText={"Already have an account? "} parentMethod={this.handleModalClick} />
+          </div>
+        )
     }
   };
 
@@ -68,7 +77,7 @@ class Navigation extends React.Component {
   };
 
   handleModalClick = (value) => {
-    this.setState({param: value})
+    this.setState({ param: value })
   };
 
   render() {

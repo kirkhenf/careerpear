@@ -67,7 +67,7 @@ class PasswordForgetForm extends Component {
 
 const PasswordForgetLink = ({parentMethod}) =>
   <p onClick={(e) => parentMethod('pwForget')} className="pwForgetLink">
-    <Link to="#">Forgot Password?</Link>
+    <Link to="#">Forgot your password?</Link>
   </p>
 
 export default PasswordForgetPage;
