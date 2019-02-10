@@ -10,8 +10,9 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
-import PropTypes from 'prop-types';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import PersonOutline from '@material-ui/icons/PersonOutline';
+import LockOutline from '@material-ui/icons/LockOutline';
 
 const SignInPage = ({ history, firebase }) =>
   <div>
@@ -94,10 +95,26 @@ class SignInForm extends Component {
         <form onSubmit={this.onSubmit}>
           <Grid container spacing={24}>
             <Grid item xs={12}>
-              <TextField fullWidth label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))} />
+              <TextField fullWidth label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <PersonOutline />
+                    </InputAdornment>
+                  ),
+                }}
+              />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth  label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))} />
+              <TextField fullWidth label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <LockOutline />
+                    </InputAdornment>
+                  ),
+                }}
+              />
             </Grid>
             {/* <input
             value={email}

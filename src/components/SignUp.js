@@ -10,6 +10,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import PersonOutline from '@material-ui/icons/PersonOutline';
 import MailOutline from '@material-ui/icons/MailOutline';
 import LockOutline from '@material-ui/icons/LockOutline';
+import "./SignUp.css"
 
 const SignUpPage = ({ history, firebase }) =>
   <div>
@@ -201,7 +202,7 @@ class SignUpForm extends Component {
 }
 
 const SignUpLink = () =>
-  <p>
+  <p className="signUpLink">
     Don't have an account?
     {' '}
     <Link to={routes.SIGN_UP}>Sign Up</Link>

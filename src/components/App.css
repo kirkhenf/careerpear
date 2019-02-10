@@ -3,6 +3,8 @@
   min-height: 100%;
 }
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
