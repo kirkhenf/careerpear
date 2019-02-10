@@ -9,3 +9,7 @@
 .pearLogo {
     max-height: 40px;
 }
+
+.loginModal {
+    max-width: 100%;
+}

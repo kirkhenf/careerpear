@@ -8,47 +8,39 @@
     background-size: cover;
     display: flex;
     align-items: center;
-    justify-content: center; 
-  }
+    justify-content: center;
+}
 
-  .banner:after {
+.banner:after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to bottom right, #008489, #ff5a5f);
+    background-image: linear-gradient(to bottom right, #297A6D, #ff5a5f);
     opacity: 0.65;
-  }
+}
 
-  .banner__content {
+.banner__content {
     position: relative;
     z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+    padding-left: 15px;
+    padding-right: 15px;
+}
 
-  h1, h3 {
-      color: white; 
-  }
+h1, h3 {
+    color: white;
+    text-align: center;
+}
 
-  h1 {
-      margin-bottom: 0px;
-  }
+h1 {
+    margin-bottom: 0px;
+}
 
-  h3 {
-      font-weight: 100;
-  }
-
-  .header {
-      text-align: center;
-      padding-left: 15px;
-      padding-right: 15px;
-  }
-
-  Button {
-      background-color: white;
-      color: #008489;
-  }
+h3 {
+    font-weight: 100;
+}

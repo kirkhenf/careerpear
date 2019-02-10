@@ -35,12 +35,12 @@ class SignOutForm extends Component {
   };
 }
 
-const doSignOut = () => {
-  const { firebase } = this.props.firebase;
-  firebase.logout().then(function () {
-    handleClose();
-  });
-}
+// const doSignOut = () => {
+//   const { firebase } = this.props.firebase;
+//   firebase.logout().then(function () {
+//     handleClose();
+//   });
+// }
 
 const handleClose = () => {
   // store.dispatch({

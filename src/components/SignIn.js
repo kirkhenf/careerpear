@@ -9,10 +9,12 @@ import { connect } from 'react-redux'
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 const SignInPage = ({ history, firebase }) =>
   <div>
-    <h1>SignIn</h1>
     <SignInForm history={history} firebase={firebase} />
     <PasswordForgetLink />
     <SignUpLink />
@@ -81,20 +83,23 @@ class SignInForm extends Component {
       error,
     } = this.state;
 
+    const { classes } = this.props;
+
     const isInvalid =
       password === '' ||
       email === '';
 
     return (
-      <div>
+      <div className="loginGrid">
         <form onSubmit={this.onSubmit}>
-          <div>
-            <TextField label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))} />
-          </div>
-          <div>
-            <TextField label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))} />
-          </div>
-          {/* <input
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))} />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth  label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))} />
+            </Grid>
+            {/* <input
             value={email}
             onChange={event => this.setState(byPropKey('email', event.target.value))}
             type="text"
@@ -106,18 +111,16 @@ class SignInForm extends Component {
             type="password"
             placeholder="Password"
           /> */}
-          <Button disabled={isInvalid} type="submit">
-            Sign In
-        </Button>
-
-          {error && <p>{error.message}</p>}
+            <Grid item xs={12}>
+              <Button fullWidth color="primary" variant="contained" disabled={isInvalid} type="submit">Log In</Button>
+            </Grid>
+            {error && <p>{error.message}</p>}
+          </Grid>
         </form>
       </div>
     );
   }
 }
-
-// export default withRouter(SignInPage);
 
 export default compose(
   withRouter,

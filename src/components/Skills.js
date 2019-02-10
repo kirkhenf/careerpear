@@ -8,8 +8,8 @@ import Chip from '@material-ui/core/Chip';
 import {
   InstantSearch,
   Highlight,
-  SearchBox,
-  Hits,
+  // SearchBox,
+  // Hits,
   connectSearchBox,
   connectStateResults,
   connectHits
