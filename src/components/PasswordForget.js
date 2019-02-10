@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import "./PasswordForget.css"
 import { auth } from '../firebase';
+import { TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import MailOutline from '@material-ui/icons/MailOutline';
 
 const PasswordForgetPage = () =>
   <div>
@@ -48,26 +53,40 @@ class PasswordForgetForm extends Component {
     const isInvalid = email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          value={this.state.email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
-
-        { error && <p>{error.message}</p> }
-      </form>
+      <div>
+        <form onSubmit={this.onSubmit}>
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Email"
+                value={this.state.email}
+                onChange={event => this.setState(byPropKey('email', event.target.value))}
+                type="text"
+                placeholder=""
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <MailOutline />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button fullWidth color="primary" variant="contained" disabled={isInvalid} type="submit">Reset My Password</Button>
+            </Grid>
+            {error && <p>{error.message}</p>}
+          </Grid>
+        </form>
+      </div >
     );
   }
 }
 
-const PasswordForgetLink = () =>
-  <p className="pwForgetLink">
-    <Link to="/pw-forget">Forgot Password?</Link>
+const PasswordForgetLink = ({ parentMethod }) =>
+  <p onClick={(e) => parentMethod('pwForget')} className="pwForgetLink">
+    <Link to="#">Forgot your password?</Link>
   </p>
 
 export default PasswordForgetPage;

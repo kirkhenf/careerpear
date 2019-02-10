@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { SignUpLink } from './SignUp';
-import { PasswordForgetLink } from './PasswordForget';
-import { auth } from '../firebase';
+import { Link, withRouter } from 'react-router-dom';
 import * as routes from '../constants/routes';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
@@ -11,14 +8,13 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import PersonOutline from '@material-ui/icons/PersonOutline';
+import MailOutline from '@material-ui/icons/MailOutline';
 import LockOutline from '@material-ui/icons/LockOutline';
+import "./SignIn.css"
 
 const SignInPage = ({ history, firebase }) =>
   <div>
     <SignInForm history={history} firebase={firebase} />
-    <PasswordForgetLink />
-    <SignUpLink />
   </div>
 
 const byPropKey = (propertyName, value) => () => ({
@@ -35,6 +31,10 @@ class SignInForm extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
+  }
+
+  click = () => {
+    this.props.handleModalClick();
   }
 
   // onSubmit = (event) => {
@@ -84,14 +84,12 @@ class SignInForm extends Component {
       error,
     } = this.state;
 
-    const { classes } = this.props;
-
     const isInvalid =
       password === '' ||
       email === '';
 
     return (
-      <div className="loginGrid">
+      <div>
         <form onSubmit={this.onSubmit}>
           <Grid container spacing={24}>
             <Grid item xs={12}>
@@ -99,7 +97,7 @@ class SignInForm extends Component {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <PersonOutline />
+                      <MailOutline />
                     </InputAdornment>
                   ),
                 }}
@@ -139,6 +137,12 @@ class SignInForm extends Component {
   }
 }
 
+const SignInLink = ({optionalText, parentMethod}) =>
+  <p className="signInLink" onClick={(e) => parentMethod('login')}>
+    {optionalText}<Link to="#">Back to login</Link>
+  </p>
+
+
 export default compose(
   withRouter,
   firebaseConnect(), // withFirebase can also be used
@@ -147,4 +151,6 @@ export default compose(
 
 export {
   SignInForm,
+  SignInLink
 };
+

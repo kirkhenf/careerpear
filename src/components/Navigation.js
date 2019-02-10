@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -17,12 +17,14 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { withStyles } from '@material-ui/core/styles';
 import MediaQuery from 'react-responsive';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import SignInForm from './SignIn';
+import { SignInForm, SignInLink } from './SignIn';
+import CloseIcon from '@material-ui/icons/Close';
+import { PasswordForgetLink, PasswordForgetForm } from './PasswordForget';
+import { SignUpForm, SignUpLink } from './SignUp';
 
-var ResponsiveDialog = withMobileDialog({breakpoint: 'xs'})(Dialog);
+var ResponsiveDialog = withMobileDialog({ breakpoint: 'xs' })(Dialog);
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -32,16 +34,50 @@ class Navigation extends React.Component {
       authUser: null,
       isModal: false,
       anchorEl: null,
-      open: false
+      open: false,
+      param: 'login'
     };
   }
 
   handleOpen = () => {
+    //putting it in the close showed the login page while closing
+    this.setState({ param: 'login' });
     this.setState({ open: true });
+  };
+
+  renderSwitch = (param) => {
+    switch (param) {
+      case 'login':
+        return (
+          <div>
+            <SignInForm />
+            <PasswordForgetLink parentMethod={this.handleModalClick} />
+            <SignUpLink parentMethod={this.handleModalClick} />
+          </div>
+        )
+      case 'pwForget':
+        return (
+          <div>
+            <PasswordForgetForm />
+            <SignInLink parentMethod={this.handleModalClick} />
+          </div>
+        )
+      default:
+        return (
+          <div>
+            <SignUpForm />
+            <SignInLink optionalText={"Already have an account? "} parentMethod={this.handleModalClick} />
+          </div>
+        )
+    }
   };
 
   handleClose = () => {
     this.setState({ open: false });
+  };
+
+  handleModalClick = (value) => {
+    this.setState({ param: value })
   };
 
   render() {
@@ -100,16 +136,20 @@ class Navigation extends React.Component {
                 {/* <Button color="primary" variant="contained">Sign In</Button> */}
                 <Button color="primary" onClick={this.handleOpen}>Log In</Button>
                 <ResponsiveDialog
+                  fullWidth={true}
+                  maxWidth={'sm'}
                   className="loginModal"
                   open={this.state.open}
                   onClose={this.handleClose}
                 >
-                  <DialogTitle>{"Login"}</DialogTitle>
+                  <DialogTitle>{"Log in to continue"}</DialogTitle>
                   <DialogContent>
-                  <SignInForm />
+                    {this.renderSwitch(this.state.param)}
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={this.handleClose} color="primary" autoFocus>X</Button>
+                    <IconButton onClick={this.handleClose} color="primary" autoFocus>
+                      <CloseIcon />
+                    </IconButton>
                   </DialogActions>
                 </ResponsiveDialog>
               </div>
