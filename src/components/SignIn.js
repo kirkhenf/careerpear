@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { SignUpLink } from './SignUp';
 import { PasswordForgetLink } from './PasswordForget';
-import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
@@ -11,7 +10,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import PersonOutline from '@material-ui/icons/PersonOutline';
+import MailOutline from '@material-ui/icons/MailOutline';
 import LockOutline from '@material-ui/icons/LockOutline';
 
 const SignInPage = ({ history, firebase }) =>
@@ -99,7 +98,7 @@ class SignInForm extends Component {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <PersonOutline />
+                      <MailOutline />
                     </InputAdornment>
                   ),
                 }}

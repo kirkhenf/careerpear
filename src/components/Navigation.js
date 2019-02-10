@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -17,12 +17,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { withStyles } from '@material-ui/core/styles';
 import MediaQuery from 'react-responsive';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import SignInForm from './SignIn';
+import CloseIcon from '@material-ui/icons/Close';
 
-var ResponsiveDialog = withMobileDialog({breakpoint: 'xs'})(Dialog);
+
+var ResponsiveDialog = withMobileDialog({ breakpoint: 'xs' })(Dialog);
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -32,12 +33,24 @@ class Navigation extends React.Component {
       authUser: null,
       isModal: false,
       anchorEl: null,
-      open: false
+      open: false,
+      param: 'login'
     };
   }
 
   handleOpen = () => {
     this.setState({ open: true });
+  };
+
+  renderSwitch = (param) => {
+    switch(param) {
+      case 'login':
+        return <SignInForm />
+      case 'pwForget':
+        return <div>PW</div>
+      default:
+        return <div>SignUp</div>
+    }
   };
 
   handleClose = () => {
@@ -48,6 +61,7 @@ class Navigation extends React.Component {
     const { isModal } = this.props;
     const { authUser } = this.props;
     const { anchorEl } = this.props;
+    const { param } = this.props;
 
     return (
       <div className="nav">
@@ -104,12 +118,14 @@ class Navigation extends React.Component {
                   open={this.state.open}
                   onClose={this.handleClose}
                 >
-                  <DialogTitle>{"Login"}</DialogTitle>
+                  <DialogTitle>{"Log in to continue"}</DialogTitle>
                   <DialogContent>
-                  <SignInForm />
+                    {this.renderSwitch(this.state.param)}
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={this.handleClose} color="primary" autoFocus>X</Button>
+                    <IconButton onClick={this.handleClose} color="primary" autoFocus>
+                      <CloseIcon />
+                    </IconButton>
                   </DialogActions>
                 </ResponsiveDialog>
               </div>
