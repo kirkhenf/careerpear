@@ -136,6 +136,8 @@ class Navigation extends React.Component {
                 {/* <Button color="primary" variant="contained">Sign In</Button> */}
                 <Button color="primary" onClick={this.handleOpen}>Log In</Button>
                 <ResponsiveDialog
+                  fullWidth={true}
+                  maxWidth={'sm'}
                   className="loginModal"
                   open={this.state.open}
                   onClose={this.handleClose}

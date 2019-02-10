@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MailOutline from '@material-ui/icons/MailOutline';
 import LockOutline from '@material-ui/icons/LockOutline';
+import "./SignIn.css"
 
 const SignInPage = ({ history, firebase }) =>
   <div>
@@ -83,14 +84,12 @@ class SignInForm extends Component {
       error,
     } = this.state;
 
-    const { classes } = this.props;
-
     const isInvalid =
       password === '' ||
       email === '';
 
     return (
-      <div className="loginGrid">
+      <div>
         <form onSubmit={this.onSubmit}>
           <Grid container spacing={24}>
             <Grid item xs={12}>

@@ -10,6 +10,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import PersonOutline from '@material-ui/icons/PersonOutline';
 import MailOutline from '@material-ui/icons/MailOutline';
 import LockOutline from '@material-ui/icons/LockOutline';
+import Grid from '@material-ui/core/Grid';
 import "./SignUp.css"
 
 const SignUpPage = ({ history, firebase }) =>
@@ -105,62 +106,63 @@ class SignUpForm extends Component {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          <div>
-            <TextField label="First Name" value={first_name} type="text" id="first_name" placeholder="" onChange={event => this.setState(byPropKey('first_name', event.target.value))}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <PersonOutline />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </div>
-          <div>
-            <TextField label="Last Name" value={last_name} type="text" id="last_name" placeholder="" onChange={event => this.setState(byPropKey('last_name', event.target.value))}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <PersonOutline />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </div>
-          <div>
-            <TextField label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <MailOutline />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </div>
-          <div>
-            <TextField label="Password" value={passwordOne} type="password" id="passwordOne" placeholder="" onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <LockOutline />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </div>
-          <div>
-            <TextField label="Confirm Password" value={passwordTwo} type="password" id="passwordTwo" placeholder="" onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <LockOutline />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </div>
-          {/* <input
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <TextField fullWidth label="First Name" value={first_name} type="text" id="first_name" placeholder="" onChange={event => this.setState(byPropKey('first_name', event.target.value))}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <PersonOutline />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Last Name" value={last_name} type="text" id="last_name" placeholder="" onChange={event => this.setState(byPropKey('last_name', event.target.value))}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <PersonOutline />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <MailOutline />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Password" value={passwordOne} type="password" id="passwordOne" placeholder="" onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <LockOutline />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Confirm Password" value={passwordTwo} type="password" id="passwordTwo" placeholder="" onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <LockOutline />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            {/* <input
           value={first_name}
           onChange={event => this.setState(byPropKey('first_name', event.target.value))}
           type="text"
@@ -190,18 +192,22 @@ class SignUpForm extends Component {
           type="password"
           placeholder="Confirm Password"
         /> */}
-          <Button disabled={isInvalid} type="submit">
-            Sign Up
+            <Grid item xs={12}>
+              <Button fullWidth color="primary" variant="contained" disabled={isInvalid} type="submit">
+                Sign Up
             </Button>
-
-          {error && <p>{error.message}</p>}
+            </Grid>
+            <Grid item xs={12}>
+              {error && <p>{error.message}</p>}
+            </Grid>
+          </Grid>
         </form>
       </div>
     );
   }
 }
 
-const SignUpLink = ({parentMethod}) =>
+const SignUpLink = ({ parentMethod }) =>
   <p className="signUpLink" onClick={(e) => parentMethod('signUp')}>
     Don't have an account?
     {' '}
