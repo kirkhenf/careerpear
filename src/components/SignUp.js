@@ -201,11 +201,11 @@ class SignUpForm extends Component {
   }
 }
 
-const SignUpLink = () =>
-  <p className="signUpLink">
+const SignUpLink = ({parentMethod}) =>
+  <p className="signUpLink" onClick={(e) => parentMethod('signUp')}>
     Don't have an account?
     {' '}
-    <Link to={routes.SIGN_UP}>Sign Up</Link>
+    <Link to="#">Sign Up</Link>
   </p>
 
 export default compose(

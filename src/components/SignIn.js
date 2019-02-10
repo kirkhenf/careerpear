@@ -16,8 +16,6 @@ import LockOutline from '@material-ui/icons/LockOutline';
 const SignInPage = ({ history, firebase }) =>
   <div>
     <SignInForm history={history} firebase={firebase} />
-    <PasswordForgetLink />
-    <SignUpLink />
   </div>
 
 const byPropKey = (propertyName, value) => () => ({
@@ -34,6 +32,10 @@ class SignInForm extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
+  }
+
+  click = () => {
+    this.props.handleModalClick();
   }
 
   // onSubmit = (event) => {

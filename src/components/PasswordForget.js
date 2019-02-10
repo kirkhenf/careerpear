@@ -59,15 +59,15 @@ class PasswordForgetForm extends Component {
           Reset My Password
         </button>
 
-        { error && <p>{error.message}</p> }
+        {error && <p>{error.message}</p>}
       </form>
     );
   }
 }
 
-const PasswordForgetLink = () =>
-  <p className="pwForgetLink">
-    <Link to="/pw-forget">Forgot Password?</Link>
+const PasswordForgetLink = ({parentMethod}) =>
+  <p onClick={(e) => parentMethod('pwForget')} className="pwForgetLink">
+    <Link to="#">Forgot Password?</Link>
   </p>
 
 export default PasswordForgetPage;

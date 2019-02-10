@@ -21,6 +21,8 @@ import MediaQuery from 'react-responsive';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import SignInForm from './SignIn';
 import CloseIcon from '@material-ui/icons/Close';
+import { PasswordForgetLink, PasswordForgetForm } from './PasswordForget';
+import { SignUpForm, SignUpLink } from './SignUp';
 
 
 var ResponsiveDialog = withMobileDialog({ breakpoint: 'xs' })(Dialog);
@@ -39,17 +41,25 @@ class Navigation extends React.Component {
   }
 
   handleOpen = () => {
+    //putting it in the close showed the login page while closing
+    this.setState({param: 'login'});
     this.setState({ open: true });
   };
 
   renderSwitch = (param) => {
-    switch(param) {
+    switch (param) {
       case 'login':
-        return <SignInForm />
+        return (
+          <div>
+            <SignInForm />
+            <PasswordForgetLink parentMethod={this.handleModalClick}/>
+            <SignUpLink parentMethod={this.handleModalClick}/>
+          </div>
+        )
       case 'pwForget':
-        return <div>PW</div>
+        return <PasswordForgetForm />
       default:
-        return <div>SignUp</div>
+        return <SignUpForm />
     }
   };
 
@@ -57,11 +67,14 @@ class Navigation extends React.Component {
     this.setState({ open: false });
   };
 
+  handleModalClick = (value) => {
+    this.setState({param: value})
+  };
+
   render() {
     const { isModal } = this.props;
     const { authUser } = this.props;
     const { anchorEl } = this.props;
-    const { param } = this.props;
 
     return (
       <div className="nav">
