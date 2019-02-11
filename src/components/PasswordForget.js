@@ -57,8 +57,8 @@ class PasswordForgetForm extends Component {
         <form onSubmit={this.onSubmit}>
           <Grid container spacing={16}>
             <Grid item xs={12} />
-            <Grid item xs={12}>
-              <TextField
+            <Grid item xs={12} className="test">
+              <TextField 
                 fullWidth
                 variant="outlined"
                 label="Email"
@@ -68,7 +68,7 @@ class PasswordForgetForm extends Component {
                 placeholder=""
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="start">
                       <MailOutline />
                     </InputAdornment>
                   ),
