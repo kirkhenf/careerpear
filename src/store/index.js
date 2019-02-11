@@ -28,8 +28,6 @@ const config = {
 // need to initialize dates as timestamps
 const firestore = firebase.firestore();
 firebase.firestore() // <- needed if using firestore
-const settings = { timestampsInSnapshots: true };
-firestore.settings(settings);
 
 // Add reactReduxFirebase enhancer when making store creator
 const createStoreWithFirebase = compose(
