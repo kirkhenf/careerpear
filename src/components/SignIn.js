@@ -97,7 +97,7 @@ class SignInForm extends Component {
               <TextField fullWidth variant="outlined" label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="start">
                       <MailOutline />
                     </InputAdornment>
                   ),
@@ -108,7 +108,7 @@ class SignInForm extends Component {
               <TextField fullWidth variant="outlined" label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="start">
                       <LockOpenOutlined />
                     </InputAdornment>
                   ),

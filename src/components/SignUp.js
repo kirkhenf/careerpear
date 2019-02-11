@@ -113,7 +113,7 @@ class SignUpForm extends Component {
               <TextField variant="outlined" fullWidth label="First Name" value={first_name} type="text" id="first_name" placeholder="" onChange={event => this.setState(byPropKey('first_name', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="start">
                       <PersonOutline />
                     </InputAdornment>
                   ),
@@ -124,7 +124,7 @@ class SignUpForm extends Component {
               <TextField variant="outlined" fullWidth label="Last Name" value={last_name} type="text" id="last_name" placeholder="" onChange={event => this.setState(byPropKey('last_name', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="start">
                       <PersonOutline />
                     </InputAdornment>
                   ),
@@ -135,7 +135,7 @@ class SignUpForm extends Component {
               <TextField variant="outlined" fullWidth label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="start">
                       <MailOutline />
                     </InputAdornment>
                   ),
@@ -146,7 +146,7 @@ class SignUpForm extends Component {
               <TextField variant="outlined" fullWidth label="Password" value={passwordOne} type="password" id="passwordOne" placeholder="" onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="start">
                       <LockOpenOutlined />
                     </InputAdornment>
                   ),
@@ -157,7 +157,7 @@ class SignUpForm extends Component {
               <TextField variant="outlined" fullWidth label="Confirm Password" value={passwordTwo} type="password" id="passwordTwo" placeholder="" onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="start">
                       <LockOpenOutlined />
                     </InputAdornment>
                   ),
