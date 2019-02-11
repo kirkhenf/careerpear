@@ -110,55 +110,55 @@ class SignUpForm extends Component {
           <Grid container spacing={16}>
             <Grid item xs={12} />
             <Grid item xs={12}>
-              <TextField variant="outlined" fullWidth label="First Name" value={first_name} type="text" id="first_name" placeholder="" onChange={event => this.setState(byPropKey('first_name', event.target.value))}
+              <TextField variant="outlined" className="input" label="First name" value={first_name} type="text" id="first_name" placeholder="" onChange={event => this.setState(byPropKey('first_name', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="start">
-                      <PersonOutline />
+                    <InputAdornment position="end">
+                      <PersonOutline color="primary"/>
                     </InputAdornment>
                   ),
                 }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField variant="outlined" fullWidth label="Last Name" value={last_name} type="text" id="last_name" placeholder="" onChange={event => this.setState(byPropKey('last_name', event.target.value))}
+              <TextField variant="outlined" className="input" label="Last name" value={last_name} type="text" id="last_name" placeholder="" onChange={event => this.setState(byPropKey('last_name', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="start">
-                      <PersonOutline />
+                    <InputAdornment position="end">
+                      <PersonOutline color="primary"/>
                     </InputAdornment>
                   ),
                 }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField variant="outlined" fullWidth label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
+              <TextField variant="outlined" className="input" label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="start">
-                      <MailOutline />
+                    <InputAdornment position="end">
+                      <MailOutline color="primary"/>
                     </InputAdornment>
                   ),
                 }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField variant="outlined" fullWidth label="Password" value={passwordOne} type="password" id="passwordOne" placeholder="" onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+              <TextField variant="outlined" className="input" label="Password" value={passwordOne} type="password" id="passwordOne" placeholder="" onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="start">
-                      <LockOpenOutlined />
+                    <InputAdornment position="end">
+                      <LockOpenOutlined color="primary"/>
                     </InputAdornment>
                   ),
                 }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField variant="outlined" fullWidth label="Confirm Password" value={passwordTwo} type="password" id="passwordTwo" placeholder="" onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+              <TextField variant="outlined" className="input" label="Confirm password" value={passwordTwo} type="password" id="passwordTwo" placeholder="" onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="start">
-                      <LockOpenOutlined />
+                    <InputAdornment position="end">
+                      <LockOpenOutlined color="primary"/>
                     </InputAdornment>
                   ),
                 }}

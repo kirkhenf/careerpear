@@ -18,6 +18,6 @@ a {
     color: #ff5a5f;
 }
 
-.MuiOutlinedInput-adornedEnd-256 {
-    padding-right: 0px !important;
+.input {
+    width: 100%;
 }
