@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MailOutline from '@material-ui/icons/MailOutline';
-import LockOutline from '@material-ui/icons/LockOutline';
+import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined';
 import "./SignIn.css"
 
 const SignInPage = ({ history, firebase }) =>
@@ -31,7 +31,6 @@ class SignInForm extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
-    console.log(props);
   }
 
   click = () => {
@@ -92,9 +91,10 @@ class SignInForm extends Component {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          <Grid container spacing={24}>
+          <Grid container spacing={16}>
+            <Grid item xs={12}/>
             <Grid item xs={12}>
-              <TextField fullWidth label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
+              <TextField fullWidth variant="outlined" label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -105,11 +105,11 @@ class SignInForm extends Component {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))}
+              <TextField fullWidth variant="outlined" label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <LockOutline />
+                      <LockOpenOutlined />
                     </InputAdornment>
                   ),
                 }}

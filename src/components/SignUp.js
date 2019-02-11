@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button'
 import InputAdornment from '@material-ui/core/InputAdornment';
 import PersonOutline from '@material-ui/icons/PersonOutline';
 import MailOutline from '@material-ui/icons/MailOutline';
-import LockOutline from '@material-ui/icons/LockOutline';
+import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined';
 import Grid from '@material-ui/core/Grid';
 import "./SignUp.css"
 
@@ -63,8 +63,6 @@ class SignUpForm extends Component {
         role: 'user'
       })
       .then((data) => {
-        console.log(data)
-        // history.push(routes.HOME);
       }).catch((error) => {
         this.setState(byPropKey('error', error));
       });
@@ -109,9 +107,10 @@ class SignUpForm extends Component {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          <Grid container spacing={24}>
+          <Grid container spacing={16}>
+            <Grid item xs={12} />
             <Grid item xs={12}>
-              <TextField fullWidth label="First Name" value={first_name} type="text" id="first_name" placeholder="" onChange={event => this.setState(byPropKey('first_name', event.target.value))}
+              <TextField variant="outlined" fullWidth label="First Name" value={first_name} type="text" id="first_name" placeholder="" onChange={event => this.setState(byPropKey('first_name', event.target.value))}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -122,7 +121,7 @@ class SignUpForm extends Component {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label="Last Name" value={last_name} type="text" id="last_name" placeholder="" onChange={event => this.setState(byPropKey('last_name', event.target.value))}
+              <TextField variant="outlined" fullWidth label="Last Name" value={last_name} type="text" id="last_name" placeholder="" onChange={event => this.setState(byPropKey('last_name', event.target.value))}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -133,7 +132,7 @@ class SignUpForm extends Component {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
+              <TextField variant="outlined" fullWidth label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -144,22 +143,22 @@ class SignUpForm extends Component {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label="Password" value={passwordOne} type="password" id="passwordOne" placeholder="" onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+              <TextField variant="outlined" fullWidth label="Password" value={passwordOne} type="password" id="passwordOne" placeholder="" onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <LockOutline />
+                      <LockOpenOutlined />
                     </InputAdornment>
                   ),
                 }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label="Confirm Password" value={passwordTwo} type="password" id="passwordTwo" placeholder="" onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+              <TextField variant="outlined" fullWidth label="Confirm Password" value={passwordTwo} type="password" id="passwordTwo" placeholder="" onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <LockOutline />
+                      <LockOpenOutlined />
                     </InputAdornment>
                   ),
                 }}
@@ -170,9 +169,7 @@ class SignUpForm extends Component {
                 Sign Up
             </Button>
             </Grid>
-            <Grid item xs={12}>
-              {error && <p>{error.message}</p>}
-            </Grid>
+            {error && <p>{error.message}</p>}
           </Grid>
         </form>
       </div>
