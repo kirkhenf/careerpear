@@ -92,41 +92,29 @@ class SignInForm extends Component {
       <div>
         <form onSubmit={this.onSubmit}>
           <Grid container spacing={16}>
-            <Grid item xs={12}/>
+            <Grid item xs={12} />
             <Grid item xs={12}>
-              <TextField fullWidth variant="outlined" label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
+              <TextField className="input" variant="outlined" label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="start">
-                      <MailOutline />
+                    <InputAdornment position="end">
+                      <MailOutline color="primary"/>
                     </InputAdornment>
                   ),
                 }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth variant="outlined" label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))}
+              <TextField className="input" variant="outlined" label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="start">
-                      <LockOpenOutlined />
+                    <InputAdornment position="end">
+                      <LockOpenOutlined color="primary" />
                     </InputAdornment>
                   ),
                 }}
               />
             </Grid>
-            {/* <input
-            value={email}
-            onChange={event => this.setState(byPropKey('email', event.target.value))}
-            type="text"
-            placeholder="Email Address"
-          />
-          <input
-            value={password}
-            onChange={event => this.setState(byPropKey('password', event.target.value))}
-            type="password"
-            placeholder="Password"
-          /> */}
             <Grid item xs={12}>
               <Button fullWidth color="primary" variant="contained" disabled={isInvalid} type="submit">Log In</Button>
             </Grid>
@@ -138,7 +126,7 @@ class SignInForm extends Component {
   }
 }
 
-const SignInLink = ({optionalText, parentMethod}) =>
+const SignInLink = ({ optionalText, parentMethod }) =>
   <p className="signInLink" onClick={(e) => parentMethod('login')}>
     {optionalText}<Link to="#">Back to login</Link>
   </p>

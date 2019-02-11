@@ -59,7 +59,7 @@ class PasswordForgetForm extends Component {
             <Grid item xs={12} />
             <Grid item xs={12} className="test">
               <TextField 
-                fullWidth
+                className="input"
                 variant="outlined"
                 label="Email"
                 value={this.state.email}
@@ -68,8 +68,8 @@ class PasswordForgetForm extends Component {
                 placeholder=""
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="start">
-                      <MailOutline />
+                    <InputAdornment position="end">
+                      <MailOutline color="primary"/>
                     </InputAdornment>
                   ),
                 }}
