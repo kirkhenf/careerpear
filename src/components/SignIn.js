@@ -31,6 +31,7 @@ class SignInForm extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
+    console.log(props);
   }
 
   click = () => {
@@ -69,7 +70,7 @@ class SignInForm extends Component {
       password: this.state.password
     }).then(() => {
       console.log("Logged in.");
-      history.push(routes.HOME);
+      // history.push(routes.HOME);
     })
       .catch(error => {
         this.setState(byPropKey('error', error));
@@ -147,7 +148,7 @@ export default compose(
   withRouter,
   firebaseConnect(), // withFirebase can also be used
   connect(({ firebase: { auth } }) => ({ auth }))
-)(SignInPage)
+)(SignInForm)
 
 export {
   SignInForm,

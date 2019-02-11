@@ -63,7 +63,10 @@ class SignUpForm extends Component {
         role: 'user'
       })
       .then((data) => {
-        history.push(routes.HOME);
+        console.log(data)
+        // history.push(routes.HOME);
+      }).catch((error) => {
+        this.setState(byPropKey('error', error));
       });
     // }
 
@@ -162,36 +165,6 @@ class SignUpForm extends Component {
                 }}
               />
             </Grid>
-            {/* <input
-          value={first_name}
-          onChange={event => this.setState(byPropKey('first_name', event.target.value))}
-          type="text"
-          placeholder="First Name"
-        />
-        <input
-          value={last_name}
-          onChange={event => this.setState(byPropKey('last_name', event.target.value))}
-          type="text"
-          placeholder="Last Name"
-        />
-        <input
-          value={email}
-          onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          value={passwordOne}
-          onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          value={passwordTwo}
-          onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-          type="password"
-          placeholder="Confirm Password"
-        /> */}
             <Grid item xs={12}>
               <Button fullWidth color="primary" variant="contained" disabled={isInvalid} type="submit">
                 Sign Up
@@ -224,5 +197,5 @@ export default compose(
 
 export {
   SignUpForm,
-  SignUpLink,
+  SignUpLink
 };

@@ -23,6 +23,9 @@ import { SignInForm, SignInLink } from './SignIn';
 import CloseIcon from '@material-ui/icons/Close';
 import { PasswordForgetLink, PasswordForgetForm } from './PasswordForget';
 import { SignUpForm, SignUpLink } from './SignUp';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux'
+import { firebaseConnect } from 'react-redux-firebase'
 
 var ResponsiveDialog = withMobileDialog({ breakpoint: 'xs' })(Dialog);
 
@@ -50,7 +53,7 @@ class Navigation extends React.Component {
       case 'login':
         return (
           <div>
-            <SignInForm />
+            <SignInForm firebase={this.props.firebase}/>
             <PasswordForgetLink parentMethod={this.handleModalClick} />
             <SignUpLink parentMethod={this.handleModalClick} />
           </div>
@@ -65,7 +68,7 @@ class Navigation extends React.Component {
       default:
         return (
           <div>
-            <SignUpForm />
+            <SignUpForm firebase={this.props.firebase}/>
             <SignInLink optionalText={"Already have an account? "} parentMethod={this.handleModalClick} />
           </div>
         )
@@ -197,4 +200,6 @@ const handleClose = () => {
   })
 }
 
-export default (connect(mapStateToProps)(Navigation));
+export default compose(withRouter,
+  firebaseConnect(), // withFirebase can also be used
+  connect(mapStateToProps))(Navigation);
