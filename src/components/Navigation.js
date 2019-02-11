@@ -109,7 +109,7 @@ class Navigation extends React.Component {
       <div className="nav">
         <AppBar position="static" color="secondary">
           <Toolbar>
-            <Typography variant="title" color="inherit" className='topBar'>
+            <Typography variant="h6" color="inherit" className='topBar'>
               <a href={routes.LANDING}>
                 <MediaQuery minDeviceWidth={600}>
                   {(matches) => {
