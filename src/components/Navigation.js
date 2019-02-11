@@ -72,6 +72,23 @@ class Navigation extends React.Component {
     }
   };
 
+  getModalTitle = () => {
+    switch (this.state.param) {
+      case 'login':
+        return (
+          "Log in to continue"
+        )
+      case 'pwForget':
+        return (
+          "Reset password"
+        )
+      default:
+        return (
+          "Sign up"
+        )
+    }  
+  }
+
   handleClose = () => {
     this.setState({ open: false });
   };
@@ -142,7 +159,7 @@ class Navigation extends React.Component {
                   open={this.state.open}
                   onClose={this.handleClose}
                 >
-                  <DialogTitle>{"Log in to continue"}</DialogTitle>
+                  <DialogTitle>{this.getModalTitle()}</DialogTitle>
                   <DialogContent>
                     {this.renderSwitch(this.state.param)}
                   </DialogContent>
