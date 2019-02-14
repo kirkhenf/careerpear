@@ -60,7 +60,9 @@ class QuizPage extends Component {
             />
           )}
         </div>
-        <LinearProgress className="quizProgress" variant="determinate" value={page/3*100} />
+        <div className="quizProgress">
+          <LinearProgress className="progressBar" variant="determinate" value={page / 3 * 100} />
+        </div>
       </div>
     )
   }
