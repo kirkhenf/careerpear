@@ -1,0 +1,14 @@
+.bodyContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.quizContent {
+    width: 100%;
+    flex: 1;
+}
+
+.quizProgress {
+    height: 15px !important;
+}

@@ -9,6 +9,8 @@ import { withRouter } from 'react-router-dom';
 import * as routes from '../constants/routes';
 import Button from '@material-ui/core/Button'
 import { withFirebase } from 'react-redux-firebase'
+import LinearProgress from '@material-ui/core/LinearProgress';
+import "./Quiz.css"
 
 class QuizPage extends Component {
   constructor(props) {
@@ -46,16 +48,19 @@ class QuizPage extends Component {
     // const { onSubmit } = this.props
     const { page } = this.state
     return (
-      <div>
-        <Button onClick={this.testPush}>Send Data</Button>
-        {page === 1 && <QuizIntro onSubmit={this.nextPage} />}
-        {page === 2 && <Quiz1 onSubmit={this.nextPage} />}
-        {page === 3 && (
-          <Quiz2
-            previousPage={this.previousPage}
-            onSubmit={this.sendHome}
-          />
-        )}
+      <div className="bodyContent">
+        <div className="quizContent">
+          {/* <Button onClick={this.testPush}>Send Data</Button> */}
+          {page === 1 && <QuizIntro onSubmit={this.nextPage} />}
+          {page === 2 && <Quiz1 onSubmit={this.nextPage} />}
+          {page === 3 && (
+            <Quiz2
+              previousPage={this.previousPage}
+              onSubmit={this.sendHome}
+            />
+          )}
+        </div>
+        <LinearProgress className="quizProgress" variant="determinate" value={page/3*100} />
       </div>
     )
   }
@@ -80,7 +85,7 @@ const mapStateToProps = (state) => ({
 const authCondition = (authUser) => !!authUser;
 
 export default compose(
-  withAuthorization(authCondition),
+  // withAuthorization(authCondition),
   withFirebase,
   withRouter,
   connect(mapStateToProps)

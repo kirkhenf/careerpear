@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import * as routes from '../constants/routes';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
