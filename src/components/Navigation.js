@@ -110,7 +110,7 @@ class Navigation extends React.Component {
         <AppBar position="static" color="secondary">
           <Toolbar>
             <Typography variant="h6" color="inherit" className='topBar'>
-              <a href={routes.LANDING}>
+              <Link to={routes.LANDING}>
                 <MediaQuery minDeviceWidth={600}>
                   {(matches) => {
                     if (matches) {
@@ -120,7 +120,7 @@ class Navigation extends React.Component {
                     }
                   }}
                 </MediaQuery>
-              </a>
+              </Link>
             </Typography>
             {authUser
               ?

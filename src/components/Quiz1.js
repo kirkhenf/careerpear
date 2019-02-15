@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Grow from '@material-ui/core/Grow'
 import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 
 const Quiz1 = props => {
   const { handleSubmit } = props
@@ -13,19 +14,22 @@ const Quiz1 = props => {
     <form className="form" onSubmit={handleSubmit}>
       <Grid container spacing={16}>
         <Grid item xs={12}>
+          <Typography variant="h4">What's your name?</Typography>
+        </Grid>
+        <Grid item xs={12}>
           <Grow timeout={500} in={true}>
             <Field
               name="firstName"
               type="text"
               variant="outlined"
-              component={renderField}
-              label="First Name"
+              component={renderTextField}
+            // placeholder="What's your name?"
             />
           </Grow>
         </Grid>
         <Grid item xs={12}>
           <div>
-            <Button type="submit" className="next">
+            <Button variant="contained" color="primary" type="submit" className="next">
               Next
         </Button>
           </div>
@@ -34,6 +38,22 @@ const Quiz1 = props => {
     </form>
   )
 }
+
+const renderTextField = ({
+  label,
+  input,
+  meta: { touched, invalid, error },
+  ...custom
+}) => (
+    <TextField
+      label={label}
+      placeholder={label}
+      error={touched && invalid}
+      helperText={touched && error}
+      {...input}
+      {...custom}
+    />
+  )
 
 export default reduxForm({
   form: 'wizard', // <------ same form name
