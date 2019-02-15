@@ -14,11 +14,11 @@ const Quiz1 = props => {
       <Grid container spacing={16}>
         <Grid item xs={12}>
           <Grow timeout={500} in={true}>
-            <TextField
+            <Field
               name="firstName"
               type="text"
               variant="outlined"
-              // component={renderField}
+              component={renderField}
               label="First Name"
             />
           </Grow>
