@@ -21,3 +21,7 @@ a {
 .input {
     width: 100%;
 }
+
+.nav {
+    z-index: 1;
+}

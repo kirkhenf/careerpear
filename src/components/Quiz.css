@@ -1,0 +1,24 @@
+.bodyContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.quizContent {
+    width: 100%;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    text-align: center;
+}
+
+.quizProgress {
+    align-self: flex-end;
+    width: 100%;
+}
+
+.progressBar {
+    height: 15px !important;
+}
