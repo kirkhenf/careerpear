@@ -31,7 +31,7 @@ export class RenderRadioGroup extends Component {
     return (
       <Grow timeout={500} in={true}>
         <FormGroup role="radiogroup" {...this.state.props} {...this.state.input}>
-          <Grid container justify="center" alignItems="center" direction="row" alignContent="space-around">
+          <Grid container justify="center" alignItems="center" direction="row">
             {this.state.buttons.map((button, key) => (
               <Grid key={key} item xs={12} sm={6} md={6} lg={3}>
                 <FormControlLabel

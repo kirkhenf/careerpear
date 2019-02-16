@@ -11,7 +11,7 @@ const QuizIntro = props => {
     <form onSubmit={handleSubmit}>
       <Grid container spacing={16}>
         <Grid item xs={12}>
-          <Typography variant="h3">Intro text!</Typography>
+          <Typography className="questionText" variant="h5">Intro text!</Typography>
         </Grid>
         <Grid item xs={12}>
           <Button color="primary" variant="contained" type="submit" className="next">Here We Go!</Button>
