@@ -37,6 +37,15 @@ const theme = createMuiTheme({
     "fontWeightRegular": 400,
     "fontWeightMedium": 500,
     useNextVariants: true,
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920
+    }
   }
   // overrides: {
   //   MuiButton: { // Name of the component ⚛️ / style sheet

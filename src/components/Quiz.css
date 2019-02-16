@@ -22,3 +22,7 @@
 .progressBar {
     height: 15px !important;
 }
+
+.options {
+    display: block !important;
+}
