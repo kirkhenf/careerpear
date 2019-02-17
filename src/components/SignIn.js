@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
