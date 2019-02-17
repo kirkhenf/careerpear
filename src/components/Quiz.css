@@ -12,6 +12,7 @@
     justify-content: center;
     display: flex;
     text-align: center;
+    overflow-x: hidden; /* I need a more elegant solution for dealing with grid rows being > 100% width */
 }
 
 .quizProgress {
@@ -21,4 +22,13 @@
 
 .progressBar {
     height: 15px !important;
+}
+
+.options {
+    display: block !important;
+}
+
+.questionText {
+    width: calc(100% - 16px);
+    display: inline-block !important;
 }

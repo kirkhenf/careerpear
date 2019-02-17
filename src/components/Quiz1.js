@@ -14,7 +14,7 @@ const Quiz1 = props => {
     <form className="form" onSubmit={handleSubmit}>
       <Grid container spacing={16}>
         <Grid item xs={12}>
-          <Typography variant="h4">What's your name?</Typography>
+          <Typography className="questionText" variant="h5">What's your name?</Typography>
         </Grid>
         <Grid item xs={12}>
           <Grow timeout={500} in={true}>

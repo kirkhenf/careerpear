@@ -111,7 +111,7 @@ class Navigation extends React.Component {
           <Toolbar>
             <Typography variant="h6" color="inherit" className='topBar'>
               <Link to={routes.LANDING}>
-                <MediaQuery minDeviceWidth={600}>
+                <MediaQuery minWidth={600} minDeviceWidth={600}>
                   {(matches) => {
                     if (matches) {
                       return <img className="pearLogo" alt="" src={require('../assets/careerpear-green-banner-fruit.png')} />;

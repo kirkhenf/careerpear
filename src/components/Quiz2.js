@@ -8,6 +8,12 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
+import DateHelpers from '../helpers/Date'
+import { withStyles } from '@material-ui/core/styles';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import RenderRadioGroup from './RenderRadioGroup'
 
 const renderError = ({ meta: { touched, error } }) =>
   touched && error ? <span>{error}</span> : false
@@ -34,10 +40,27 @@ let Quiz2 = props => {
     <form onSubmit={handleSubmit}>
       <Grid container spacing={16}>
         <Grid item xs={12}>
-          <Typography variant="h3">Hey {firstName}!</Typography>
+          <Typography className="questionText" variant="h5">Hey {firstName}! You wake up ready to take on the day - open up your closet, what outfit are you picking for work this {DateHelpers.getNearestDay()} morning? </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Field name="email" type="email" component={renderField} label="Email" />
+          <RenderRadioGroup name="dress" buttons={[
+              {
+                value: "0",
+                name: "Casual"
+              },
+              {
+                value: "1",
+                name: "Business Casual"
+              },
+              {
+                value: "2",
+                name: "Formal"
+              },
+              {
+                value: "3",
+                name: "Uniform"
+              }
+            ]}/>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={16} justify="center">
@@ -72,18 +95,10 @@ Quiz2 = connect(state => {
   }
 })(Quiz2)
 
-Quiz2 = connect(
-  state => ({
-    values: {
-      family: state.form.wizard.values
-    }
-  })
-)(Quiz2)
-
-export default
+export default compose(
   reduxForm({
     form: 'wizard', //Form name is same
     destroyOnUnmount: false,
     forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
     validate
-  })(Quiz2)
+  }))(Quiz2)

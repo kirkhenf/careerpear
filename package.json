@@ -22,6 +22,7 @@
     "redux": "^4.0.1",
     "redux-firestore": "^0.5.8",
     "redux-form": "latest",
+    "redux-form-material-ui": "^5.0.0-beta.3",
     "typeface-roboto": "0.0.54"
   },
   "scripts": {
