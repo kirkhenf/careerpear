@@ -6,6 +6,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import Grow from "@material-ui/core/Grow"
+import { Field, reduxForm } from 'redux-form'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import FormControl from '@material-ui/core/FormControl'
 
 export class RenderRadioGroup extends Component {
   constructor(props) {
@@ -19,20 +22,41 @@ export class RenderRadioGroup extends Component {
     };
   }
 
+  radioButton = ({ input, buttons, ...rest }) => (
+    // <FormControl>
+    <FormGroup role="radiogroup" {...input} {...rest}>
+      {this.state.buttons.map((button, key) => (
+        <Grid key={key} item xs={12} sm={6} md={6} lg={3}>
+          <FormControlLabel id={button.value}
+            checked={this.state.props.value === button.value}
+            value={button.value}
+            onChange={event => { this.change(button.value) }}
+            value={button.value}
+            control={<Radio
+              checked={this.state.selected[button.value]}
+              color="primary" />}
+            label={button.name} />
+        </Grid>
+      ))}
+      </FormGroup>
+    /* </FormControl> */
+  )
+
+  change = value => {
+    let temp = {};
+    temp[value] = true;
+    this.setState({
+      selected: temp
+    });
+  };
+
   render() {
-    const change = value => {
-      let temp = {};
-      temp[value] = true;
-      this.setState({
-        selected: temp
-      });
-    };
 
     return (
       <Grow timeout={500} in={true}>
         <FormGroup role="radiogroup" {...this.state.props} {...this.state.input}>
           <Grid container justify="center" alignItems="center" direction="row">
-            {this.state.buttons.map((button, key) => (
+            {/* {this.state.buttons.map((button, key) => (
               <Grid key={key} item xs={12} sm={6} md={6} lg={3}>
                 <FormControlLabel
                   {...this.state.props}
@@ -51,7 +75,11 @@ export class RenderRadioGroup extends Component {
                   label={button.name}
                 />
               </Grid>
-            ))}
+            ))} */}
+            <Field name="dress" component={this.radioButton}>
+              {/* <Radio value="male" label="male" />
+              <Radio value="female" label="female" /> */}
+            </Field>
           </Grid>
         </FormGroup>
       </Grow>
@@ -59,10 +87,10 @@ export class RenderRadioGroup extends Component {
   }
 }
 
-RenderRadioGroup.propTypes = {
-  input: PropTypes.object.isRequired,
-  buttons: PropTypes.array.isRequired,
-  onChangeHandler: PropTypes.func
-};
+// RenderRadioGroup.propTypes = {
+//   input: PropTypes.object.isRequired,
+//   buttons: PropTypes.array.isRequired,
+//   onChangeHandler: PropTypes.func
+// };
 
 export default RenderRadioGroup;

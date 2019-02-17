@@ -55,6 +55,10 @@ let Quiz2 = props => {
               {
                 value: "option3b",
                 name: "Option3b"
+              },
+              {
+                value: "option4b",
+                name: "Option4b"
               }
             ]}/>
         </Grid>
@@ -90,14 +94,6 @@ Quiz2 = connect(state => {
     firstName
   }
 })(Quiz2)
-
-Quiz2 = connect(
-  state => ({
-    values: {
-      family: state.form.wizard.values
-    }
-  })
-)(Quiz2)
 
 export default compose(
   reduxForm({

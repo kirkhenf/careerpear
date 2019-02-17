@@ -1,22 +1,30 @@
 import React from 'react'
-import { reduxForm } from 'redux-form'
-import Button from '@material-ui/core/Button'
+import { reduxForm, getFormValues } from 'redux-form'
 import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
 import SignUpForm from './SignUp'
+import { connect } from 'react-redux';
 
-const QuizIntro = props => {
-    const { handleSubmit } = props
+let QuizEnd = props => {
+    const { values } = props;
+    console.log(values);
     return (
         <div>
-            <Typography variant="h5" color="primary">You made it!</Typography>
+            <Typography variant="h6"><pre>{JSON.stringify(values, null, 2) }</pre></Typography>
             <SignUpForm />
         </div>
     )
 }
 
+QuizEnd = connect(state => {
+    // can select values individually
+    const values = getFormValues('wizard')(state);
+    return {
+        values
+    }
+})(QuizEnd)
+
 export default reduxForm({
     form: 'wizard', // <------ same form name
     destroyOnUnmount: false, // <------ preserve form data
     forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
-})(QuizIntro)
+})(QuizEnd)
