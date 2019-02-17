@@ -6,7 +6,7 @@
 }
 
 .quizContent {
-    width: 100%;
+    padding: 16px;
     flex: 1;
     align-items: center;
     justify-content: center;

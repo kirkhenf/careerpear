@@ -10,7 +10,7 @@ let QuizEnd = props => {
     return (
         <div>
             <Typography variant="h6"><pre>{JSON.stringify(values, null, 2) }</pre></Typography>
-            <SignUpForm />
+            {/* <SignUpForm /> */}
         </div>
     )
 }

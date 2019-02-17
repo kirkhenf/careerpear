@@ -13,13 +13,28 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 const styles = theme => ({
   quizOption: {
     [theme.breakpoints.down('xs')]: {
-      textAlign: "left"
+      marginRight: "10px"
     },
-    padding: "10px"
+    padding: "8px"
   },
   quizOptionLabel: {
     minWidth: '50%',
-    border: "5px solid #297A6D",
+    marginRight: "0",
+    marginLeft: "0",
+    border: "3px solid #297A6D",
+    borderRadius: "10px",
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    },
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '80%'
+    },
+    [theme.breakpoints.down('md')]: {
+      minWidth: '60%'
+    },
+    [theme.breakpoints.down('lg')]: {
+      minWidth: '80%'
+    }
   }
 });
 
