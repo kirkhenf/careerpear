@@ -11,18 +11,12 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 // const defaultTheme = createMuiTheme();
 const styles = theme => ({
-  quizOption: {
-    [theme.breakpoints.down('xs')]: {
-      marginRight: "10px"
-    },
-    padding: "8px"
-  },
-  quizOptionLabel: {
+  quizOptionLabelSelected: {
+    border: "2px solid #297A6D !important",
     minWidth: '50%',
     marginRight: "0",
     marginLeft: "0",
-    border: "3px solid #297A6D",
-    borderRadius: "10px",
+    borderRadius: "4px",
     [theme.breakpoints.down('xs')]: {
       width: '100%'
     },
@@ -34,14 +28,38 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('lg')]: {
       minWidth: '80%'
-    }
-  }
+    },
+  },
+  quizOption: {
+    [theme.breakpoints.down('xs')]: {
+      marginRight: "10px"
+    },
+    padding: "8px"
+  },
+  quizOptionLabel: {
+    minWidth: '50%',
+    marginRight: "0",
+    marginLeft: "0",
+    border: "1px solid rgba(0, 0, 0, 0.23)",
+    borderRadius: "4px",
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    },
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '80%'
+    },
+    [theme.breakpoints.down('md')]: {
+      minWidth: '60%'
+    },
+    [theme.breakpoints.down('lg')]: {
+      minWidth: '80%'
+    },
+  },
 });
 
 export class RenderRadioGroup extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       input: this.props.input,
       buttons: this.props.buttons,
@@ -57,17 +75,25 @@ export class RenderRadioGroup extends Component {
 
   radioButton = ({ input, buttons, classes, ...rest }) => (
     // <FormControl>
-    <FormGroup role="radiogroup" {...input} {...rest}>
+    <FormGroup row role="radiogroup" {...input} {...rest}>
       <Grid container justify="center" alignItems="center" direction="row">
         {this.state.buttons.map((button, key) => (
-          <Grid className={this.state.classes.quizOption} key={key} item xs={12} sm={6} md={6} lg={3}>
-            <FormControlLabel className={this.state.classes.quizOptionLabel} id={button.value}
+          <Grid checked={this.state.selected[button.value]} className={this.state.classes.quizOption} key={key} item xs={12} sm={6} md={6} lg={3}>
+            <FormControlLabel
+              classes={{
+                label: this.state.classes.label,
+              }}
+              // className={this.state.classes.quizOptionLabel} id={button.value}
+              className={`${this.state.selected[button.value] ? (this.state.classes.quizOptionLabelSelected) : (this.state.classes.quizOptionLabel)}`}
               checked={this.state.props.value === button.value}
               value={button.value}
               onChange={event => { this.change(button.value) }}
               value={button.value}
               control={<Radio
                 checked={this.state.selected[button.value]}
+                classes={{
+                  checked: this.state.classes.checked,
+                }}
                 color="primary" />}
               label={button.name} />
           </Grid>
