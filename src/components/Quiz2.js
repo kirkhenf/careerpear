@@ -40,7 +40,7 @@ let Quiz2 = props => {
     <form onSubmit={handleSubmit}>
       <Grid container spacing={16}>
         <Grid item xs={12}>
-          <Typography className="questionText" variant="h5">Hey {firstName}! You wake up ready to take on the day - open up your closet, what outfit are you picking for work this {DateHelpers.getNearestDay()} morning? </Typography>
+          <Typography className="questionText" variant="h5">Hey {firstName}! Up next: your ideal work outfit. What fits your style for this {DateHelpers.getNearestDay()} morning? </Typography>
         </Grid>
         <Grid item xs={12}>
           <RenderRadioGroup name="dress" buttons={[
