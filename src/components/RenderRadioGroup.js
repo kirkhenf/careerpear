@@ -2,10 +2,13 @@ import React from "react";
 import Radio from "@material-ui/core/Radio";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from '@material-ui/core/FormControl'
 import { Component } from "react";
+import RadioGroup from '@material-ui/core/RadioGroup'
 import Grid from "@material-ui/core/Grid";
 import Grow from "@material-ui/core/Grow"
-import { Field } from 'redux-form'
+import { connect } from 'react-redux'
+import { Field, formValueSelector } from 'redux-form'
 import { withStyles } from '@material-ui/core/styles';
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
@@ -63,44 +66,54 @@ export class RenderRadioGroup extends Component {
     this.state = {
       input: this.props.input,
       buttons: this.props.buttons,
-      name: this.props.name,
       onChangeHandler: this.props.onChangeHandler,
       props: this.props,
       classes: this.props.classes,
-      selected: {}
+      selected: {},
+      questionName: this.props.questionName
     };
   }
 
   required = value => (value || typeof value === 'number' ? undefined : 'Required')
 
+  Wire = ({ children, ...props }) => children(props);
+
   radioButton = ({ input, buttons, classes, ...rest }) => (
-    // <FormControl>
-    <FormGroup row role="radiogroup" {...input} {...rest}>
-      <Grid container justify="center" alignItems="center" direction="row">
-        {this.state.buttons.map((button, key) => (
-          <Grid checked={this.state.selected[button.value]} className={this.state.classes.quizOption} key={key} item xs={12} sm={6} md={6} lg={3}>
-            <FormControlLabel
-              classes={{
-                label: this.state.classes.label,
-              }}
-              // className={this.state.classes.quizOptionLabel} id={button.value}
-              className={`${this.state.selected[button.value] ? (this.state.classes.quizOptionLabelSelected) : (this.state.classes.quizOptionLabel)}`}
-              checked={this.state.props.value === button.value}
-              value={button.value}
-              onChange={event => { this.change(button.value) }}
-              value={button.value}
-              control={<Radio
-                checked={this.state.selected[button.value]}
-                classes={{
-                  checked: this.state.classes.checked,
-                }}
-                color="primary" />}
-              label={button.name} />
-          </Grid>
-        ))}
-      </Grid>
-    </FormGroup>
+    <FormControl>
+      <RadioGroup {...input} {...rest}>
+        <Grid container justify="center" alignItems="center" direction="row">
+          {this.state.buttons.map((button, key) => (
+            <Grid checked={this.state.dress === [button.value]} className={this.state.classes.quizOption} key={key} item xs={12} sm={6} md={6} lg={3}>
+              <FormControlLabel
+                {...console.log(this.state)}
+                className={`${(this.state.props[this.state.props.questionName] === button.value || this.state.selected[button.value]) ? (this.state.classes.quizOptionLabelSelected) : (this.state.classes.quizOptionLabel)}`}
+                checked={this.state.props[this.state.props.questionName] === button.value}
+                key={key}
+                value={button.value}
+                onChange={event => { this.change(button.value) }}
+                value={button.value}
+                control={<Radio
+                  checked={this.state.selected[button.value]}
+                  classes={{
+                    checked: this.state.classes.checked,
+                  }}
+                  color="primary" />}
+                label={button.name} />
+            </Grid>
+          ))}
+        </Grid>
+      </RadioGroup>
+    </FormControl>
   )
+
+  // radioButton = ({ input, ...rest }) => (
+  //   <FormControl>
+  //     <RadioGroup {...input} {...rest}>
+  //       <FormControlLabel value="female" control={<Radio color="primary"/>} label="Female" />
+  //       <FormControlLabel value="male" control={<Radio color="primary"/>} label="Male" />
+  //     </RadioGroup>
+  //   </FormControl>
+  // )
 
   change = value => {
     let temp = {};
@@ -111,12 +124,29 @@ export class RenderRadioGroup extends Component {
   };
 
   render() {
+    console.log(this.state.selected);
     return (
       <Grow timeout={500} in={true}>
-        <Field validate={[this.required]} name={this.state.name} component={this.radioButton}></Field>
+        {/* <Field validate={[this.required]} name={this.state.name} component={this.radioButton}>
+          <Radio value="0" label="Casual" />
+          <Radio value="1" label="Business Casual" />
+        </Field> */}
+        <Field name={this.state.questionName} component={this.radioButton}>
+          {/* <Radio value="male" label="male" />
+          <Radio value="female" label="female" /> */}
+        </Field>
       </Grow>
     );
   }
 }
+
+const selector = formValueSelector('wizard') // <-- same as form name
+RenderRadioGroup = connect(state => {
+  // can select values individually
+  const dress = selector(state, 'dress');
+  return {
+    dress
+  }
+})(RenderRadioGroup)
 
 export default withStyles(styles)(RenderRadioGroup);

@@ -3,12 +3,13 @@ import QuizIntro from './QuizIntro';
 import Quiz1 from './Quiz1';
 import Quiz2 from './Quiz2';
 import QuizEnd from './QuizEnd';
-import withAuthorization from './withAuthorization';
+import QuizTemplate from './QuizTemplate';
+// import withAuthorization from './withAuthorization';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import * as routes from '../constants/routes';
-import Button from '@material-ui/core/Button'
+// import Button from '@material-ui/core/Button'
 import { withFirebase } from 'react-redux-firebase'
 import LinearProgress from '@material-ui/core/LinearProgress';
 import "./Quiz.css"
@@ -60,10 +61,30 @@ class QuizPage extends Component {
               onSubmit={this.nextPage}
             />
           )}
-          {page === 4 && <QuizEnd />}
+          {page === 4 && <QuizTemplate questionName="test" questionText="test" buttons={[
+            {
+              value: "0",
+              name: "Casual"
+            },
+            {
+              value: "1",
+              name: "Business Casual"
+            },
+            {
+              value: "2",
+              name: "Formal"
+            },
+            {
+              value: "3",
+              name: "Uniform"
+            }
+          ]}
+            previousPage={this.previousPage}
+            onSubmit={this.nextPage} />}
+          {page === 5 && <QuizEnd />}
         </div>
         <div className="quizProgress">
-          <LinearProgress className="progressBar" variant="determinate" value={(page-1) / 3 * 100} />
+          <LinearProgress className="progressBar" variant="determinate" value={(page - 1) / 3 * 100} />
         </div>
       </div>
     )
