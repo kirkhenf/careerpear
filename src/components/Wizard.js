@@ -14,14 +14,17 @@ export default class Wizard extends React.Component {
         super(props)
         this.state = {
             page: 0,
-            values: props.initialValues || {}
+            values: props.initialValues || {},
+            fromChild: 'foo'
         }
     }
-    next = values =>
+    next = values => {
         this.setState(state => ({
             page: Math.min(state.page + 1, this.props.children.length - 1),
             values
         }))
+        this.props.addSomething(values);
+    }
 
     previous = () =>
         this.setState(state => ({
@@ -67,21 +70,21 @@ export default class Wizard extends React.Component {
                         {activePage}
                         <Grid item xs={12}>
                             <Grid container spacing={16} justify="center">
-                                    {page > 0 && (
-                                        <Grid item>
-                                            <Button variant="outlined" type="button" onClick={this.previous}>
-                                                Back
+                                {page > 0 && (
+                                    <Grid item>
+                                        <Button variant="outlined" type="button" onClick={this.previous}>
+                                            Back
                 </Button>
-                                        </Grid>
-                                    )}
-                                    {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>}
-                                    {isLastPage && (
-                                        <Grid item>
-                                            <Button color="primary" variant="contained" type="submit" disabled={submitting}>
-                                                Submit
+                                    </Grid>
+                                )}
+                                {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>}
+                                {isLastPage && (
+                                    <Grid item>
+                                        <Button color="primary" variant="contained" type="submit" disabled={submitting}>
+                                            Submit
                 </Button>
-                                        </Grid>
-                                    )}
+                                    </Grid>
+                                )}
                             </Grid>
                         </Grid>
 

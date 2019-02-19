@@ -1,7 +1,5 @@
 import React from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from '@material-ui/core/FormControl'
-import RadioGroup from '@material-ui/core/RadioGroup'
 import Grid from "@material-ui/core/Grid";
 import Grow from "@material-ui/core/Grow"
 import { Field } from 'react-final-form'
