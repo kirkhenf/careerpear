@@ -63,7 +63,6 @@ const RenderRadios = props => {
               options.map((option, key) => (
                 <Grid className="quizOptionGrid" key={key} item xs={12} sm={6} md={6} lg={3}>
                   <FormControlLabel
-                    {...console.log(classes.quizOption)}
                     className={classes.quizOption}
                     label={option.label}
                     control={

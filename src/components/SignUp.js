@@ -13,15 +13,15 @@ import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined';
 import Grid from '@material-ui/core/Grid';
 import "./SignUp.css"
 
-const SignUpPage = ({ history, firebase }) =>
+const SignUpPage = ({ history, firebase, firstName }) =>
   <div>
     <h1>SignUp</h1>
-    <SignUpForm history={history} firebase={firebase} />
+    <SignUpForm history={history} firstName={firstName} firebase={firebase} />
   </div>
 
 const INITIAL_STATE = {
-  first_name: '',
-  last_name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
@@ -36,13 +36,14 @@ class SignUpForm extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
+    this.state.firstName = props.firstName;
   }
 
   onSubmit = (event) => {
     event.preventDefault();
     const {
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       email,
       passwordOne,
     } = this.state;
@@ -52,14 +53,14 @@ class SignUpForm extends Component {
       history
     } = this.props;
 
-    // createNewUser = ({ email, password, first_name, last_name }) => {
+    // createNewUser = ({ email, password, firstName, lastName }) => {
     firebase.createUser({
       email: email,
       password: passwordOne
     }, {
         email: email,
-        first_name: first_name,
-        last_name: last_name,
+        firstName: firstName,
+        lastName: lastName,
         role: 'user'
       })
       .then((data) => {
@@ -71,7 +72,7 @@ class SignUpForm extends Component {
     // auth.doCreateUserWithEmailAndPassword(email, passwordOne)
     //   .then(authUser => {
     //     // Create a user in your own accessible Firebase Database too
-    //     db.doCreateUser(authUser.user.uid, first_name, last_name, email)
+    //     db.doCreateUser(authUser.user.uid, firstName, lastName, email)
     //       .then(() => {
     //         this.setState(() => ({ ...INITIAL_STATE }));
     //         history.push(routes.HOME);
@@ -83,13 +84,12 @@ class SignUpForm extends Component {
     //   .catch(error => {
     //     this.setState(byPropKey('error', error));
     //   });
-    event.preventDefault();
   }
 
   render() {
     const {
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       email,
       passwordOne,
       passwordTwo,
@@ -100,17 +100,16 @@ class SignUpForm extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      first_name === '' ||
-      last_name === '';
+      firstName === '' ||
+      lastName === '';
 
 
     return (
       <div>
-        <form onSubmit={this.onSubmit}>
+        {/* <form onSubmit={this.onSubmit}> */}
           <Grid container spacing={16}>
-            <Grid item xs={12} />
             <Grid item xs={12}>
-              <TextField variant="outlined" className="input" label="First name" value={first_name} type="text" id="first_name" placeholder="" onChange={event => this.setState(byPropKey('first_name', event.target.value))}
+              <TextField variant="outlined" className="input" label="First name" value={firstName} type="text" id="firstName" placeholder="" onChange={event => this.setState(byPropKey('firstName', event.target.value))}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -121,7 +120,7 @@ class SignUpForm extends Component {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField variant="outlined" className="input" label="Last name" value={last_name} type="text" id="last_name" placeholder="" onChange={event => this.setState(byPropKey('last_name', event.target.value))}
+              <TextField variant="outlined" className="input" label="Last name" value={lastName} type="text" id="lastName" placeholder="" onChange={event => this.setState(byPropKey('lastName', event.target.value))}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -171,7 +170,7 @@ class SignUpForm extends Component {
             </Grid>
             {error && <p>{error.message}</p>}
           </Grid>
-        </form>
+        {/* </form> */}
       </div>
     );
   }

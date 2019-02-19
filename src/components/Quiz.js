@@ -7,6 +7,7 @@ import { TextField } from "final-form-material-ui";
 import Wizard from './Wizard'
 import RenderRadios from './RenderRadios'
 import DateHelpers from '../helpers/Date'
+import SignUpForm from './SignUp'
 import './Quiz.css'
 
 const onSubmit = async values => {
@@ -88,7 +89,11 @@ class Quiz extends React.Component {
                     label: "Uniform"
                   }
                 ]} />
-            </Wizard.Page >
+            </Wizard.Page>
+            <Wizard.Page>
+              <Typography variant="h5">You did it!</Typography>
+              <SignUpForm firstName={this.state.values.firstName} />
+            </Wizard.Page>
           </Wizard >
         </div>
       </div>

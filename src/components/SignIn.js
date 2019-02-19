@@ -91,7 +91,6 @@ class SignInForm extends Component {
       <div>
         <form onSubmit={this.onSubmit}>
           <Grid container spacing={16}>
-            <Grid item xs={12} />
             <Grid item xs={12}>
               <TextField className="input" variant="outlined" label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
                 InputProps={{
