@@ -10,7 +10,6 @@ import Grow from "@material-ui/core/Grow"
 import { connect } from 'react-redux'
 import { Field, formValueSelector } from 'redux-form'
 import { withStyles } from '@material-ui/core/styles';
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 // const defaultTheme = createMuiTheme();
 const styles = theme => ({
@@ -34,12 +33,6 @@ const styles = theme => ({
     },
   },
   quizOption: {
-    [theme.breakpoints.down('xs')]: {
-      marginRight: "10px"
-    },
-    padding: "8px"
-  },
-  quizOptionLabel: {
     minWidth: '50%',
     marginRight: "0",
     marginLeft: "0",
