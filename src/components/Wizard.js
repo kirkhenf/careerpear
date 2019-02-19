@@ -14,8 +14,7 @@ export default class Wizard extends React.Component {
         super(props)
         this.state = {
             page: 0,
-            values: props.initialValues || {},
-            fromChild: 'foo'
+            values: props.initialValues || {}
         }
     }
     next = values => {

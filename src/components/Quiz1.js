@@ -21,19 +21,19 @@ class Quiz1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      test: ''
+      values: ''
     }
   }
 
-  addSomething(stateFromChild) {
-    this.setState({test : stateFromChild});
+  addSomething(valuesFromWizard) {
+    this.setState({values : valuesFromWizard});
   }
 
   render() {
     return (
       <Wizard
         onSubmit={onSubmit}
-        addSomething={(test => this.addSomething(test))}
+        addSomething={(values => this.addSomething(values))}
       >
         <Wizard.Page>
           <Grid container spacing={16}>
@@ -64,7 +64,7 @@ class Quiz1 extends React.Component {
         </Wizard.Page>
         <Wizard.Page>
           <RenderRadios
-            questionText={'Hey ' + this.state.test.firstName + '! Which outfit is more your style for work this ' + DateHelpers.getNearestDay() +' morning?'} 
+            questionText={'Hey ' + this.state.values.firstName + '! Which outfit is more your style for work this ' + DateHelpers.getNearestDay() +' morning?'} 
             // questionText="test"
             questionName="dress"
             options={[
