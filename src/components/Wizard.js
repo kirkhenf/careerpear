@@ -67,15 +67,14 @@ export default class Wizard extends React.Component {
                         {activePage}
                         <Grid item xs={12}>
                             <Grid container spacing={16} justify="center">
-                                <div className="buttons">
                                     {page > 0 && (
                                         <Grid item>
                                             <Button variant="outlined" type="button" onClick={this.previous}>
-                                                « Previous
+                                                Back
                 </Button>
                                         </Grid>
                                     )}
-                                    {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next »</Button></Grid>}
+                                    {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>}
                                     {isLastPage && (
                                         <Grid item>
                                             <Button color="primary" variant="contained" type="submit" disabled={submitting}>
@@ -83,7 +82,6 @@ export default class Wizard extends React.Component {
                 </Button>
                                         </Grid>
                                     )}
-                                </div>
                             </Grid>
                         </Grid>
 

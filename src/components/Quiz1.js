@@ -27,6 +27,13 @@ const Quiz1 = props => {
       <Wizard.Page>
         <Grid container spacing={16}>
           <Grid item xs={12}>
+            <Typography className="questionText" variant="h5">Let's get you <i>pear</i>-ed!</Typography>
+          </Grid>
+        </Grid>
+      </Wizard.Page>
+      <Wizard.Page>
+        <Grid container spacing={16}>
+          <Grid item xs={12}>
             <Typography className="questionText" variant="h5">We'll start slow. What's your name?</Typography>
           </Grid>
           <Grid item xs={12}>
@@ -45,33 +52,26 @@ const Quiz1 = props => {
         </Grid>
       </Wizard.Page>
       <Wizard.Page>
-        <Grid container spacing={16}>
-          <Grid item xs={12}>
-            <Typography className="questionText" variant="h5">We'll start slow. What's your name?</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <RenderRadios questionName="dress" options={[
-              {
-                value: "0",
-                label: "Casual"
-              },
-              {
-                value: "1",
-                label: "Business Casual"
-              },
-              {
-                value: "2",
-                label: "Formal"
-              },
-              {
-                value: "3",
-                label: "Uniform"
-              }
-            ]} />
-          </Grid>
-        </Grid>
-      </Wizard.Page>
-    </Wizard>
+        <RenderRadios questionText="test" questionName="dress" options={[
+          {
+            value: "0",
+            label: "Casual"
+          },
+          {
+            value: "1",
+            label: "Business Casual"
+          },
+          {
+            value: "2",
+            label: "Formal"
+          },
+          {
+            value: "3",
+            label: "Uniform"
+          }
+        ]} />
+      </Wizard.Page >
+    </Wizard >
   )
 }
 

@@ -7,6 +7,7 @@ import Grow from "@material-ui/core/Grow"
 import { Field } from 'react-final-form'
 import { Radio } from "final-form-material-ui";
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
   quizOptionLabelSelected: {
@@ -51,31 +52,38 @@ const styles = theme => ({
 });
 
 const RenderRadios = props => {
-  const { options, classes, questionName } = props;
+  const { options, classes, questionName, questionText } = props;
   return (
-    <Grow timeout={500} in={true}>
-      <Grid container justify="center" alignItems="center" direction="row" >
-        {
-          options.map((option, key) => (
-            <Grid className="quizOptionGrid" key={key} item xs={12} sm={6} md={6} lg={3}>
-              <FormControlLabel
-                {...console.log(classes.quizOption)}
-                className={classes.quizOption}
-                label={option.label}
-                control={
-                  <Field
-                    name={questionName}
-                    color="primary"
-                    component={Radio}
-                    type="radio"
-                    value={option.value}
-                  />
-                }
-              />
-            </Grid>
-          ))}
+    <Grid container spacing={16}>
+      <Grid item xs={12}>
+        <Typography className="questionText" variant="h5">{questionText}</Typography>
       </Grid>
-    </Grow>
+      <Grid item xs={12}>
+        <Grow timeout={500} in={true}>
+          <Grid container justify="center" alignItems="center" direction="row" >
+            {
+              options.map((option, key) => (
+                <Grid className="quizOptionGrid" key={key} item xs={12} sm={6} md={6} lg={3}>
+                  <FormControlLabel
+                    {...console.log(classes.quizOption)}
+                    className={classes.quizOption}
+                    label={option.label}
+                    control={
+                      <Field
+                        name={questionName}
+                        color="primary"
+                        component={Radio}
+                        type="radio"
+                        value={option.value}
+                      />
+                    }
+                  />
+                </Grid>
+              ))}
+          </Grid>
+        </Grow>
+      </Grid>
+    </Grid>
   )
 }
 

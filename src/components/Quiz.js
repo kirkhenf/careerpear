@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import QuizIntro from './QuizIntro';
 import Quiz1 from './Quiz1';
-import Quiz2 from './Quiz2';
 import QuizEnd from './QuizEnd';
-import QuizTemplate from './QuizTemplate';
 // import withAuthorization from './withAuthorization';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -55,7 +53,7 @@ class QuizPage extends Component {
           {/* <Button onClick={this.testPush}>Send Data</Button> */}
           {page === 1 && <QuizIntro onSubmit={this.nextPage} />}
           {page === 2 && <Quiz1 onSubmit={this.nextPage} />}
-          {page === 3 && (
+          {/* {page === 3 && (
             <Quiz2
               previousPage={this.previousPage}
               onSubmit={this.nextPage}
@@ -81,7 +79,7 @@ class QuizPage extends Component {
           ]}
             previousPage={this.previousPage}
             onSubmit={this.nextPage} />}
-          {page === 5 && <QuizEnd />}
+          {page === 5 && <QuizEnd />} */}
         </div>
         <div className="quizProgress">
           <LinearProgress className="progressBar" variant="determinate" value={(page - 1) / 3 * 100} />
