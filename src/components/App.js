@@ -46,7 +46,7 @@ const theme = createMuiTheme({
       lg: 1280,
       xl: 1920
     }
-  }
+  } 
   // overrides: {
   //   MuiButton: { // Name of the component ⚛️ / style sheet
   //     text: { // Name of the rule

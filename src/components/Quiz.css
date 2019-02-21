@@ -28,7 +28,12 @@
     display: block !important;
 }
 
-.questionText {
-    width: calc(100% - 16px);
-    display: inline-block !important;
+.quizOption {
+    min-width: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    border-radius: 4px;
+}
+
+.quizOptionGrid {
+    padding: 8px;
 }
