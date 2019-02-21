@@ -8,16 +8,10 @@ import Wizard from './Wizard'
 import RenderRadios from './RenderRadios'
 import DateHelpers from '../helpers/Date'
 import SignUpForm from './SignUp'
+import { firebaseConnect } from 'react-redux-firebase';
 import './Quiz.css'
 
-const onSubmit = async values => {
-  await sleep(300)
-  window.alert(JSON.stringify(values, 0, 2))
-}
-
 const required = value => (value ? undefined : 'Required')
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class Quiz extends React.Component {
   constructor(props) {
@@ -31,12 +25,37 @@ class Quiz extends React.Component {
     this.setState({ values: valuesFromWizard });
   }
 
+  onSubmit = values => {
+    const { firebase } = this.props;
+    // console.log(values);
+    // await sleep(1000);
+    firebase.createUser({
+      email: values.email,
+      password: values.passwordOne
+    }, {
+        email: values.email,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        role: 'user'
+      })
+      .then((data) => {
+        console.log(data);
+      }).catch((error) => {
+        // this.setState(this.byPropKey('error', error));
+        // console.log(error);
+      });
+  }
+
+  byPropKey = (propertyName, value) => () => ({
+    [propertyName]: value,
+  });
+
   render() {
     return (
       <div className="bodyContent">
         <div className="quizContent">
           <Wizard
-            onSubmit={onSubmit}
+            onSubmit={this.onSubmit}
             addSomething={(values => this.addSomething(values))}
           >
             <Wizard.Page>
@@ -101,4 +120,4 @@ class Quiz extends React.Component {
   }
 }
 
-export default Quiz
+export default firebaseConnect()(Quiz)

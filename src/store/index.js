@@ -19,8 +19,8 @@ const config = {
     return {
       uid: user.uid,
       email: user.email,
-      first_name: profile.first_name,
-      last_name: profile.last_name
+      firstName: profile.firstName,
+      lastName: profile.lastName
     };
   }
 }
