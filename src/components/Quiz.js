@@ -109,9 +109,31 @@ class Quiz extends React.Component {
                   }
                 ]} />
             </Wizard.Page>
-            <Wizard.Page>
+            <Wizard.Page
+              validate={values => {
+                const errors = {};
+                if (!values.firstName) {
+                  errors.firstName = "Required";
+                }
+                if (!values.lastName) {
+                  errors.lastName = "Required";
+                }
+                if (!values.email) {
+                  errors.email = "Required";
+                } else if (!values.email.match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)) {
+                  errors.email = "Please enter a valid e-mail adresssss"
+                }
+                if (!values.passwordOne) {
+                  errors.passwordOne = "Required";
+                }
+                if (values.passwordOne !== values.passwordTwo) {
+                  errors.passwordTwo = "Your passwords must match";
+                }
+                return errors;
+              }}>
               <Typography variant="h5">You did it!</Typography>
-              <SignUpForm firstName={this.state.values.firstName} />
+              <SignUpForm
+                firstName={this.state.values.firstName} />
             </Wizard.Page>
           </Wizard >
         </div>

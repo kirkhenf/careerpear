@@ -11,6 +11,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import store from '../store';
+import { Form } from 'react-final-form'
 import SignOutButton from './SignOut';
 import * as routes from '../constants/routes';
 import Dialog from '@material-ui/core/Dialog';
@@ -22,7 +23,7 @@ import withMobileDialog from '@material-ui/core/withMobileDialog';
 import { SignInForm, SignInLink } from './SignIn';
 import CloseIcon from '@material-ui/icons/Close';
 import { PasswordForgetLink, PasswordForgetForm } from './PasswordForget';
-import { SignUpForm, SignUpLink } from './SignUp';
+import { SignUpForm, SignUpLink, SignUpButton } from './SignUp';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux'
 import { firebaseConnect } from 'react-redux-firebase'
@@ -42,18 +43,50 @@ class Navigation extends React.Component {
     };
   }
 
+  // const isInvalid =
+  //     passwordOne !== passwordTwo ||
+  //     passwordOne === '' ||
+  //     email === '' ||
+  //     firstName === '' ||
+  //     lastName === '';
+
   handleOpen = () => {
     //putting it in the close showed the login page while closing
     this.setState({ param: 'login' });
     this.setState({ open: true });
   };
 
+  handleSubmit = values => {
+    const { firebase } = this.props;
+    // console.log(values);
+    // await sleep(1000);
+    firebase.createUser({
+      email: values.email,
+      password: values.passwordOne
+    }, {
+        email: values.email,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        role: 'user'
+      })
+      .then((data) => {
+        console.log(data);
+      }).catch((error) => {
+        // this.setState(this.byPropKey('error', error));
+        // console.log(error);
+      });
+  }
+
+  byPropKey = (propertyName, value) => () => ({
+    [propertyName]: value,
+  });
+
   renderSwitch = (param) => {
     switch (param) {
       case 'login':
         return (
           <div>
-            <SignInForm firebase={this.props.firebase}/>
+            <SignInForm firebase={this.props.firebase} />
             <PasswordForgetLink parentMethod={this.handleModalClick} />
             <SignUpLink parentMethod={this.handleModalClick} />
           </div>
@@ -68,9 +101,38 @@ class Navigation extends React.Component {
       default:
         return (
           <div>
-            <SignUpForm firebase={this.props.firebase}/>
+            <Form
+              validate={values => {
+                const errors = {};
+                if (!values.firstName) {
+                  errors.firstName = "Required";
+                }
+                if (!values.lastName) {
+                  errors.lastName = "Required";
+                }
+                if (!values.email) {
+                  errors.email = "Required";
+                } else if (!values.email.match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)) {
+                  errors.email = "Please enter a valid e-mail adresssss"
+                }
+                if (!values.passwordOne) {
+                  errors.passwordOne = "Required";
+                }
+                if (values.passwordOne !== values.passwordTwo) {
+                  errors.passwordTwo = "Your passwords must match";
+                }
+                return errors;
+              }}
+              onSubmit={this.handleSubmit}>
+              {({ handleSubmit, submitting, values }) => (
+                <form onSubmit={handleSubmit}>
+                  <SignUpForm firebase={this.props.firebase} />
+                  <SignUpButton disabled={submitting} />
+                </form>
+              )}
+            </Form>
             <SignInLink optionalText={"Already have an account? "} parentMethod={this.handleModalClick} />
-          </div>
+          </div >
         )
     }
   };
@@ -89,7 +151,7 @@ class Navigation extends React.Component {
         return (
           "Sign up"
         )
-    }  
+    }
   }
 
   handleClose = () => {

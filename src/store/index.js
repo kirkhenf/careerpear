@@ -7,7 +7,8 @@ import { reduxFirestore } from 'redux-firestore' // <- needed if using firestore
 
 // react-redux-firebase options
 const config = {
-  userProfile: 'users', // firebase root where user profiles are stored
+  userProfile: 'users',
+  useFirestoreForProfile: true, // firebase root where user profiles are stored
   enableLogging: false, // enable/disable Firebase's database logging
   // useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
   profileParamsToPopulate: [

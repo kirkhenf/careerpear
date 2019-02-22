@@ -234,6 +234,16 @@ class SignUpForm extends Component {
   }
 }
 
+const SignUpButton = () =>
+  <Grid className="signUpButton" container spacing={24}>
+    <Grid item xs={12}>
+      <Button fullWidth color="primary" variant="contained" type="submit">
+        Sign Up
+            </Button>
+    </Grid>
+  </Grid>
+
+
 const SignUpLink = ({ parentMethod }) =>
   <p className="signUpLink" onClick={(e) => parentMethod('signUp')}>
     Don't have an account?
@@ -251,5 +261,6 @@ export default compose(
 
 export {
   SignUpForm,
-  SignUpLink
+  SignUpLink,
+  SignUpButton
 };
