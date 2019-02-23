@@ -1,6 +1,7 @@
 import React from 'react'
 import Grow from '@material-ui/core/Grow'
 import Grid from '@material-ui/core/Grid'
+import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography'
 import { Field } from 'react-final-form'
 import { TextField } from "final-form-material-ui";
@@ -10,6 +11,9 @@ import DateHelpers from '../helpers/Date'
 import SignUpForm from './SignUp'
 import { firebaseConnect } from 'react-redux-firebase';
 import './Quiz.css'
+import * as routes from '../constants/routes';
+import { compose } from 'redux'
+import LinearProgress from '@material-ui/core/LinearProgress'
 
 const required = value => (value ? undefined : 'Required')
 
@@ -17,18 +21,21 @@ class Quiz extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      values: ''
+      values: '',
+      pageProgress: 0
     }
   }
 
-  addSomething(valuesFromWizard) {
+  addSomething(valuesFromWizard, pages, currentPage) {
     this.setState({ values: valuesFromWizard });
   }
 
+  getPageProgress(pageProgress) {
+    this.setState({ pageProgress: pageProgress });
+  }
+
   onSubmit = values => {
-    const { firebase } = this.props;
-    // console.log(values);
-    // await sleep(1000);
+    const { firebase, history } = this.props;
     firebase.createUser({
       email: values.email,
       password: values.passwordOne
@@ -40,9 +47,9 @@ class Quiz extends React.Component {
       })
       .then((data) => {
         console.log(data);
+        history.push(routes.HOME);
       }).catch((error) => {
-        // this.setState(this.byPropKey('error', error));
-        // console.log(error);
+        console.log(error);
       });
   }
 
@@ -56,7 +63,8 @@ class Quiz extends React.Component {
         <div className="quizContent">
           <Wizard
             onSubmit={this.onSubmit}
-            addSomething={(values => this.addSomething(values))}
+            addSomething={(values => this.addSomething(values, ))}
+            getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
           >
             <Wizard.Page>
               <Grid container spacing={16}>
@@ -137,9 +145,12 @@ class Quiz extends React.Component {
             </Wizard.Page>
           </Wizard >
         </div>
+        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress}/>
       </div>
     )
   }
 }
 
-export default firebaseConnect()(Quiz)
+export default compose(
+  withRouter,
+  firebaseConnect())(Quiz)

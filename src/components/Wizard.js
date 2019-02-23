@@ -17,12 +17,14 @@ export default class Wizard extends React.Component {
       values: props.initialValues || {}
     }
   }
+
   next = values => {
     this.setState(state => ({
       page: Math.min(state.page + 1, this.props.children.length - 1),
       values
     }))
     this.props.addSomething(values);
+    this.props.getPageProgress((this.state.page+1) / (this.props.children.length - 1) * 100);
   }
 
   previous = () =>

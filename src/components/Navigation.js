@@ -187,7 +187,7 @@ class Navigation extends React.Component {
             {authUser
               ?
               < div className="navButtons">
-                <Button><Link to={routes.HOME}>Home</Link></Button>
+                <Button component={Link} to={routes.HOME}>Home</Button>
                 <IconButton
                   aria-owns={isModal ? 'menu-appbar' : null}
                   aria-haspopup="true"
