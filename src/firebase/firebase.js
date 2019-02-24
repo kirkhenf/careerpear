@@ -15,8 +15,6 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
 const auth = firebase.auth();
-const databaseRef = firebase.database().ref();
-export const usersRef = databaseRef.child("users");
 
 export {
   db,

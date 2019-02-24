@@ -14,6 +14,9 @@ import { firebaseConnect, firestoreConnect } from 'react-redux-firebase';
 import './Quiz.css'
 import { compose } from 'redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import { addQuizResults } from '../actions';
+import omit from 'lodash/omit';
+import _ from 'lodash'
 
 const required = value => (value ? undefined : 'Required')
 
@@ -22,10 +25,10 @@ class Quiz extends React.Component {
     super(props);
     this.state = {
       values: '',
-      pageProgress: 0
+      pageProgress: 0,
+      isFetching: false,
     }
   }
-
 
   addSomething(valuesFromWizard, pages, currentPage) {
     this.setState({ values: valuesFromWizard });
@@ -36,7 +39,7 @@ class Quiz extends React.Component {
   }
 
   onSubmit = values => {
-    const { firebase, history } = this.props;
+    const { firebase, history, addQuizResults } = this.props;
     firebase.createUser({
       email: values.email,
       password: values.passwordOne
@@ -47,7 +50,8 @@ class Quiz extends React.Component {
         role: 'user'
       })
       .then((data) => {
-
+        var quizValues = _.omit(values, ['email', 'firstName', 'lastName', 'passwordOne', 'passwordTwo']);
+        addQuizResults(quizValues);
       }).catch((error) => {
         console.log(error);
       });
@@ -58,6 +62,7 @@ class Quiz extends React.Component {
   });
 
   render() {
+    const { isFetching } = this.props;
     return (
       <div className="bodyContent">
         <div className="quizContent">
@@ -96,7 +101,6 @@ class Quiz extends React.Component {
             <Wizard.Page>
               <RenderRadios
                 questionText={'Hey ' + this.state.values.firstName + '! Which outfit is more your style for work this ' + DateHelpers.getNearestDay() + ' morning?'}
-                // questionText="test"
                 questionName="dress"
                 options={[
                   {
@@ -145,13 +149,25 @@ class Quiz extends React.Component {
             </Wizard.Page>
           </Wizard >
         </div>
-        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress} />
+        <LinearProgress disabled={isFetching} className="progressBar" variant="determinate" value={this.state.pageProgress} />
       </div>
     )
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    isFetching: state.quiz.isFetching
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addQuizResults: (quizResults) => dispatch(addQuizResults(quizResults)),
+  }
+}
+
 export default compose(
-  firestoreConnect(['todos']),
+  connect(mapStateToProps, mapDispatchToProps),
   withRouter,
   firebaseConnect())(Quiz)

@@ -1,19 +1,35 @@
 import {
     ADD_QUIZ_RESULTS,
-    // READ_QUIZ_RESULTS
+    ERROR,
+    SUCCESFUL_WRITE
 } from '../actions/types'
 
 const initialState = {
+    isFetching: false,
     results: ''
 }
 
-function quizResults(state = initialState, action) {
+function quizReducer(state = initialState, action) {
     switch (action.type) {
-        case ADD_QUIZ_RESULTS:
-            return action.payload;
-        // case READ_QUIZ_RESULTS:
-        //     return action.payload;
+        case ADD_QUIZ_RESULTS: {
+            return Object.assign({}, state, {
+                isFetching: true
+            })
+        }
+        case ERROR:
+            return {
+                ...state,
+                error: action.error
+            }
+        case SUCCESFUL_WRITE:
+            return Object.assign({}, state, {
+                ...state,
+                isFetching: false,
+                results: action.payload
+            })
         default:
             return state;
     }
 }
+
+export default quizReducer;
