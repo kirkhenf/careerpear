@@ -1,6 +1,7 @@
-import { createStore, compose } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from '../reducers';
 import firebase from 'firebase'
+import thunk from 'redux-thunk';
 import { reactReduxFirebase } from 'react-redux-firebase'
 import { reduxFirestore } from 'redux-firestore' // <- needed if using firestore
 
@@ -33,7 +34,8 @@ firebase.firestore() // <- needed if using firestore
 // Add reactReduxFirebase enhancer when making store creator
 const createStoreWithFirebase = compose(
   reactReduxFirebase(firebase, config), // firebase instance as first argument
-  reduxFirestore(firebase) // <- needed if using firestore
+  reduxFirestore(firebase), // <- needed if using firestore
+  applyMiddleware(thunk)
 )(createStore)
 
 const store = createStoreWithFirebase(rootReducer);

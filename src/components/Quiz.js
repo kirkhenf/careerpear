@@ -7,11 +7,11 @@ import { Field } from 'react-final-form'
 import { TextField } from "final-form-material-ui";
 import Wizard from './Wizard'
 import RenderRadios from './RenderRadios'
+import { connect } from 'react-redux'
 import DateHelpers from '../helpers/Date'
 import SignUpForm from './SignUp'
-import { firebaseConnect } from 'react-redux-firebase';
+import { firebaseConnect, firestoreConnect } from 'react-redux-firebase';
 import './Quiz.css'
-import * as routes from '../constants/routes';
 import { compose } from 'redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
 
@@ -25,6 +25,7 @@ class Quiz extends React.Component {
       pageProgress: 0
     }
   }
+
 
   addSomething(valuesFromWizard, pages, currentPage) {
     this.setState({ values: valuesFromWizard });
@@ -46,8 +47,7 @@ class Quiz extends React.Component {
         role: 'user'
       })
       .then((data) => {
-        console.log(data);
-        history.push(routes.HOME);
+
       }).catch((error) => {
         console.log(error);
       });
@@ -145,12 +145,13 @@ class Quiz extends React.Component {
             </Wizard.Page>
           </Wizard >
         </div>
-        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress}/>
+        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress} />
       </div>
     )
   }
 }
 
 export default compose(
+  firestoreConnect(['todos']),
   withRouter,
   firebaseConnect())(Quiz)

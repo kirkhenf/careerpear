@@ -3,13 +3,21 @@ import './Landing.css';
 import Button from '@material-ui/core/Button'
 import { Link, withRouter } from 'react-router-dom';
 import * as routes from '../constants/routes';
+import { addQuizResults } from '../actions';
+import { compose } from 'redux'
+import { connect } from "react-redux";
+import { withFirestore } from 'react-redux-firebase';
 
-const LandingPage = ({ history }) =>
-  <LandingContent history={history} />
+const LandingPage = ({ history, addQuizResults, firestore }) =>
+  <LandingContent history={history} firestore={firestore} addQuizResults={addQuizResults}/>
 
 class LandingContent extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
+    const { addQuizResults } = this.props;
+    console.log(addQuizResults);
+    addQuizResults();
   }
 
   goToQuiz = (e) => {
@@ -30,4 +38,19 @@ class LandingContent extends Component {
   }
 }
 
-export default withRouter(LandingPage);
+function mapStateToProps(state) {
+  return {
+      bungo: state.bungoTokenReducer
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+      addQuizResults: () => dispatch(addQuizResults({test: 'test'})),
+  }
+}
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withFirestore,
+  withRouter)(LandingPage);

@@ -1,0 +1,1 @@
+export const ADD_QUIZ_RESULTS = 'ADD_QUIZ_RESULTS'
