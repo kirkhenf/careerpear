@@ -10,13 +10,11 @@ import RenderRadios from './RenderRadios'
 import { connect } from 'react-redux'
 import DateHelpers from '../helpers/Date'
 import SignUpForm from './SignUp'
-import { firebaseConnect, firestoreConnect } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase';
 import './Quiz.css'
 import { compose } from 'redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { addQuizResults } from '../actions';
-import omit from 'lodash/omit';
-import _ from 'lodash'
 
 const required = value => (value ? undefined : 'Required')
 
@@ -30,7 +28,7 @@ class Quiz extends React.Component {
     }
   }
 
-  addSomething(valuesFromWizard, pages, currentPage) {
+  addSomething(valuesFromWizard) {
     this.setState({ values: valuesFromWizard });
   }
 
@@ -39,22 +37,8 @@ class Quiz extends React.Component {
   }
 
   onSubmit = values => {
-    const { firebase, history, addQuizResults } = this.props;
-    firebase.createUser({
-      email: values.email,
-      password: values.passwordOne
-    }, {
-        email: values.email,
-        firstName: values.firstName,
-        lastName: values.lastName,
-        role: 'user'
-      })
-      .then((data) => {
-        var quizValues = _.omit(values, ['email', 'firstName', 'lastName', 'passwordOne', 'passwordTwo']);
-        addQuizResults(quizValues);
-      }).catch((error) => {
-        console.log(error);
-      });
+    const { addQuizResults } = this.props;
+    addQuizResults(values);
   }
 
   byPropKey = (propertyName, value) => () => ({
@@ -149,7 +133,7 @@ class Quiz extends React.Component {
             </Wizard.Page>
           </Wizard >
         </div>
-        <LinearProgress disabled={isFetching} className="progressBar" variant="determinate" value={this.state.pageProgress} />
+        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress} />
       </div>
     )
   }
@@ -163,7 +147,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addQuizResults: (quizResults) => dispatch(addQuizResults(quizResults)),
+    addQuizResults: (quizResults) => dispatch(addQuizResults(quizResults))
   }
 }
 
