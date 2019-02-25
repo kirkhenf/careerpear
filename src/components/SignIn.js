@@ -36,28 +36,6 @@ class SignInForm extends Component {
     this.props.handleModalClick();
   }
 
-  // onSubmit = (event) => {
-  //   const {
-  //     email,
-  //     password,
-  //   } = this.state;
-
-  //   const {
-  //     history,
-  //   } = this.props;
-
-  //   auth.doSignInWithEmailAndPassword(email, password)
-  //     .then(() => {
-  //       this.setState(() => ({ ...INITIAL_STATE }));
-  //       history.push(routes.HOME);
-  //     })
-  //     .catch(error => {
-  //       this.setState(byPropKey('error', error));
-  //     });
-
-  //   event.preventDefault();
-  // }
-
   onSubmit = (event) => {
     const {
       firebase,
