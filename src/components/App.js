@@ -1,8 +1,12 @@
 import React from 'react';
-import './App.css';
 import { firebase } from '../firebase';
 import 'typeface-roboto'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import * as routes from '../constants/routes';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+// File imports
+import './App.css';
 import Navigation from './Navigation';
 import LandingPage from './Landing';
 import SignUpPage from './Authentication/SignUp';
@@ -13,8 +17,6 @@ import QuizPage from './Quiz';
 import AccountPage from './Authentication/Account';
 import SkillsPage from './Skills';
 import withAuthentication from './Authentication/withAuthentication.js';
-import * as routes from '../constants/routes';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {

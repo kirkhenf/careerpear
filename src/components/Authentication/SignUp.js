@@ -12,6 +12,8 @@ import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined';
 import Grid from '@material-ui/core/Grid';
 import { Field } from 'react-final-form'
 import { TextField } from "final-form-material-ui";
+
+// File imports
 import "./SignUp.css"
 
 // <Field
