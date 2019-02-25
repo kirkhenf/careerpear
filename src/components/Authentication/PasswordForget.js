@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import "./PasswordForget.css"
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';

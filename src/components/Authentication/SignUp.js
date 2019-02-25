@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import * as routes from '../constants/routes';
+import * as routes from '../../constants/routes';
 import { firebaseConnect } from 'react-redux-firebase';
 import Button from '@material-ui/core/Button'
 import InputAdornment from '@material-ui/core/InputAdornment';

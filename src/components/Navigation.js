@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import store from '../store';
 import { Form } from 'react-final-form'
-import SignOutButton from './SignOut';
+import SignOutButton from './Authentication/SignOut';
 import * as routes from '../constants/routes';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -20,10 +20,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MediaQuery from 'react-responsive';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import { SignInForm, SignInLink } from './SignIn';
+import { SignInForm, SignInLink } from './Authentication/SignIn';
 import CloseIcon from '@material-ui/icons/Close';
-import { PasswordForgetLink, PasswordForgetForm } from './PasswordForget';
-import { SignUpForm, SignUpLink, SignUpButton } from './SignUp';
+import { PasswordForgetLink, PasswordForgetForm } from './Authentication/PasswordForget';
+import { SignUpForm, SignUpLink, SignUpButton } from './Authentication/SignUp';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux'
 import { firebaseConnect } from 'react-redux-firebase'

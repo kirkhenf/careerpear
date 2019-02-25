@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 
-import withAuthorization from './withAuthorization';
+import withAuthorization from './Authentication/withAuthorization';
 import { db } from '../firebase';
 
 class HomePage extends Component {

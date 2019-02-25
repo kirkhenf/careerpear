@@ -9,7 +9,7 @@ import Wizard from './Wizard'
 import RenderRadios from './RenderRadios'
 import { connect } from 'react-redux'
 import DateHelpers from '../helpers/Date'
-import SignUpForm from './SignUp'
+import SignUpForm from './Authentication/SignUp'
 import { firebaseConnect } from 'react-redux-firebase';
 import './Quiz.css'
 import { compose } from 'redux'
