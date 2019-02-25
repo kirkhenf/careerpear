@@ -1,15 +1,20 @@
 import React from 'react'
 import Grow from '@material-ui/core/Grow'
 import Grid from '@material-ui/core/Grid'
+import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography'
 import { Field } from 'react-final-form'
 import { TextField } from "final-form-material-ui";
 import Wizard from './Wizard'
 import RenderRadios from './RenderRadios'
+import { connect } from 'react-redux'
 import DateHelpers from '../helpers/Date'
 import SignUpForm from './SignUp'
 import { firebaseConnect } from 'react-redux-firebase';
 import './Quiz.css'
+import { compose } from 'redux'
+import LinearProgress from '@material-ui/core/LinearProgress'
+import { addQuizResults } from '../actions';
 
 const required = value => (value ? undefined : 'Required')
 
@@ -17,7 +22,9 @@ class Quiz extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      values: ''
+      values: '',
+      pageProgress: 0,
+      isFetching: false,
     }
   }
 
@@ -25,25 +32,13 @@ class Quiz extends React.Component {
     this.setState({ values: valuesFromWizard });
   }
 
+  getPageProgress(pageProgress) {
+    this.setState({ pageProgress: pageProgress });
+  }
+
   onSubmit = values => {
-    const { firebase } = this.props;
-    // console.log(values);
-    // await sleep(1000);
-    firebase.createUser({
-      email: values.email,
-      password: values.passwordOne
-    }, {
-        email: values.email,
-        firstName: values.firstName,
-        lastName: values.lastName,
-        role: 'user'
-      })
-      .then((data) => {
-        console.log(data);
-      }).catch((error) => {
-        // this.setState(this.byPropKey('error', error));
-        // console.log(error);
-      });
+    const { addQuizResults } = this.props;
+    addQuizResults(values);
   }
 
   byPropKey = (propertyName, value) => () => ({
@@ -51,12 +46,14 @@ class Quiz extends React.Component {
   });
 
   render() {
+    const { isFetching } = this.props;
     return (
       <div className="bodyContent">
         <div className="quizContent">
           <Wizard
             onSubmit={this.onSubmit}
-            addSomething={(values => this.addSomething(values))}
+            addSomething={(values => this.addSomething(values, ))}
+            getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
           >
             <Wizard.Page>
               <Grid container spacing={16}>
@@ -88,7 +85,6 @@ class Quiz extends React.Component {
             <Wizard.Page>
               <RenderRadios
                 questionText={'Hey ' + this.state.values.firstName + '! Which outfit is more your style for work this ' + DateHelpers.getNearestDay() + ' morning?'}
-                // questionText="test"
                 questionName="dress"
                 options={[
                   {
@@ -109,15 +105,53 @@ class Quiz extends React.Component {
                   }
                 ]} />
             </Wizard.Page>
-            <Wizard.Page>
+            <Wizard.Page
+              validate={values => {
+                const errors = {};
+                if (!values.firstName) {
+                  errors.firstName = "Required";
+                }
+                if (!values.lastName) {
+                  errors.lastName = "Required";
+                }
+                if (!values.email) {
+                  errors.email = "Required";
+                } else if (!values.email.match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)) {
+                  errors.email = "Please enter a valid e-mail adresssss"
+                }
+                if (!values.passwordOne) {
+                  errors.passwordOne = "Required";
+                }
+                if (values.passwordOne !== values.passwordTwo) {
+                  errors.passwordTwo = "Your passwords must match";
+                }
+                return errors;
+              }}>
               <Typography variant="h5">You did it!</Typography>
-              <SignUpForm firstName={this.state.values.firstName} />
+              <SignUpForm
+                firstName={this.state.values.firstName} />
             </Wizard.Page>
           </Wizard >
         </div>
+        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress} />
       </div>
     )
   }
 }
 
-export default firebaseConnect()(Quiz)
+function mapStateToProps(state) {
+  return {
+    isFetching: state.quiz.isFetching
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addQuizResults: (quizResults) => dispatch(addQuizResults(quizResults))
+  }
+}
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
+  firebaseConnect())(Quiz)

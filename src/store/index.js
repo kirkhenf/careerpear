@@ -1,13 +1,15 @@
-import { createStore, compose } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from '../reducers';
 import firebase from 'firebase'
+import thunk from 'redux-thunk';
 import { reactReduxFirebase } from 'react-redux-firebase'
 import { reduxFirestore } from 'redux-firestore' // <- needed if using firestore
 
 
 // react-redux-firebase options
 const config = {
-  userProfile: 'users', // firebase root where user profiles are stored
+  userProfile: 'users',
+  useFirestoreForProfile: true, // firebase root where user profiles are stored
   enableLogging: false, // enable/disable Firebase's database logging
   // useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
   profileParamsToPopulate: [
@@ -32,7 +34,8 @@ firebase.firestore() // <- needed if using firestore
 // Add reactReduxFirebase enhancer when making store creator
 const createStoreWithFirebase = compose(
   reactReduxFirebase(firebase, config), // firebase instance as first argument
-  reduxFirestore(firebase) // <- needed if using firestore
+  reduxFirestore(firebase), // <- needed if using firestore
+  applyMiddleware(thunk)
 )(createStore)
 
 const store = createStoreWithFirebase(rootReducer);

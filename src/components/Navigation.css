@@ -25,3 +25,7 @@ a {
 .nav {
     z-index: 1;
 }
+
+.signUpButton {
+    margin-top: 4px !important;
+}
