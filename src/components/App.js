@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as routes from '../constants/routes';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-// File imports
+// Page imports
 import './App.css';
 import Navigation from './Navigation';
 import LandingPage from './Landing';
@@ -13,7 +13,7 @@ import SignUpPage from './Authentication/SignUp';
 import SignInPage from './Authentication/SignIn';
 import PasswordForgetPage from './Authentication/PasswordForget';
 import HomePage from './Home';
-import QuizPage from './Quiz';
+import QuizPage from './Quiz/Quiz';
 import AccountPage from './Authentication/Account';
 import SkillsPage from './Skills';
 import withAuthentication from './Authentication/withAuthentication.js';

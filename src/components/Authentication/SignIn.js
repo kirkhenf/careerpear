@@ -10,7 +10,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import MailOutline from '@material-ui/icons/MailOutline';
 import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined';
 
-// File imports
+// Page imports
 import "./SignIn.css"
 
 const SignInPage = ({ history, firebase }) =>

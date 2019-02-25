@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MailOutline from '@material-ui/icons/MailOutline';
 
-// File imports
+// Page imports
 import "./PasswordForget.css"
 
 const PasswordForgetPage = () =>
