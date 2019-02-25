@@ -58,7 +58,7 @@ export default class Wizard extends React.Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, isFetching } = this.props
     const { page, values } = this.state
     const activePage = React.Children.toArray(children)[page]
     const isLastPage = page === React.Children.count(children) - 1
@@ -80,7 +80,7 @@ export default class Wizard extends React.Component {
                 {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>}
                 {isLastPage && (
                   <Grid item>
-                    <Button color="primary" variant="contained" type="submit"  disabled={submitting}>Submit</Button>
+                    <Button color="primary" variant="contained" type="submit"  disabled={isFetching}>Submit</Button>
                   </Grid>
                 )}
               </Grid>
