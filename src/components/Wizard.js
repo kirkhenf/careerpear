@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Form } from 'react-final-form'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import CircularProgress from '@material-ui/core/CircularProgress'
 
 export default class Wizard extends React.Component {
   static propTypes = {
@@ -68,7 +67,7 @@ export default class Wizard extends React.Component {
         validate={this.validate}
         onSubmit={this.handleSubmit}>
         {({ handleSubmit, submitting, values }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={this.handleSubmit}>
             {activePage}
             <Grid item xs={12}>
               <Grid container spacing={16} justify="center">
@@ -80,7 +79,7 @@ export default class Wizard extends React.Component {
                 {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>}
                 {isLastPage && (
                   <Grid item>
-                    <Button color="primary" variant="contained" type="submit"  disabled={isFetching}>Submit</Button>
+                    <Button color="primary" variant="contained" type="submit" disabled={isFetching}>Submit</Button>
                   </Grid>
                 )}
               </Grid>

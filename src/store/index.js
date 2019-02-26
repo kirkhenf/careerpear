@@ -13,7 +13,7 @@ const config = {
   enableLogging: false, // enable/disable Firebase's database logging
   // useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
   profileParamsToPopulate: [
-    { child: 'roles', root: 'roles' }, // populates user's role with matching role object from roles
+    { child: 'role', root: 'roles' }, // populates user's role with matching role object from roles
   ],
   firebaseStateName: 'firebase', // should match the reducer name ('firebase' is default)
   profileFactory: (userData, profile) => { // how profiles are stored in database
@@ -22,7 +22,7 @@ const config = {
       uid: user.uid,
       email: user.email,
       firstName: profile.firstName,
-      lastName: profile.lastName
+      lastName: profile.lastName,
     };
   }
 }

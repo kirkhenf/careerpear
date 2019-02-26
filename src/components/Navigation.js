@@ -118,9 +118,6 @@ class Navigation extends React.Component {
                 if (!values.passwordOne) {
                   errors.passwordOne = "Required";
                 }
-                if (values.passwordOne !== values.passwordTwo) {
-                  errors.passwordTwo = "Your passwords must match";
-                }
                 return errors;
               }}
               onSubmit={this.handleSubmit}>
