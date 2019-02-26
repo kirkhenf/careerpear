@@ -70,7 +70,7 @@ class Navigation extends React.Component {
         role: 'user'
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
       }).catch((error) => {
         // this.setState(this.byPropKey('error', error));
         // console.log(error);

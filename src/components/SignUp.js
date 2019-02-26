@@ -207,7 +207,7 @@ class SignUpForm extends Component {
 const SignUpButton = () =>
   <Grid className="signUpButton" container spacing={24}>
     <Grid item xs={12}>
-      <Button fullWidth onClick={(e) => onSubmit(e)} color="primary" variant="contained" type="submit">
+      <Button fullWidth color="primary" variant="contained" type="submit">
         Sign Up
             </Button>
     </Grid>

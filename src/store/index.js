@@ -23,6 +23,7 @@ const config = {
       email: user.email,
       firstName: profile.firstName,
       lastName: profile.lastName,
+      role: 'user',
     };
   }
 }
