@@ -83,7 +83,14 @@ class Quiz extends React.Component {
                 </Grid>
               </Grid>
             </Wizard.Page>
-            <Wizard.Page>
+            <Wizard.Page
+              validate={values => {
+                const errors = {};
+                if (!values.dress) {
+                  errors.firstName = "Required";
+                }
+                return errors;
+              }}>
               <RenderRadios
                 questionText={'Hey ' + this.state.values.firstName + '! Which outfit is more your style for work this ' + DateHelpers.getNearestDay() + ' morning?'}
                 questionName="dress"
@@ -122,9 +129,6 @@ class Quiz extends React.Component {
                 }
                 if (!values.passwordOne) {
                   errors.passwordOne = "Required";
-                }
-                if (values.passwordOne !== values.passwordTwo) {
-                  errors.passwordTwo = "Your passwords must match";
                 }
                 return errors;
               }}>

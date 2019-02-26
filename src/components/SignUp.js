@@ -35,7 +35,6 @@ const INITIAL_STATE = {
   lastName: '',
   email: '',
   passwordOne: '',
-  passwordTwo: '',
   error: null,
 };
 
@@ -105,12 +104,10 @@ class SignUpForm extends Component {
       lastName,
       email,
       passwordOne,
-      passwordTwo,
       error,
     } = this.state;
 
     const isInvalid =
-      passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
       firstName === '' ||
@@ -201,34 +198,7 @@ class SignUpForm extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12}>
-            <Field
-              variant="outlined"
-              className="input"
-              name="passwordTwo"
-              label="Confirm password"
-              component={TextField}
-              validate={required}
-              type="password"
-              id="passwordTwo"
-              placeholder=""
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <LockOpenOutlined color="primary" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-          {/* <Grid item xs={12}>
-            <Button fullWidth color="primary" variant="contained" disabled={isInvalid} type="submit">
-              Sign Up
-            </Button>
-          </Grid> */}
-          {/* {error && <p>{error.message}</p>} */}
         </Grid>
-        {/* </form> */}
       </div>
     );
   }

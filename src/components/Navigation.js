@@ -216,7 +216,7 @@ class Navigation extends React.Component {
               </div>
               : <div className="navButtons">
                 {/* <Button color="primary" variant="contained">Sign In</Button> */}
-                <Button color="primary" onClick={this.handleOpen}>Log In</Button>
+                <Button onClick={this.handleOpen}>Log In</Button>
                 <ResponsiveDialog
                   fullWidth={true}
                   maxWidth={'sm'}
