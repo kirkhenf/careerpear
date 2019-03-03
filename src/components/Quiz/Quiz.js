@@ -38,9 +38,9 @@ class Quiz extends React.Component {
     this.setState({ pageProgress: pageProgress });
   }
 
-  onSubmit = values => {
-    const { addQuizResults } = this.props;
-    addQuizResults(values);
+  onSubmit = (values) => {
+    const { addQuizResults, history } = this.props;
+    addQuizResults(values, history);
   }
 
   byPropKey = (propertyName, value) => () => ({
@@ -56,6 +56,7 @@ class Quiz extends React.Component {
             onSubmit={this.onSubmit}
             addSomething={(values => this.addSomething(values, ))}
             getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
+            isFetching={isFetching}
           >
             <Wizard.Page>
               <Grid container spacing={16}>
@@ -143,13 +144,13 @@ class Quiz extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    isFetching: state.quiz.isFetching
+    isFetching: state.quiz.isFetching,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    addQuizResults: (quizResults) => dispatch(addQuizResults(quizResults))
+    addQuizResults: (quizResults, history) => dispatch(addQuizResults(quizResults, history))
   }
 }
 

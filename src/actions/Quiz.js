@@ -6,8 +6,9 @@ import { getFirestore } from 'redux-firestore';
 import { getFirebase } from 'react-redux-firebase';
 import { SUCCESFUL_WRITE, ERROR, ADD_QUIZ_RESULTS } from './types'
 import _ from 'lodash'
+import * as routes from '../constants/routes';
 
-export function addQuizResults(results) {
+export function addQuizResults(results, history) {
     return function (dispatch) {
         dispatch({ type: ADD_QUIZ_RESULTS });
         var fStorm = getFirestore();
@@ -30,6 +31,7 @@ export function addQuizResults(results) {
                         fStorm.collection('quizResults').add(quizValues).then((data) => {
                             //dispatch successful write, tell isFetching false
                             dispatch({ type: SUCCESFUL_WRITE, payload: data });
+                            history.push(routes.HOME);
                         }).catch((error) => {
                             //dispatch error
                             dispatch({ type: ERROR, error: error });
@@ -40,6 +42,8 @@ export function addQuizResults(results) {
 
                 })
 
+            }).catch((error) => {
+                dispatch({ type: ERROR, error: error });
             });
     }
 }

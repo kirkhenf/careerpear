@@ -19,6 +19,7 @@ function quizReducer(state = initialState, action) {
         case ERROR:
             return {
                 ...state,
+                isFetching: false,
                 error: action.error
             }
         case SUCCESFUL_WRITE:
