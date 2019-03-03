@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Typography } from '@material-ui/core';
 
-//File imports
-import withAuthorization from './withAuthorization';
+// File imports
+import withAuthorization from './Authentication/withAuthorization';
+import { db } from '../firebase';
 
 class HomePage extends Component {
   constructor(props) {

@@ -5,16 +5,18 @@ import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography'
 import { Field } from 'react-final-form'
 import { TextField } from "final-form-material-ui";
-import Wizard from './Wizard'
-import RenderRadios from './RenderRadios'
 import { connect } from 'react-redux'
-import DateHelpers from '../helpers/Date'
-import SignUpForm from './SignUp'
 import { firebaseConnect } from 'react-redux-firebase';
-import './Quiz.css'
 import { compose } from 'redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import { addQuizResults } from '../actions';
+
+// Page imports
+import Wizard from './Wizard'
+import SignUpForm from '../Authentication/SignUp'
+import './Quiz.css'
+import DateHelpers from '../../helpers/Date'
+import RenderRadios from './RenderRadios'
+import { addQuizResults } from '../../actions';
 
 const required = value => (value ? undefined : 'Required')
 
