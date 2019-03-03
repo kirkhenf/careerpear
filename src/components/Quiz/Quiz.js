@@ -17,6 +17,7 @@ import './Quiz.css'
 import DateHelpers from '../../helpers/Date'
 import RenderRadios from './RenderRadios'
 import { addQuizResults } from '../../actions';
+import QuizIntro from './QuestionTypes/QuizIntro';
 
 const required = value => (value ? undefined : 'Required')
 
@@ -59,11 +60,7 @@ class Quiz extends React.Component {
             isFetching={isFetching}
           >
             <Wizard.Page>
-              <Grid container spacing={16}>
-                <Grid item xs={12}>
-                  <Typography className="questionText" variant="h5">Let's get you <i>pear</i>-ed!</Typography>
-                </Grid>
-              </Grid>
+              <QuizIntro></QuizIntro>
             </Wizard.Page>
             <Wizard.Page>
               <Grid container spacing={16}>
