@@ -50,6 +50,6 @@ export function addQuizResults(results, history) {
     }
 }
 
-// export const fetchToDos = () => async dispatch => {
+export function getQuizResults() {
 
-// };
+}

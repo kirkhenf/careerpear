@@ -67,7 +67,7 @@ export default class Wizard extends React.Component {
         validate={this.validate}
         onSubmit={this.handleSubmit}>
         {({ handleSubmit, submitting, values }) => (
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={handleSubmit}>
             {activePage}
             <Grid item xs={12}>
               <Grid container spacing={16} justify="center">

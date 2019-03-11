@@ -9,6 +9,7 @@ import SignUpPage from './SignUp';
 import SignInPage from './SignIn';
 import PasswordForgetPage from './PasswordForget';
 import HomePage from './Home';
+import ContactPage from './Contact';
 import QuizPage from './Quiz';
 import AccountPage from './Account';
 import SkillsPage from './Skills';
@@ -70,6 +71,7 @@ const App = () =>
           <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
           <Route exact path={routes.QUIZ} component={() => <QuizPage />} />
           <Route exact path={routes.SKILLS} component={() => <SkillsPage />} />
+          <Route exact path={routes.CONTACT} component={() => <ContactPage />} />
         </div>
       </div>
     </Router>
