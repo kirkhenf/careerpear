@@ -1,10 +1,6 @@
 import React from 'react'
-import Grow from '@material-ui/core/Grow'
-import Grid from '@material-ui/core/Grid'
 import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography'
-import { Field } from 'react-final-form'
-import { TextField } from "final-form-material-ui";
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux'
@@ -15,10 +11,10 @@ import Wizard from './Wizard'
 import SignUpForm from '../Authentication/SignUp'
 import './Quiz.css'
 import DateHelpers from '../../helpers/Date'
-import RenderRadios from './RenderRadios'
 import { addQuizResults } from '../../actions';
-
-const required = value => (value ? undefined : 'Required')
+import QuizIntro from './QuestionTypes/QuizIntro';
+import ShortForm from './QuestionTypes/ShortForm';
+import MultipleChoice from './QuestionTypes/MultipleChoice';
 
 class Quiz extends React.Component {
   constructor(props) {
@@ -49,6 +45,37 @@ class Quiz extends React.Component {
 
   render() {
     const { isFetching } = this.props;
+
+    const FirstNameShortForm = {
+      Question: "We'll start slow. What's your name?",
+      Placeholder: "First Name",
+      FieldName: "firstName"
+    };
+
+    const DressCodeMultipleChoice = {
+      Question: "Hey " + this.state.values.firstName + '! Which outfit is more your style for work this ' + DateHelpers.getNearestDay() + ' morning?',
+      QuestionName: "dress",
+      Options: 
+        [
+          {
+            value: "0",
+            label: "Casual"
+          },
+          {
+            value: "1",
+            label: "Business Casual"
+          },
+          {
+            value: "2",
+            label: "Formal"
+          },
+          {
+            value: "3",
+            label: "Uniform"
+          }
+        ]
+    };
+
     return (
       <div className="bodyContent">
         <div className="quizContent">
@@ -59,54 +86,13 @@ class Quiz extends React.Component {
             isFetching={isFetching}
           >
             <Wizard.Page>
-              <Grid container spacing={16}>
-                <Grid item xs={12}>
-                  <Typography className="questionText" variant="h5">Let's get you <i>pear</i>-ed!</Typography>
-                </Grid>
-              </Grid>
+              <QuizIntro></QuizIntro>
             </Wizard.Page>
             <Wizard.Page>
-              <Grid container spacing={16}>
-                <Grid item xs={12}>
-                  <Typography className="questionText" variant="h5">We'll start slow. What's your name?</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grow timeout={500} in={true}>
-                    <Field
-                      name="firstName"
-                      type="text"
-                      component={TextField}
-                      margin="normal"
-                      fullWidth
-                      variant="outlined"
-                      validate={required}
-                    />
-                  </Grow>
-                </Grid>
-              </Grid>
+              <ShortForm {...FirstNameShortForm}></ShortForm>
             </Wizard.Page>
             <Wizard.Page>
-              <RenderRadios
-                questionText={'Hey ' + this.state.values.firstName + '! Which outfit is more your style for work this ' + DateHelpers.getNearestDay() + ' morning?'}
-                questionName="dress"
-                options={[
-                  {
-                    value: "0",
-                    label: "Casual"
-                  },
-                  {
-                    value: "1",
-                    label: "Business Casual"
-                  },
-                  {
-                    value: "2",
-                    label: "Formal"
-                  },
-                  {
-                    value: "3",
-                    label: "Uniform"
-                  }
-                ]} />
+              <MultipleChoice {...DressCodeMultipleChoice}></MultipleChoice>
             </Wizard.Page>
             <Wizard.Page
               validate={values => {
