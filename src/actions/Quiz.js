@@ -11,7 +11,7 @@ import * as routes from '../constants/routes';
 export function addQuizResults(results, history) {
     return function (dispatch) {
         dispatch({ type: ADD_QUIZ_RESULTS });
-        var fStorm = getFirestore();
+        var fStore = getFirestore();
         var fBase = getFirebase();
         fBase.createUser({
             email: results.email,
@@ -26,9 +26,11 @@ export function addQuizResults(results, history) {
                     if (user) {
                         //add user ID to the call
                         results.uid = user.uid;
+                        results.created = fStore.Timestamp.fromDate(new Date());
+                        results.updated = results.created; 
                         //push results to the quizResults collection
-                        var quizValues = _.omit(results, ['email', 'firstName', 'lastName', 'passwordOne', 'passwordTwo']);
-                        fStorm.collection('quizResults').add(quizValues).then((data) => {
+                        var quizValues = _.omit(results, ['email', 'firstName', 'lastName', 'passwordOne']);
+                        fStore.collection('quizResults').add(quizValues).then((data) => {
                             //dispatch successful write, tell isFetching false
                             dispatch({ type: SUCCESFUL_WRITE, payload: data });
                             history.push(routes.HOME);
@@ -48,6 +50,6 @@ export function addQuizResults(results, history) {
     }
 }
 
-// export const fetchToDos = () => async dispatch => {
+export function getQuizResults() {
 
-// };
+}

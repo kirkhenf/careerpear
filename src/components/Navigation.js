@@ -70,7 +70,7 @@ class Navigation extends React.Component {
         role: 'user'
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
       }).catch((error) => {
         // this.setState(this.byPropKey('error', error));
         // console.log(error);
@@ -117,9 +117,6 @@ class Navigation extends React.Component {
                 }
                 if (!values.passwordOne) {
                   errors.passwordOne = "Required";
-                }
-                if (values.passwordOne !== values.passwordTwo) {
-                  errors.passwordTwo = "Your passwords must match";
                 }
                 return errors;
               }}
@@ -216,7 +213,7 @@ class Navigation extends React.Component {
               </div>
               : <div className="navButtons">
                 {/* <Button color="primary" variant="contained">Sign In</Button> */}
-                <Button color="primary" onClick={this.handleOpen}>Log In</Button>
+                <Button onClick={this.handleOpen}>Log In</Button>
                 <ResponsiveDialog
                   fullWidth={true}
                   maxWidth={'sm'}

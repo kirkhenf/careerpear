@@ -1,0 +1,23 @@
+.contactContainer {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.cardContainer {
+    max-width: 1000px;
+}
+
+.contactCard {
+    width: 100%;  
+    text-align: center; 
+}
+
+.contactCardPhoto {
+    margin-top: 16px !important;
+    width: 120px !important;
+    height: 120px !important;
+    margin: auto;
+}

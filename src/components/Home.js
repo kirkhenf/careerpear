@@ -11,13 +11,21 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      users: null,
-    };
+    this.state = {...props};
   }
 
-  componentDidMount() {
-    
+  async componentDidMount() {
+    console.log(this.state);
+    try {
+      const response = await fetch(`https://us-central1-careerpear-10c55.cloudfunctions.net/results?id=`+ this.state.authUser.uid);
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      const json = await response.json();
+      this.setState({ results: json });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
@@ -25,14 +33,14 @@ class HomePage extends Component {
     return (
       <div>
         <Typography variant="h1">Home</Typography>
-        <p>The Home Page is accessible by every signed in user.</p>
+        <p>{JSON.stringify(this.state.results)}</p>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  
+  authUser: state.sessionState.authUser
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -30,6 +30,8 @@ class Quiz extends React.Component {
     }
   }
 
+  quizData = require('../../config/questions.json');
+
   addSomething(valuesFromWizard) {
     this.setState({ values: valuesFromWizard });
   }
@@ -47,6 +49,22 @@ class Quiz extends React.Component {
     [propertyName]: value,
   });
 
+  createQuiz(brain) {
+    var wizardArray = [];
+    if (brain == 0) {
+      for (let value of this.quizData.logical.questions) {
+        wizardArray.push(<Wizard.Page key={value.key}>
+          <RenderRadios
+            questionText={"t"}
+            questionName={"t"}
+            options={value.options} />
+        </Wizard.Page>);
+      }
+    }
+    
+    return wizardArray;
+  }
+
   render() {
     const { isFetching } = this.props;
     return (
@@ -59,55 +77,21 @@ class Quiz extends React.Component {
             isFetching={isFetching}
           >
             <Wizard.Page>
-              <Grid container spacing={16}>
-                <Grid item xs={12}>
-                  <Typography className="questionText" variant="h5">Let's get you <i>pear</i>-ed!</Typography>
-                </Grid>
-              </Grid>
-            </Wizard.Page>
-            <Wizard.Page>
-              <Grid container spacing={16}>
-                <Grid item xs={12}>
-                  <Typography className="questionText" variant="h5">We'll start slow. What's your name?</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grow timeout={500} in={true}>
-                    <Field
-                      name="firstName"
-                      type="text"
-                      component={TextField}
-                      margin="normal"
-                      fullWidth
-                      variant="outlined"
-                      validate={required}
-                    />
-                  </Grow>
-                </Grid>
-              </Grid>
-            </Wizard.Page>
-            <Wizard.Page>
               <RenderRadios
-                questionText={'Hey ' + this.state.values.firstName + '! Which outfit is more your style for work this ' + DateHelpers.getNearestDay() + ' morning?'}
-                questionName="dress"
+                questionText={"Let's get you pear-ed! To start, which style best fits your personality?"}
+                questionName="brain"
                 options={[
                   {
                     value: "0",
-                    label: "Casual"
+                    label: "Logical"
                   },
                   {
                     value: "1",
-                    label: "Business Casual"
-                  },
-                  {
-                    value: "2",
-                    label: "Formal"
-                  },
-                  {
-                    value: "3",
-                    label: "Uniform"
+                    label: "Creative"
                   }
                 ]} />
             </Wizard.Page>
+            {this.createQuiz(this.state.values.brain)}
             <Wizard.Page
               validate={values => {
                 const errors = {};
@@ -124,9 +108,6 @@ class Quiz extends React.Component {
                 }
                 if (!values.passwordOne) {
                   errors.passwordOne = "Required";
-                }
-                if (values.passwordOne !== values.passwordTwo) {
-                  errors.passwordTwo = "Your passwords must match";
                 }
                 return errors;
               }}>

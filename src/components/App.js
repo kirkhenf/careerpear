@@ -15,6 +15,7 @@ import PasswordForgetPage from './Authentication/PasswordForget';
 import HomePage from './Home';
 import QuizPage from './Quiz/Quiz';
 import AccountPage from './Authentication/Account';
+import ContactPage from './Contact';
 import SkillsPage from './Skills';
 import withAuthentication from './Authentication/withAuthentication.js';
 
@@ -72,6 +73,7 @@ const App = () =>
           <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
           <Route exact path={routes.QUIZ} component={() => <QuizPage />} />
           <Route exact path={routes.SKILLS} component={() => <SkillsPage />} />
+          <Route exact path={routes.CONTACT} component={() => <ContactPage />} />
         </div>
       </div>
     </Router>
