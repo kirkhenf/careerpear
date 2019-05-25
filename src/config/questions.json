@@ -1,0 +1,54 @@
+{
+    "logical" : {
+        "questions" : [
+            {
+                "key" : "logical0",
+                "questionText" : "Test",
+                "questionName" : "Ing",
+                "options" : [
+                    {
+                        "value" : "0",
+                        "label": "test"
+                    }
+                ]
+            },
+            {
+                "key" : "logical1",
+                "questionText" : "1a",
+                "questionName" : "1a",
+                "options" : [
+                    {
+                        "value" : 1,
+                        "label": "1"
+                    }
+                ]
+            }
+        ]
+    },
+    "creative" : {
+        "questions" : [
+            {
+                "key" : "creative0",
+                "questionText" : "Test",
+                "questionName" : "Ing",
+                "options" : [
+                    {
+                        "value" : "0",
+                        "label": "test"
+                    }
+                ]
+            },
+            {
+                "key" : "creative1",
+                "questionText" : "1a",
+                "questionName" : "1a",
+                "options" : [
+                    {
+                        "value" : 1,
+                        "label": "1"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -28,6 +28,8 @@ class Quiz extends React.Component {
     }
   }
 
+  quizData = require('../config/questions.json');
+
   addSomething(valuesFromWizard) {
     this.setState({ values: valuesFromWizard });
   }
@@ -45,6 +47,22 @@ class Quiz extends React.Component {
     [propertyName]: value,
   });
 
+  createQuiz(brain) {
+    var wizardArray = [];
+    if (brain == 0) {
+      for (let value of this.quizData.logical.questions) {
+        wizardArray.push(<Wizard.Page key={value.key}>
+          <RenderRadios
+            questionText={"t"}
+            questionName={"t"}
+            options={value.options} />
+        </Wizard.Page>);
+      }
+    }
+    
+    return wizardArray;
+  }
+
   render() {
     const { isFetching } = this.props;
     return (
@@ -57,13 +75,21 @@ class Quiz extends React.Component {
             isFetching={isFetching}
           >
             <Wizard.Page>
-              <Grid container spacing={16}>
-                <Grid item xs={12}>
-                  <Typography className="questionText" variant="h5">Let's get you <i>pear</i>-ed!</Typography>
-                </Grid>
-              </Grid>
+              <RenderRadios
+                questionText={"Let's get you pear-ed! To start, which style best fits your personality?"}
+                questionName="brain"
+                options={[
+                  {
+                    value: "0",
+                    label: "Logical"
+                  },
+                  {
+                    value: "1",
+                    label: "Creative"
+                  }
+                ]} />
             </Wizard.Page>
-            <Wizard.Page>
+            {/* <Wizard.Page>
               <Grid container spacing={16}>
                 <Grid item xs={12}>
                   <Typography className="questionText" variant="h5">We'll start slow. What's your name?</Typography>
@@ -112,7 +138,8 @@ class Quiz extends React.Component {
                     label: "Uniform"
                   }
                 ]} />
-            </Wizard.Page>
+            </Wizard.Page> */}
+            {this.createQuiz(this.state.values.brain)}
             <Wizard.Page
               validate={values => {
                 const errors = {};
