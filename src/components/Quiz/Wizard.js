@@ -14,17 +14,31 @@ export default class Wizard extends React.Component {
     super(props)
     this.state = {
       page: 0,
-      values: props.initialValues || {}
+      values: props.initialValues || {},
+      accurateChildren : {}
     }
   }
 
+  // getChildrenCount() {
+  //   const { children, onSubmit } = this.props
+
+  // }
+
+  // getChildrenCount() {
+  //   const { children, onSubmit } = this.props
+  //   this.children.map(child => {
+  //     if
+  //   })
+  // }
+
   next = values => {
+    const { children, onSubmit } = this.props
     this.setState(state => ({
-      page: Math.min(state.page + 1, this.props.children.length - 1),
+      page: Math.min(state.page + 1, React.Children.count(children) - 1),
       values
     }))
     this.props.addSomething(values);
-    this.props.getPageProgress((this.state.page+1) / (this.props.children.length - 1) * 100);
+    this.props.getPageProgress((this.state.page+1) / (React.Children.count(children) - 1) * 100);
   }
 
   previous = () =>
@@ -38,12 +52,12 @@ export default class Wizard extends React.Component {
  * functions once the form has been defined.
  */
 
-  validate = values => {
-    const activePage = React.Children.toArray(this.props.children)[
-      this.state.page
-    ]
-    return activePage.props.validate ? activePage.props.validate(values) : {}
-  }
+  // validate = values => {
+  //   const activePage = React.Children.toArray(this.props.children)[
+  //     this.state.page
+  //   ]
+  //   return activePage.props.validate ? activePage.props.validate(values) : {}
+  // }
 
   handleSubmit = values => {
     const { children, onSubmit } = this.props
@@ -61,10 +75,14 @@ export default class Wizard extends React.Component {
     const { page, values } = this.state
     const activePage = React.Children.toArray(children)[page]
     const isLastPage = page === React.Children.count(children) - 1
+    console.log(children);
+    console.log(page);
+    console.log(isLastPage)
+    console.log(React.Children.count(children) - 1)
     return (
       <Form
         initialValues={values}
-        validate={this.validate}
+        // validate={this.validate}
         onSubmit={this.handleSubmit}>
         {({ handleSubmit, submitting, values }) => (
           <form onSubmit={handleSubmit}>

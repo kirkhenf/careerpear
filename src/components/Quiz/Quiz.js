@@ -49,19 +49,24 @@ class Quiz extends React.Component {
     [propertyName]: value,
   });
 
+  Aux = props => props.children;
+
   createQuiz(brain) {
     var wizardArray = [];
     if (brain == 0) {
-      for (let value of this.quizData.logical.questions) {
-        wizardArray.push(<Wizard.Page key={value.key}>
-          <RenderRadios
-            questionText={"t"}
-            questionName={"t"}
-            options={value.options} />
-        </Wizard.Page>);
-      }
+      return (
+        <>
+          {this.quizData.logical.questions.map(value => (
+            <Wizard.Page key={value.key}>
+              <RenderRadios
+                questionText={value.questionText}
+                questionName={value.questionName}
+                options={value.options} />
+            </Wizard.Page>
+          ))}
+        </>
+      )
     }
-    
     return wizardArray;
   }
 
@@ -91,7 +96,14 @@ class Quiz extends React.Component {
                   }
                 ]} />
             </Wizard.Page>
-            {this.createQuiz(this.state.values.brain)}
+            {this.quizData.logical.questions.map(
+              value => (<Wizard.Page key={value.key}>
+                <RenderRadios
+                  questionText={value.questionText}
+                  questionName={value.questionName}
+                  options={value.options} />
+              </Wizard.Page>)
+            )}
             <Wizard.Page
               validate={values => {
                 const errors = {};
