@@ -24,6 +24,7 @@ const config = {
       firstName: profile.firstName,
       lastName: profile.lastName,
       role: 'user',
+      quizResults: profile.quizResults
     };
   }
 }

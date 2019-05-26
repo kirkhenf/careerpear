@@ -13,6 +13,12 @@ export function addQuizResults(results, history) {
         dispatch({ type: ADD_QUIZ_RESULTS });
         var fStore = getFirestore();
         var fBase = getFirebase();
+        var quizResults = [];
+        var quizResultsInstance;
+        quizResultsInstance = _.omit(results, ['email', 'firstName', 'lastName', 'passwordOne']);
+        quizResultsInstance.created = fStore.Timestamp.fromDate(new Date());
+        quizResults.push(quizResultsInstance);
+
         fBase.createUser({
             email: results.email,
             password: results.passwordOne
@@ -20,14 +26,16 @@ export function addQuizResults(results, history) {
                 email: results.email,
                 firstName: results.firstName,
                 lastName: results.lastName,
+                quizResults: quizResults,
                 role: 'user'
-            }).then(() => {
+            })
+            .then(() => {
                 fBase.auth().onAuthStateChanged(function (user) {
                     if (user) {
                         //add user ID to the call
                         results.uid = user.uid;
                         results.created = fStore.Timestamp.fromDate(new Date());
-                        results.updated = results.created; 
+                        results.updated = results.created;
                         //push results to the quizResults collection
                         var quizValues = _.omit(results, ['email', 'firstName', 'lastName', 'passwordOne']);
                         fStore.collection('quizResults').add(quizValues).then((data) => {
@@ -44,7 +52,8 @@ export function addQuizResults(results, history) {
 
                 })
 
-            }).catch((error) => {
+            })
+            .catch((error) => {
                 dispatch({ type: ERROR, error: error });
             });
     }
