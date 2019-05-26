@@ -49,23 +49,28 @@ class Quiz extends React.Component {
     [propertyName]: value,
   });
 
-  Aux = props => props.children;
-
   createQuiz(brain) {
     var wizardArray = [];
     if (brain == 0) {
-      return (
-        <>
-          {this.quizData.logical.questions.map(value => (
-            <Wizard.Page key={value.key}>
-              <RenderRadios
-                questionText={value.questionText}
-                questionName={value.questionName}
-                options={value.options} />
-            </Wizard.Page>
-          ))}
-        </>
-      )
+      this.quizData.logical.questions.map(value => (
+        wizardArray.push(
+          <Wizard.Page key={value.key}>
+            <RenderRadios
+              questionText={value.questionText}
+              questionName={value.questionName}
+              options={value.options} />
+          </Wizard.Page>)
+      ))
+    } else {
+      this.quizData.creative.questions.map(value => (
+        wizardArray.push(
+          <Wizard.Page key={value.key}>
+            <RenderRadios
+              questionText={value.questionText}
+              questionName={value.questionName}
+              options={value.options} />
+          </Wizard.Page>)
+      ))
     }
     return wizardArray;
   }
@@ -96,14 +101,7 @@ class Quiz extends React.Component {
                   }
                 ]} />
             </Wizard.Page>
-            {this.quizData.logical.questions.map(
-              value => (<Wizard.Page key={value.key}>
-                <RenderRadios
-                  questionText={value.questionText}
-                  questionName={value.questionName}
-                  options={value.options} />
-              </Wizard.Page>)
-            )}
+            {this.createQuiz(this.state.values.brain)}
             <Wizard.Page
               validate={values => {
                 const errors = {};
