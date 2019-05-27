@@ -86,6 +86,7 @@ export default class Wizard extends React.Component {
 
   render() {
     const { children, isFetching } = this.props
+    console.log(React.Children.toArray(children));
     const { page, values } = this.state
     const activePage = React.Children.toArray(children)[page]
     const isLastPage = page === React.Children.count(children) - 1

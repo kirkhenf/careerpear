@@ -28,6 +28,12 @@ const styles = theme => ({
     },
   },
   quizOption: {
+    '&:hover $label': {
+      color: 'white'
+    },
+    '&:hover': {
+      background: "#297A6D"
+    },
     minWidth: '50%',
     marginRight: "0",
     marginLeft: "0",
@@ -47,6 +53,7 @@ const styles = theme => ({
       maxWidth: '80%'
     },
   },
+  label : {}
 });
 
 const RenderRadios = props => {
@@ -63,10 +70,11 @@ const RenderRadios = props => {
               options.map((option, key) => (
                 <Grid className="quizOptionGrid" key={key} item xs={12} sm={6} md={6} lg={3}>
                   <FormControlLabel
-                    className={classes.quizOption}
+                    classes={{ root: classes.quizOption, label: classes.label }}
                     label={option.label}
                     control={
                       <Field
+                        classes={{ root: classes.label }}
                         name={questionName}
                         color="primary"
                         component={Radio}

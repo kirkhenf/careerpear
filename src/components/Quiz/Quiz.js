@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Grow from '@material-ui/core/Grow'
 import Grid from '@material-ui/core/Grid'
 import { withRouter } from 'react-router-dom';
@@ -9,6 +9,8 @@ import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import useFetch from 'fetch-suspense';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Page imports
 import Wizard from './Wizard'
@@ -30,6 +32,44 @@ class Quiz extends React.Component {
     }
   }
 
+  MyFetchingComponent = () => {
+    const data = useFetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getCreativeQuiz', { method: 'GET' });
+    var brain = this.state.values.brain;
+    var wizardArray = [];
+    var options = [];
+    if (brain == 0) {
+      this.quizData.logical.questions.map(value => (
+        wizardArray.push(
+          <Wizard.Page key={value.key}>
+            <RenderRadios
+              questionText={value.questionText}
+              questionName={value.questionName}
+              options={value.options} />
+          </Wizard.Page>)
+      ))
+    } else
+      data.map(value => (
+        options=[],
+        value.choices.forEach(choice => (
+          options.push(
+            {
+            label:choice.personaDebug,
+            value:choice.personaId
+            }
+          )
+        )),
+        wizardArray.push(
+          <Wizard.Page key={value.questionId}>
+            <RenderRadios
+              questionText={value.question}
+              questionName={value.questionId}
+              options={options}
+            />
+          </Wizard.Page>)
+      ));
+    return (wizardArray);
+  }
+
   quizData = require('../../config/questions.json');
 
   addSomething(valuesFromWizard) {
@@ -49,8 +89,16 @@ class Quiz extends React.Component {
     [propertyName]: value,
   });
 
-  createQuiz(brain) {
+  // getQuizPages(data) {
+  //   fetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getCreativeQuiz')
+  //     .then(response => response.json())
+  //     .then(json => resolve(json));
+  // }
+
+  createQuiz(data) {
+    var brain = 1;
     var wizardArray = [];
+    var options = [];
     if (brain == 0) {
       this.quizData.logical.questions.map(value => (
         wizardArray.push(
@@ -61,18 +109,25 @@ class Quiz extends React.Component {
               options={value.options} />
           </Wizard.Page>)
       ))
-    } else {
-      this.quizData.creative.questions.map(value => (
+    } else if (brain == 1) {
+      data.map(value => (
+        options = [],
+        value.choices.forEach(choice => (
+          options['label'] = choice.personaDebug,
+          options['value'] = choice.personaId
+        )),
         wizardArray.push(
-          <Wizard.Page key={value.key}>
+          <Wizard.Page key={value.questionId}>
             <RenderRadios
-              questionText={value.questionText}
-              questionName={value.questionName}
-              options={value.options} />
+              questionText={value.question}
+              questionName={value.questionId}
+              options={this.options}
+            />
           </Wizard.Page>)
-      ))
+      )
+      )
+      return (wizardArray);
     }
-    return wizardArray;
   }
 
   render() {
@@ -101,7 +156,9 @@ class Quiz extends React.Component {
                   }
                 ]} />
             </Wizard.Page>
-            {this.createQuiz(this.state.values.brain)}
+            <Suspense fallback={<CircularProgress />}>
+              <this.MyFetchingComponent />
+            </Suspense>
             <Wizard.Page
               validate={values => {
                 const errors = {};
