@@ -24,24 +24,21 @@ export default class Wizard extends React.Component {
     super(props)
     this.state = {
       page: 0,
-      countValues: 0,
       values: props.initialValues || {}
     }
   }
 
-  next = values => {
-    console.log("Going to next page");
-    const { children, onSubmit } = this.props
-    this.setState(state => ({
-      page: Math.min(state.page + 1, React.Children.count(children) - 1),
-      values
-    }))
-    this.props.addSomething(values);
-    this.props.getPageProgress((this.state.page + 1) / (React.Children.count(children) - 1) * 100);
-  }
+  // next = values => {
+  //   const { children, onSubmit } = this.props
+  //   this.setState(state => ({
+  //     page: Math.min(state.page + 1, React.Children.count(children) - 1),
+  //     values
+  //   }))
+  //   this.props.addSomething(values);
+  //   this.props.getPageProgress((this.state.page + 1) / (React.Children.count(children) - 1) * 100);
+  // }
 
   previous = () => {
-    console.log("Going to previous page");
     const { children } = this.props
     this.setState(state => ({
       page: Math.max(state.page - 1, 0)
@@ -66,16 +63,24 @@ export default class Wizard extends React.Component {
 
   handleSubmit = (values, e) => {
     const { page } = this.state
-    console.log(this.count(e.getState().values));
-    console.log("Page: " + page)
-    if (values.brain && !(this.count(e.getState().values) < page)) {
-      const { children, onSubmit } = this.props
+    const { children, onSubmit } = this.props
+    const isLastPage = page === React.Children.count(children) - 1
+    if (isLastPage) {
+      return onSubmit(values)
+    }
+  }
+
+  next = (values, e) => {
+    const { page } = this.state
+    if (e.getState().values.brain && !(this.count(e.getState().values) <= page)) {
+      const { children } = this.props
       const isLastPage = page === React.Children.count(children) - 1
-      if (isLastPage) {
-        return onSubmit(values)
-      } else {
-        this.next(values)
-      }
+      this.setState(state => ({
+        page: Math.min(state.page + 1, React.Children.count(children) - 1),
+        values
+      }))
+      this.props.addSomething(e.getState().values);
+      this.props.getPageProgress((this.state.page + 1) / (React.Children.count(children) - 1) * 100);
     }
   }
 
@@ -90,11 +95,12 @@ export default class Wizard extends React.Component {
         validate={this.validate}
         onSubmit={this.handleSubmit}
         previous={this.previous}
+        next={this.next}
         mutators={{
           clear
         }}
       >
-        {({ handleSubmit, previous, form, form: { mutators: { clear } }, submitting, values }) => (
+        {({ handleSubmit, previous, next, form, form: { mutators: { clear } }, submitting, values }) => (
           <form onSubmit={handleSubmit}>
             {activePage}
             <Grid item xs={12}>
@@ -115,11 +121,7 @@ export default class Wizard extends React.Component {
                 )}
               </Grid>
             </Grid>
-            <FormSpy onChange={(e) => handleSubmit(values, e)} subscription={{ values: true }}>
-              {({ values }) => (
-                console.log(values)
-              )}
-            </FormSpy>
+            <FormSpy onChange={() => next(values, form)} subscription={{ values: true }}/>
             {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
           </form>
         )}
