@@ -1,8 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form } from 'react-final-form'
+import { Form, FormSpy } from 'react-final-form'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import arrayMutators from 'final-form-arrays'
+import Fab from '@material-ui/core/Fab';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+
+const clear = ([children, page, previous], state, { changeValue }) => {
+  var element = React.Children.toArray(children)[page - 1].props.children.props.questionName;
+  previous();
+  changeValue(state, element, () => undefined)
+}
 
 export default class Wizard extends React.Component {
   static propTypes = {
@@ -14,12 +24,13 @@ export default class Wizard extends React.Component {
     super(props)
     this.state = {
       page: 0,
-      values: props.initialValues || {},
-      accurateChildren: {}
+      countValues: 0,
+      values: props.initialValues || {}
     }
   }
 
   next = values => {
+    console.log("Going to next page");
     const { children, onSubmit } = this.props
     this.setState(state => ({
       page: Math.min(state.page + 1, React.Children.count(children) - 1),
@@ -30,6 +41,7 @@ export default class Wizard extends React.Component {
   }
 
   previous = () => {
+    console.log("Going to previous page");
     const { children } = this.props
     this.setState(state => ({
       page: Math.max(state.page - 1, 0)
@@ -50,14 +62,20 @@ export default class Wizard extends React.Component {
     return activePage.props.validate ? activePage.props.validate(values) : {}
   }
 
-  handleSubmit = values => {
-    const { children, onSubmit } = this.props
+  count(obj) { return Object.keys(obj).length; }
+
+  handleSubmit = (values, e) => {
     const { page } = this.state
-    const isLastPage = page === React.Children.count(children) - 1
-    if (isLastPage) {
-      return onSubmit(values)
-    } else {
-      this.next(values)
+    console.log(this.count(e.getState().values));
+    console.log("Page: " + page)
+    if (values.brain && !(this.count(e.getState().values) < page)) {
+      const { children, onSubmit } = this.props
+      const isLastPage = page === React.Children.count(children) - 1
+      if (isLastPage) {
+        return onSubmit(values)
+      } else {
+        this.next(values)
+      }
     }
   }
 
@@ -70,18 +88,26 @@ export default class Wizard extends React.Component {
       <Form
         initialValues={values}
         validate={this.validate}
-        onSubmit={this.handleSubmit}>
-        {({ handleSubmit, submitting, values }) => (
+        onSubmit={this.handleSubmit}
+        previous={this.previous}
+        mutators={{
+          clear
+        }}
+      >
+        {({ handleSubmit, previous, form, form: { mutators: { clear } }, submitting, values }) => (
           <form onSubmit={handleSubmit}>
             {activePage}
             <Grid item xs={12}>
               <Grid container spacing={16} justify="center">
                 {page > 0 && (
-                  <Grid item>
-                    <Button variant="outlined" type="button" onClick={this.previous}>Back</Button>
-                  </Grid>
+                  <Fab color="secondary" onClick={() => clear(children, page, () => this.previous())} style={{ position: 'fixed', bottom: '30px', left: '15px' }}>
+                    <ChevronLeftIcon />
+                  </Fab>
+                  // <Grid item>
+                  //   <Button variant="outlined" type="button" onClick={() => clear(children, page, () => this.previous())}>Back</Button>
+                  // </Grid>
                 )}
-                {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>}
+                {/* {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>} */}
                 {isLastPage && (
                   <Grid item>
                     <Button color="primary" variant="contained" type="submit" disabled={isFetching}>Submit</Button>
@@ -89,7 +115,12 @@ export default class Wizard extends React.Component {
                 )}
               </Grid>
             </Grid>
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
+            <FormSpy onChange={(e) => handleSubmit(values, e)} subscription={{ values: true }}>
+              {({ values }) => (
+                console.log(values)
+              )}
+            </FormSpy>
+            {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
           </form>
         )}
       </Form>
