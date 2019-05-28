@@ -18,7 +18,13 @@ export default class Wizard extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired
   }
-  static Page = ({ children }) => children
+  
+  static Page = ({ children }) => this.getChildren(children)
+
+  static getChildren = children => {
+    console.log(children);
+    return children;
+  }
 
   constructor(props) {
     super(props)
@@ -72,7 +78,7 @@ export default class Wizard extends React.Component {
 
   next = (values, e) => {
     const { page } = this.state
-    if (e.getState().values.brain && !(this.count(e.getState().values) <= page)) {
+    if (!(this.count(e.getState().values) <= page)) {
       const { children } = this.props
       const isLastPage = page === React.Children.count(children) - 1
       this.setState(state => ({
