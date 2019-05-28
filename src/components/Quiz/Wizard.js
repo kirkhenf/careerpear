@@ -8,10 +8,13 @@ import Fab from '@material-ui/core/Fab';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-const clear = ([children, page, previous], state, { changeValue }) => {
-  var element = React.Children.toArray(children)[page - 1].props.children.props.questionName;
-  previous();
-  changeValue(state, element, () => undefined)
+const clear = ([children, page, previous, reset], state, { changeValue }) => {
+  if(page != 0) {var element = React.Children.toArray(children)[page - 1].props.children.props.questionName;
+    previous();
+    changeValue(state, element, () => undefined)
+  } else {
+    reset();
+  }
 }
 
 export default class Wizard extends React.Component {
@@ -91,8 +94,7 @@ export default class Wizard extends React.Component {
   }
 
   render() {
-    const { children, isFetching } = this.props
-    console.log(React.Children.toArray(children));
+    const { children, reset, isFetching } = this.props
     const { page, values } = this.state
     const activePage = React.Children.toArray(children)[page]
     const isLastPage = page === React.Children.count(children) - 1
@@ -112,14 +114,9 @@ export default class Wizard extends React.Component {
             {activePage}
             <Grid item xs={12}>
               <Grid container spacing={16} justify="center">
-                {page > 0 && (
-                  <Fab color="secondary" onClick={() => clear(children, page, () => this.previous())} style={{ position: 'fixed', bottom: '30px', left: '15px' }}>
+                  <Fab color="secondary" onClick={() => clear(children, page, () => this.previous(), reset)} style={{ position: 'fixed', bottom: '30px', left: '15px' }}>
                     <ChevronLeftIcon />
                   </Fab>
-                  // <Grid item>
-                  //   <Button variant="outlined" type="button" onClick={() => clear(children, page, () => this.previous())}>Back</Button>
-                  // </Grid>
-                )}
                 {/* {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>} */}
                 {isLastPage && (
                   <Grid item>

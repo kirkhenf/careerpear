@@ -33,12 +33,16 @@ class Quiz extends React.Component {
   }
 
   handleChange = (event) => {
-    console.log(event);
     var value = event.target.value;
     this.setState(state => ({
       brain: value
     }))
-    console.log("Firing");
+  }
+
+  reset = () => {
+    this.setState(state => ({
+      brain: undefined
+    }))
   }
 
   getSubmissionPage() {
@@ -82,6 +86,7 @@ class Quiz extends React.Component {
           addSomething={(values => this.addSomething(values, ))}
           getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
           isFetching={isFetching}
+          reset={this.reset}
         >
           {this.quizData.logical.questions.map(value => (
             <Wizard.Page key={value.key}>
@@ -100,6 +105,7 @@ class Quiz extends React.Component {
           addSomething={(values => this.addSomething(values, ))}
           getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
           isFetching={isFetching}
+          reset={this.reset}
         >
           {data.map(value => (
             options = [],
