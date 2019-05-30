@@ -88,6 +88,7 @@ export default class Wizard extends React.Component {
         page: Math.min(state.page + 1, React.Children.count(children) - 1),
         values
       }))
+      // console.log(values);
       this.props.addSomething(e.getState().values);
       this.props.getPageProgress((this.state.page + 1) / (React.Children.count(children) - 1) * 100);
     }
@@ -126,7 +127,7 @@ export default class Wizard extends React.Component {
               </Grid>
             </Grid>
             <FormSpy onChange={() => next(values, form)} subscription={{ values: true }}/>
-            {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
+            <pre>{JSON.stringify(values, 0, 2)}</pre>
           </form>
         )}
       </Form>

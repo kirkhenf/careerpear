@@ -96,7 +96,10 @@ class Quiz extends React.Component {
               options.push(
                 {
                   label: choice.option,
-                  value: choice.weight
+                  value: JSON.stringify({
+                    selection:choice.weight,
+                    trait:value.traitId
+                  })
                 }
               )
             )),
