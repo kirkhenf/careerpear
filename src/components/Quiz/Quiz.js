@@ -74,8 +74,10 @@ class Quiz extends React.Component {
   }
 
   QuizQuestions = () => {
-    const data = useFetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getCreativeQuiz', { method: 'GET' });
     var brain = this.state.brain;
+    if (brain == 1) {
+      var data = useFetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getCreativeQuiz', { method: 'GET' });
+    } else var data = useFetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getLogicalQuiz', { method: 'GET' });
     var wizardArray = [];
     var options = [];
     const { isFetching } = this.props;
@@ -88,13 +90,24 @@ class Quiz extends React.Component {
           isFetching={isFetching}
           reset={this.reset}
         >
-          {this.quizData.logical.questions.map(value => (
-            <Wizard.Page key={value.key}>
+          {data.map(value => (
+            options = [],
+            value.choices.forEach(choice => (
+              options.push(
+                {
+                  label: choice.option,
+                  value: choice.weight
+                }
+              )
+            )),
+            <Wizard.Page key={value.questionId}>
               <WizardRadios
-                questionText={value.questionText}
-                questionName={value.questionName}
-                options={value.options} />
-            </Wizard.Page>))}
+                questionText={value.question}
+                questionName={value.questionId}
+                options={options}
+              />
+            </Wizard.Page>
+          ))}
           {this.getSubmissionPage()}
         </Wizard>
       )
