@@ -3,7 +3,17 @@
   min-height: 100%;
 }
 
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+@font-face {
+  font-family: 'Campton';
+  src: url('../assets/Campton-LightDEMO.woff2')
+}
+
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;

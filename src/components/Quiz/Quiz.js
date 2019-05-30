@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Grow from '@material-ui/core/Grow'
 import Grid from '@material-ui/core/Grid'
 import { withRouter } from 'react-router-dom';
@@ -9,13 +9,15 @@ import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import useFetch from 'fetch-suspense';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Page imports
 import Wizard from './Wizard'
 import SignUpForm from '../Authentication/SignUp'
 import './Quiz.css'
 import DateHelpers from '../../helpers/Date'
-import RenderRadios from './RenderRadios'
+import { NormalRadios, WizardRadios } from './RenderRadios'
 import { addQuizResults } from '../../actions';
 
 const required = value => (value ? undefined : 'Required')
@@ -28,6 +30,118 @@ class Quiz extends React.Component {
       pageProgress: 0,
       isFetching: false,
     }
+  }
+
+  handleChange = (event) => {
+    var value = event.target.value;
+    this.setState(state => ({
+      brain: value
+    }))
+  }
+
+  reset = () => {
+    this.setState(state => ({
+      brain: undefined
+    }))
+  }
+
+  getSubmissionPage() {
+    return (
+      <Wizard.Page
+        validate={values => {
+          const errors = {};
+          if (!values.firstName) {
+            errors.firstName = "Required";
+          }
+          if (!values.lastName) {
+            errors.lastName = "Required";
+          }
+          if (!values.email) {
+            errors.email = "Required";
+          } else if (!values.email.match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)) {
+            errors.email = "Please enter a valid e-mail adresssss"
+          }
+          if (!values.passwordOne) {
+            errors.passwordOne = "Required";
+          }
+          return errors;
+        }}>
+        <Typography variant="h5">You did it!</Typography>
+        <SignUpForm
+          firstName={this.state.values.firstName} />
+      </Wizard.Page>
+    )
+  }
+
+  QuizQuestions = () => {
+    var brain = this.state.brain;
+    if (brain == 1) {
+      var data = useFetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getCreativeQuiz', { method: 'GET' });
+    } else var data = useFetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getLogicalQuiz', { method: 'GET' });
+    var wizardArray = [];
+    var options = [];
+    const { isFetching } = this.props;
+    if (brain == 0) {
+      return (
+        <Wizard
+          onSubmit={this.onSubmit}
+          addSomething={(values => this.addSomething(values, ))}
+          getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
+          isFetching={isFetching}
+          reset={this.reset}
+        >
+          {data.map(value => (
+            options = [],
+            value.choices.forEach(choice => (
+              options.push(
+                {
+                  label: choice.option,
+                  value: choice.weight
+                }
+              )
+            )),
+            <Wizard.Page key={value.questionId}>
+              <WizardRadios
+                questionText={value.question}
+                questionName={value.questionId}
+                options={options}
+              />
+            </Wizard.Page>
+          ))}
+          {this.getSubmissionPage()}
+        </Wizard>
+      )
+    } else if (brain == 1)
+      return (
+        <Wizard
+          onSubmit={this.onSubmit}
+          addSomething={(values => this.addSomething(values, ))}
+          getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
+          isFetching={isFetching}
+          reset={this.reset}
+        >
+          {data.map(value => (
+            options = [],
+            value.choices.forEach(choice => (
+              options.push(
+                {
+                  label: choice.personaDebug,
+                  value: choice.personaId
+                }
+              )
+            )),
+            <Wizard.Page key={value.questionId}>
+              <WizardRadios
+                questionText={value.question}
+                questionName={value.questionId}
+                options={options}
+              />
+            </Wizard.Page>
+          ))}
+          {this.getSubmissionPage()}
+        </Wizard>
+      )
+    return (wizardArray);
   }
 
   quizData = require('../../config/questions.json');
@@ -49,73 +163,28 @@ class Quiz extends React.Component {
     [propertyName]: value,
   });
 
-  createQuiz(brain) {
-    var wizardArray = [];
-    if (brain == 0) {
-      for (let value of this.quizData.logical.questions) {
-        wizardArray.push(<Wizard.Page key={value.key}>
-          <RenderRadios
-            questionText={"t"}
-            questionName={"t"}
-            options={value.options} />
-        </Wizard.Page>);
-      }
-    }
-    
-    return wizardArray;
-  }
-
   render() {
     const { isFetching } = this.props;
     return (
       <div className="bodyContent">
         <div className="quizContent">
-          <Wizard
-            onSubmit={this.onSubmit}
-            addSomething={(values => this.addSomething(values, ))}
-            getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
-            isFetching={isFetching}
-          >
-            <Wizard.Page>
-              <RenderRadios
-                questionText={"Let's get you pear-ed! To start, which style best fits your personality?"}
-                questionName="brain"
-                options={[
-                  {
-                    value: "0",
-                    label: "Logical"
-                  },
-                  {
-                    value: "1",
-                    label: "Creative"
-                  }
-                ]} />
-            </Wizard.Page>
-            {this.createQuiz(this.state.values.brain)}
-            <Wizard.Page
-              validate={values => {
-                const errors = {};
-                if (!values.firstName) {
-                  errors.firstName = "Required";
-                }
-                if (!values.lastName) {
-                  errors.lastName = "Required";
-                }
-                if (!values.email) {
-                  errors.email = "Required";
-                } else if (!values.email.match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/)) {
-                  errors.email = "Please enter a valid e-mail adresssss"
-                }
-                if (!values.passwordOne) {
-                  errors.passwordOne = "Required";
-                }
-                return errors;
-              }}>
-              <Typography variant="h5">You did it!</Typography>
-              <SignUpForm
-                firstName={this.state.values.firstName} />
-            </Wizard.Page>
-          </Wizard >
+          {!this.state.brain && <NormalRadios
+            questionText={"Let's get you pear-ed! To start, which style best fits your personality?"}
+            questionName="brain"
+            handleChange={this.handleChange}
+            options={[
+              {
+                value: "0",
+                label: "Logical"
+              },
+              {
+                value: "1",
+                label: "Creative"
+              }
+            ]} />}
+          {this.state.brain && <Suspense fallback={<CircularProgress />}>
+            <this.QuizQuestions />
+          </Suspense>}
         </div>
         <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress} />
       </div>

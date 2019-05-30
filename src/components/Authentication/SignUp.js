@@ -28,7 +28,6 @@ import "./SignUp.css"
 
 const SignUpPage = ({ history, firebase, firstName }) =>
   <div>
-    <h1>SignUp</h1>
     <SignUpForm history={history} firstName={firstName} firebase={firebase} />
   </div>
 

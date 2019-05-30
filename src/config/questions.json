@@ -18,8 +18,30 @@
                 "questionName" : "1a",
                 "options" : [
                     {
-                        "value" : 1,
-                        "label": "1"
+                        "value" : "1",
+                        "label": "testing"
+                    }
+                ]
+            },
+            {
+                "key" : "logical2",
+                "questionText" : "2a",
+                "questionName" : "2a",
+                "options" : [
+                    {
+                        "value" : "2",
+                        "label": "testing"
+                    }
+                ]
+            },
+            {
+                "key" : "logical3",
+                "questionText" : "3a",
+                "questionName" : "3a",
+                "options" : [
+                    {
+                        "value" : "3",
+                        "label": "testing"
                     }
                 ]
             }
@@ -44,7 +66,7 @@
                 "questionName" : "1a",
                 "options" : [
                     {
-                        "value" : 1,
+                        "value" : "1",
                         "label": "1"
                     }
                 ]
