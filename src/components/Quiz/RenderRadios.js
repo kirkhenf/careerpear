@@ -128,7 +128,7 @@ const RenderNormalRadios = props => {
 }
 
 const RenderImageRadios = props => {
-  const { options, classes, questionName, questionText, handleChange } = props;
+  const { options, classes, questionName, questionText } = props;
   return (
     <Grid container spacing={16}>
       <Grid item xs={12}>
@@ -140,15 +140,20 @@ const RenderImageRadios = props => {
             {
               options.map((option, key) => (
                 <Grid className="quizOptionGrid" key={key} item xs={12} sm={6} md={6} lg={3}>
-                    <RadioGroup value={questionName}>
-                      <FormControlLabel
-                        classes={{ root: classes.quizOption, label:classes.label }}
-                        label={<img src={option.imageSrc} />}
-                        control={<NormalRadio classes={{ root: classes.label }} color="primary" />}
+                  <FormControlLabel
+                    classes={{ root: classes.quizOption, label:classes.label }}
+                    label={<img src={option.imageSrc} />}
+                    control={
+                      <Field
+                        classes={{ root: classes.label }}
+                        name={questionName}
+                        color="primary"
+                        component={Radio}
+                        type="radio"
                         value={option.value}
-                        onClick={handleChange}
                       />
-                    </RadioGroup>
+                    }
+                  />
                 </Grid>
               ))}
           </Grid>
