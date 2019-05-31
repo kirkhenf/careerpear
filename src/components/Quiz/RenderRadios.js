@@ -127,9 +127,41 @@ const RenderNormalRadios = props => {
   )
 }
 
+const RenderImageRadios = props => {
+  const { options, classes, questionName, questionText, handleChange } = props;
+  return (
+    <Grid container spacing={16}>
+      <Grid item xs={12}>
+        <Typography className="questionText" variant="h5">{questionText}</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Grow timeout={500} in={true}>
+          <Grid container justify="center" alignItems="center" direction="row" >
+            {
+              options.map((option, key) => (
+                <Grid className="quizOptionGrid" key={key} item xs={12} sm={6} md={6} lg={3}>
+                    <RadioGroup value={questionName}>
+                      <FormControlLabel
+                        classes={{ root: classes.quizOption, label:classes.label }}
+                        label={<img src={option.imageSrc} />}
+                        control={<NormalRadio classes={{ root: classes.label }} color="primary" />}
+                        value={option.value}
+                        onClick={handleChange}
+                      />
+                    </RadioGroup>
+                </Grid>
+              ))}
+          </Grid>
+        </Grow>
+      </Grid>
+    </Grid>
+  )
+}
+
+const ImageRadios = withStyles(styles)(RenderImageRadios);
 const NormalRadios = withStyles(styles)(RenderNormalRadios);
 const WizardRadios = withStyles(styles)(RenderWizardRadios);
 
-export { NormalRadios, WizardRadios };
+export { ImageRadios, NormalRadios, WizardRadios };
 
 export default withStyles(styles)(WizardRadios);
