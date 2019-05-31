@@ -31,6 +31,10 @@ const styles = theme => ({
       minWidth: '80%'
     },
   },
+  image :{
+    maxWidth: '100%',
+    maxHeight: '100%'
+  },
   quizOption: {
     '&:hover $label': {
       color: 'white'
@@ -142,7 +146,7 @@ const RenderImageRadios = props => {
                 <Grid className="quizOptionGrid" key={key} item xs={12} sm={6} md={6} lg={3}>
                   <FormControlLabel
                     classes={{ root: classes.quizOption, label:classes.label }}
-                    label={<img src={option.imageSrc} />}
+                    label={<img className={classes.image} src={option.imageSrc} />}
                     control={
                       <Field
                         classes={{ root: classes.label }}
