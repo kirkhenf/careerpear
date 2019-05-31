@@ -17,7 +17,7 @@ import Wizard from './Wizard'
 import SignUpForm from '../Authentication/SignUp'
 import './Quiz.css'
 import DateHelpers from '../../helpers/Date'
-import { NormalRadios, WizardRadios } from './RenderRadios'
+import { ImageRadios, NormalRadios, WizardRadios } from './RenderRadios'
 import { addQuizResults } from '../../actions';
 
 const required = value => (value ? undefined : 'Required')
@@ -126,12 +126,13 @@ class Quiz extends React.Component {
               options.push(
                 {
                   label: choice.personaDebug,
-                  value: choice.personaId
+                  value: choice.personaId,
+                  imageSrc: choice.imgUrl
                 }
               )
             )),
             <Wizard.Page key={value.questionId}>
-              <WizardRadios
+              <ImageRadios
                 questionText={value.question}
                 questionName={value.questionId}
                 options={options}

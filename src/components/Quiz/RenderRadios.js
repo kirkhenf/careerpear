@@ -31,6 +31,10 @@ const styles = theme => ({
       minWidth: '80%'
     },
   },
+  image :{
+    maxWidth: '100%',
+    maxHeight: '100%'
+  },
   quizOption: {
     '&:hover $label': {
       color: 'white'
@@ -127,9 +131,46 @@ const RenderNormalRadios = props => {
   )
 }
 
+const RenderImageRadios = props => {
+  const { options, classes, questionName, questionText } = props;
+  return (
+    <Grid container spacing={16}>
+      <Grid item xs={12}>
+        <Typography className="questionText" variant="h5">{questionText}</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Grow timeout={500} in={true}>
+          <Grid container justify="center" alignItems="center" direction="row" >
+            {
+              options.map((option, key) => (
+                <Grid className="quizOptionGrid" key={key} item xs={12} sm={6} md={6} lg={3}>
+                  <FormControlLabel
+                    classes={{ root: classes.quizOption, label:classes.label }}
+                    label={<img className={classes.image} src={option.imageSrc} />}
+                    control={
+                      <Field
+                        classes={{ root: classes.label }}
+                        name={questionName}
+                        color="primary"
+                        component={Radio}
+                        type="radio"
+                        value={option.value}
+                      />
+                    }
+                  />
+                </Grid>
+              ))}
+          </Grid>
+        </Grow>
+      </Grid>
+    </Grid>
+  )
+}
+
+const ImageRadios = withStyles(styles)(RenderImageRadios);
 const NormalRadios = withStyles(styles)(RenderNormalRadios);
 const WizardRadios = withStyles(styles)(RenderWizardRadios);
 
-export { NormalRadios, WizardRadios };
+export { ImageRadios, NormalRadios, WizardRadios };
 
 export default withStyles(styles)(WizardRadios);
