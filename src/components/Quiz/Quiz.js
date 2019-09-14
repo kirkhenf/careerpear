@@ -1,10 +1,6 @@
 import React, { Suspense } from 'react'
-import Grow from '@material-ui/core/Grow'
-import Grid from '@material-ui/core/Grid'
 import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography'
-import { Field } from 'react-final-form'
-import { TextField } from "final-form-material-ui";
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux'
@@ -16,7 +12,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Wizard from './Wizard'
 import SignUpForm from '../Authentication/SignUp'
 import './Quiz.css'
-import DateHelpers from '../../helpers/Date'
 import { ImageRadios, NormalRadios, WizardRadios } from './RenderRadios'
 import { addQuizResults } from '../../actions';
 
@@ -26,6 +21,7 @@ class Quiz extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      brain: null,
       values: '',
       pageProgress: 0,
       isFetching: false,
@@ -37,6 +33,7 @@ class Quiz extends React.Component {
     this.setState(state => ({
       brain: value
     }))
+    this.addSomething(value);
   }
 
   reset = () => {
@@ -81,7 +78,8 @@ class Quiz extends React.Component {
     var wizardArray = [];
     var options = [];
     const { isFetching } = this.props;
-    if (brain == 0) {
+    var values = this.state.values;
+    if (brain == 0) { // Logical Quiz
       return (
         <Wizard
           onSubmit={this.onSubmit}
@@ -96,7 +94,10 @@ class Quiz extends React.Component {
               options.push(
                 {
                   label: choice.option,
-                  value: choice.weight
+                  value: JSON.stringify({
+                    weight: choice.weight,
+                    traitId: value.traitId
+                  })
                 }
               )
             )),
@@ -111,7 +112,7 @@ class Quiz extends React.Component {
           {this.getSubmissionPage()}
         </Wizard>
       )
-    } else if (brain == 1)
+    } else if (brain == 1) // Creative quiz
       return (
         <Wizard
           onSubmit={this.onSubmit}
@@ -157,7 +158,7 @@ class Quiz extends React.Component {
 
   onSubmit = (values) => {
     const { addQuizResults, history } = this.props;
-    addQuizResults(values, history);
+    addQuizResults(values, history, this.state.brain);
   }
 
   byPropKey = (propertyName, value) => () => ({
@@ -201,7 +202,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addQuizResults: (quizResults, history) => dispatch(addQuizResults(quizResults, history))
+    addQuizResults: (quizResults, history, brain) => dispatch(addQuizResults(quizResults, history, brain))
   }
 }
 

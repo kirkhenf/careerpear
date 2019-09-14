@@ -25,7 +25,6 @@ export default class Wizard extends React.Component {
   static Page = ({ children }) => this.getChildren(children)
 
   static getChildren = children => {
-    console.log(children);
     return children;
   }
 
