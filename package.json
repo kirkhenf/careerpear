@@ -35,7 +35,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom --env.TEST_MODE=true webpack --config test_webpack_config.js",
+    "test": "REACT_APP_TEST_MODE=true react-scripts test --env=jsdom ",
     "eject": "react-scripts eject"
   },
   "browserslist": [
