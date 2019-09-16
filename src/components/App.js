@@ -4,6 +4,7 @@ import 'typeface-roboto'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as routes from '../constants/routes';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import ReactGA from 'react-ga';
 
 // Page imports
 import './App.css';
@@ -59,8 +60,14 @@ const theme = createMuiTheme({
   // },
 });
 
+function initializeReactGA() {
+  ReactGA.initialize('UA-148051381-1');
+  ReactGA.pageview('/Home');
+}
+
 const App = () =>
   <MuiThemeProvider theme={theme}>
+    {initializeReactGA()}
     <Router>
       <div className="page">
         <Navigation />
