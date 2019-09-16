@@ -7,6 +7,10 @@ import arrayMutators from 'final-form-arrays'
 import Fab from '@material-ui/core/Fab';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ReactGA from 'react-ga';
+
+const CREATIVE = 1;
+const LOCICAL = 0;
 
 const clear = ([children, page, previous, reset], state, { changeValue }) => {
   if(page != 0) {var element = React.Children.toArray(children)[page - 1].props.children.props.questionName;
@@ -46,11 +50,18 @@ export default class Wizard extends React.Component {
   //   this.props.getPageProgress((this.state.page + 1) / (React.Children.count(children) - 1) * 100);
   // }
 
+  brainType = () => {
+    if(this.props.brain === CREATIVE) {
+      return 'creative'
+    } else return 'logical'
+  }
+
   previous = () => {
     const { children } = this.props
     this.setState(state => ({
       page: Math.max(state.page - 1, 0)
     }))
+    ReactGA.ga('send', 'pageview', '/quiz/' + this.brainType() + '/' + (this.state.page));
     this.props.getPageProgress((this.state.page - 1) / (React.Children.count(children) - 1) * 100);
   }
 
@@ -82,12 +93,14 @@ export default class Wizard extends React.Component {
     const { page } = this.state
     if (!(this.count(e.getState().values) <= page)) {
       const { children } = this.props
-      const isLastPage = page === React.Children.count(children) - 1
+      const isLastPage = page === React.Children.count(children) - 1;
       this.setState(state => ({
         page: Math.min(state.page + 1, React.Children.count(children) - 1),
         values
       }))
       this.props.addSomething(e.getState().values);
+      if(!isLastPage) ReactGA.ga('send', 'pageview', '/quiz/' + this.brainType() + '/' + (this.state.page));
+      else ReactGA.ga('send', 'pageview', '/quiz/SignUp');
       this.props.getPageProgress((this.state.page + 1) / (React.Children.count(children) - 1) * 100);
     }
   }
