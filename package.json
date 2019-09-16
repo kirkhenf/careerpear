@@ -33,8 +33,8 @@
     "typeface-roboto": "0.0.54"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "REACT_APP_TEST_MODE=false react-scripts start",
+    "build": "REACT_APP_TEST_MODE=false react-scripts build",
     "test": "REACT_APP_TEST_MODE=true react-scripts test --env=jsdom ",
     "eject": "react-scripts eject"
   },
