@@ -70,7 +70,6 @@ class App extends React.Component {
   
   componentDidMount(){
     initializeReactGA();
-    console.log("Mounted");
   }
 
   render() {

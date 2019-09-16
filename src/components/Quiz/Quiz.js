@@ -7,6 +7,7 @@ import { compose } from 'redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import useFetch from 'fetch-suspense';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ReactGA from 'react-ga';
 
 // Page imports
 import Wizard from './Wizard'
@@ -26,6 +27,10 @@ class Quiz extends React.Component {
       pageProgress: 0,
       isFetching: false,
     }
+  }
+
+  componentDidMount() {
+    ReactGA.ga('send', 'pageview', '/Quiz');
   }
 
   handleChange = (event) => {
@@ -82,6 +87,7 @@ class Quiz extends React.Component {
     if (brain == 0) { // Logical Quiz
       return (
         <Wizard
+          brain={brain}
           onSubmit={this.onSubmit}
           addSomething={(values => this.addSomething(values, ))}
           getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
@@ -115,6 +121,7 @@ class Quiz extends React.Component {
     } else if (brain == 1) // Creative quiz
       return (
         <Wizard
+          brain={brain}
           onSubmit={this.onSubmit}
           addSomething={(values => this.addSomething(values, ))}
           getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
