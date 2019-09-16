@@ -50,7 +50,7 @@ const theme = createMuiTheme({
       lg: 1280,
       xl: 1920
     }
-  } 
+  }
   // overrides: {
   //   MuiButton: { // Name of the component ⚛️ / style sheet
   //     text: { // Name of the rule
@@ -61,29 +61,40 @@ const theme = createMuiTheme({
 });
 
 function initializeReactGA() {
-  ReactGA.initialize('UA-148051381-1', { testMode: process.env.REACT_APP_TEST_MODE } );
-  ReactGA.pageview('/Home');
+  var isTrueSet = (process.env.REACT_APP_TEST_MODE == 'true');
+  ReactGA.initialize('UA-148051381-1', { testMode: isTrueSet});
+  ReactGA.ga('send', 'pageview', '/');
 }
 
-const App = () =>
-  <MuiThemeProvider theme={theme}>
-    {initializeReactGA()}
-    <Router>
-      <div className="page">
-        <Navigation />
-        <div className="content">
-          <Route exact path={routes.LANDING} component={() => <LandingPage />} />
-          <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
-          <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
-          <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
-          <Route exact path={routes.HOME} component={() => <HomePage />} />
-          <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
-          <Route exact path={routes.QUIZ} component={() => <QuizPage />} />
-          <Route exact path={routes.SKILLS} component={() => <SkillsPage />} />
-          <Route exact path={routes.CONTACT} component={() => <ContactPage />} />
-        </div>
-      </div>
-    </Router>
-  </MuiThemeProvider>
+class App extends React.Component {
+  
+  componentDidMount(){
+    initializeReactGA();
+  }
+
+  render() {
+    return (
+      <MuiThemeProvider theme={theme}>
+        <Router>
+          <div className="page">
+            <Navigation />
+            <div className="content">
+              <Route exact path={routes.LANDING} component={() => <LandingPage />} />
+              <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
+              <Route exact path={routes.SIGN_IN} component={() => <SignInPage />} />
+              <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
+              <Route exact path={routes.HOME} component={() => <HomePage />} />
+              <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
+              <Route exact path={routes.QUIZ} component={() => <QuizPage />} />
+              <Route exact path={routes.SKILLS} component={() => <SkillsPage />} />
+              <Route exact path={routes.CONTACT} component={() => <ContactPage />} />
+            </div>
+          </div>
+        </Router>
+      </MuiThemeProvider>
+    )
+  }
+}
+
 
 export default withAuthentication(App);
