@@ -61,7 +61,7 @@ const theme = createMuiTheme({
 });
 
 function initializeReactGA() {
-  ReactGA.initialize('UA-148051381-1');
+  ReactGA.initialize('UA-148051381-1', process.env.TEST_MODE );
   ReactGA.pageview('/Home');
 }
 
