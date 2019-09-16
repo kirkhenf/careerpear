@@ -35,7 +35,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom --env.TEST_MODE=true",
+    "test": "react-scripts test --env=jsdom --env.TEST_MODE=true webpack --config test_webpack_config.js",
     "eject": "react-scripts eject"
   },
   "browserslist": [
@@ -43,5 +43,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "webpack": "^4.40.2"
+  }
 }
