@@ -114,18 +114,26 @@ export function generateLogicalTraits(user, values) {
         })
     });
 
-    console.log(JSON.stringify(logicalResults));
-
-    fetch('https://us-central1-careerpear-10c55.cloudfunctions.net/generateLogicalTraits', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(logicalResults)
-    })
-        .then(response => response.json())
-        .then(responseJson => {
-            console.log(responseJson);
+    //get token and make fetch
+    var fBase = getFirebase();
+    fBase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+        var bearer = 'Bearer ' + idToken;
+        fetch('https://us-central1-careerpear-10c55.cloudfunctions.net/generateLogicalTraits', {
+            method: 'POST',
+            withCredentials: true,
+            credentials: 'include',
+            headers: {
+                'Authorization': bearer,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(logicalResults)
         })
+            .then(response => response.json())
+            .then(responseJson => {
+                console.log(responseJson);
+            })
+    }).catch(function (error) {
+        console.log(error)
+    });
 }
