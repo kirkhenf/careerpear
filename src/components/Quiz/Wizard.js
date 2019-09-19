@@ -100,7 +100,7 @@ export default class Wizard extends React.Component {
       }))
       this.props.addSomething(e.getState().values);
       if(!isLastPage) ReactGA.ga('send', 'pageview', '/quiz/' + this.brainType() + '/' + (this.state.page));
-      else ReactGA.ga('send', 'pageview', '/quiz/SignUp');
+      else ReactGA.ga('send', 'pageview', '/quiz/signup');
       this.props.getPageProgress((this.state.page + 1) / (React.Children.count(children) - 1) * 100);
     }
   }
@@ -122,7 +122,7 @@ export default class Wizard extends React.Component {
         }}
       >
         {({ handleSubmit, previous, next, form, form: { mutators: { clear } }, submitting, values }) => (
-          <form onSubmit={handleSubmit}>
+          <form style={{height: '100%', width: '100%'}} onSubmit={handleSubmit}>
             {activePage}
             <Grid item xs={12}>
               <Grid container spacing={16} justify="center">

@@ -75,9 +75,13 @@ export function generateCreativePersona(user, values) {
         })
     });
 
+    console.log(creativeResults);
+
     //get token and make fetch
     var fBase = getFirebase();
     fBase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+        console.log(idToken);
+        console.log(creativeResults);
         var bearer = 'Bearer ' + idToken;
         fetch('https://us-central1-careerpear-10c55.cloudfunctions.net/generateCreativePersona', {
             method: 'POST',
@@ -93,6 +97,8 @@ export function generateCreativePersona(user, values) {
             .then(response => response.json())
             .then(responseJson => {
                 console.log(responseJson);
+            }).catch(function (error) {
+                console.log(error);
             })
     }).catch(function (error) {
         console.log(error)
@@ -113,6 +119,8 @@ export function generateLogicalTraits(user, values) {
             weight: obj.weight, //need to populate
         })
     });
+
+    console.log(logicalResults);
 
     //get token and make fetch
     var fBase = getFirebase();

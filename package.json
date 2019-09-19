@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^4.0.0",
+    "@material-ui/lab": "^4.0.0-alpha.26",
     "classnames": "^2.2.6",
     "fetch-suspense": "^1.1.0",
     "final-form": "^4.13.0",

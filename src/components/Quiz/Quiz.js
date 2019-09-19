@@ -7,7 +7,12 @@ import { compose } from 'redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import useFetch from 'fetch-suspense';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import PlayArrow from '@material-ui/icons/PlayArrow'
 import ReactGA from 'react-ga';
+import { useState, useEffect } from 'react';
+import Skeleton from '@material-ui/lab/Skeleton';
+import Grid from '@material-ui/core/Grid'
+import Slide from '@material-ui/core/Slide';
 
 // Page imports
 import Wizard from './Wizard'
@@ -30,7 +35,7 @@ class Quiz extends React.Component {
   }
 
   componentDidMount() {
-    ReactGA.ga('send', 'pageview', '/Quiz');
+    ReactGA.ga('send', 'pageview', '/quiz');
   }
 
   handleChange = (event) => {
@@ -176,7 +181,19 @@ class Quiz extends React.Component {
     const { isFetching } = this.props;
     return (
       <div className="bodyContent">
+        <Grid container alignItems="center" justify="center" className="question">
+          <Grid item className="pearAvatarContainer">
+            <Slide in={true} direction="right">
+              <img className="pearAvatar" src={require('../../assets/dress_business_casual.png')} />
+            </Slide>
+            {/* <Skeleton variant="circle" width={200} height={200} /> */}
+          </Grid>
+          <Grid item className="quizInfo">
+            <h2>Hi hey hello</h2>
+          </Grid>
+        </Grid>
         <div className="quizContent">
+          <RightCarrot/>
           {!this.state.brain && <NormalRadios
             questionText={"Let's get you pear-ed! To start, which style best fits your personality?"}
             questionName="brain"
@@ -195,7 +212,8 @@ class Quiz extends React.Component {
             <this.QuizQuestions />
           </Suspense>}
         </div>
-        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress} />
+        <ProgressNumber progress={this.state.pageProgress} />
+        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress}>Test</LinearProgress>
       </div>
     )
   }
@@ -211,6 +229,68 @@ function mapDispatchToProps(dispatch) {
   return {
     addQuizResults: (quizResults, history, brain) => dispatch(addQuizResults(quizResults, history, brain))
   }
+}
+
+const RightCarrot = () => {
+  const { width } = useWindowDimensions();
+  var halfpoint = width / 2;
+  var style = {
+    position: 'absolute',
+    left: halfpoint - 14,
+    top: '75px',
+    fontSize: '40px',
+    color: 'white'
+  }
+  return (
+    <PlayArrow style={style} />
+  );
+}
+
+const ProgressNumber = (pageProgress) => {
+
+  const { width } = useWindowDimensions();
+  var currentWidth = (width * pageProgress.progress / 100);
+  var style = {
+    position: 'absolute',
+    left: '0px',
+    bottom: '0px',
+    width: currentWidth,
+    textAlign: 'center',
+    transition: 'width 0.5s',
+    lineHeight: 'normal',
+    marginBottom: '0px',
+    fontSize: '10px',
+    color: 'white',
+    zIndex: '1',
+  }
+  return (
+    <div style={style}>
+      {Math.round(pageProgress.progress)}%
+    </div>
+  );
+}
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
+
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
 }
 
 export default compose(

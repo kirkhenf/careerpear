@@ -77,7 +77,7 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}>
         <Router>
           <div className="page">
-            <Navigation />
+            {/* <Navigation /> */}
             <div className="content">
               <Route exact path={routes.LANDING} component={() => <LandingPage />} />
               <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
