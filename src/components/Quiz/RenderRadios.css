@@ -1,12 +1,3 @@
-/* .quizOptionGrid {
-    height: 100%;
-    width: 100%;
-} */
-
-input {
-    display: none;
-}
-
 .quizContent {
     flex: 1;
     text-align: center;
@@ -19,6 +10,24 @@ input {
     display: flex;
     align-content: space-between;
     flex-wrap: nowrap !important;
+}
+
+.answer {
+    flex: 1 !important;
+    width: 100%;
+    height: auto;   
+}
+
+.normalRadio {
+    height: 100%;
+}
+
+.quizOption:hover .radio {
+    color: #e91e63 !important;
+}
+
+.radio {
+    color: white !important;
 }
 
 .questionText {
@@ -36,6 +45,8 @@ input {
 .quizOptionsGrid {
     justify-content: space-between;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .questionTextBorder {
@@ -47,4 +58,6 @@ input {
 
 .outerAnswers {
     flex: 4 !important;
+    display: flex;
+    flex-direction: column;
 }
