@@ -3,14 +3,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
 import Grow from "@material-ui/core/Grow"
 import { Field } from 'react-final-form'
-import { Button } from '@material-ui/core/Button'
 import { Radio } from "final-form-material-ui";
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography'
 import NormalRadio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
-import Input from '@material-ui/core/Input';
 import './RenderRadios.css'
+import { Avatar } from "@material-ui/core";
 
 
 const styles = theme => ({
@@ -34,7 +33,7 @@ const styles = theme => ({
     background: 'transparent',
     '&:hover': {
       background: "white",
-      boxShadow: '0 0 11px rgba(33,33,33,.2)',
+      boxShadow: '0 0 11px rgba(33,33,33,.33)',
       transition: 'all .2s ease-in-out',
       transform: 'scale(1.05)'
     },
@@ -50,8 +49,8 @@ const styles = theme => ({
   },
   label: {
     color: 'white',
+    textAlign: 'left',
     '& $label': {
-      textAlign: 'center',
       width: '100%',
       padding: '5px'
     },
@@ -80,6 +79,7 @@ const RenderWizardRadios = props => {
                       <Field
                         classes={{ root: 'radio' }}
                         name={questionName}
+                        icon={<Avatar className="radio">{(String.fromCharCode(97 + key)).toUpperCase()}</Avatar>}
                         color="primary"
                         component={Radio}
                         type="radio"
@@ -115,7 +115,7 @@ const RenderNormalRadios = props => {
                       classes={{ root: classes.quizOption, label: classes.label }}
                       label={option.label}
                       className="quizOption"
-                      control={<NormalRadio className="radio" />}
+                      control={<NormalRadio icon={<Avatar>{(String.fromCharCode(97 + key)).toUpperCase()}</Avatar>} className="radio" />}
                       value={option.value}
                       onClick={handleChange}
                     />
@@ -151,6 +151,7 @@ const RenderImageRadios = props => {
                       <Field
                         classes={{ root: 'radio' }}
                         name={questionName}
+                        icon={<Avatar>{(String.fromCharCode(97 + key)).toUpperCase()}</Avatar>}
                         color="primary"
                         component={Radio}
                         type="radio"

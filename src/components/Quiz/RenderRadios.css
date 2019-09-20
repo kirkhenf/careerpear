@@ -23,7 +23,8 @@
 }
 
 .quizOption:hover .radio {
-    color: #e91e63 !important;
+    color: white !important;
+    /* background-color: #e91e63 !important; */
 }
 
 .radio {
