@@ -13,22 +13,11 @@ import { Avatar } from "@material-ui/core";
 
 
 const styles = theme => ({
-  quizOptionLabelSelected: {
-    border: "2px solid #297A6D !important",
-    minWidth: '50%',
-    marginRight: "0",
-    marginLeft: "0",
-    borderRadius: "4px",
-    width: '80%'
-  },
   image: {
-    maxWidth: '100%',
-    maxHeight: '100%'
+    width: '100%',
+    height: '100%'
   },
   quizOption: {
-    radio: {
-      color: 'yellow',
-    },
     color: 'white',
     background: 'transparent',
     '&:hover': {
@@ -45,15 +34,19 @@ const styles = theme => ({
     height: "100%",
     marginLeft: "auto",
     borderRadius: "4px",
-    width: '80%'
+    width: '90%'
   },
   label: {
     color: 'white',
     textAlign: 'left',
-    '& $label': {
-      width: '100%',
-      padding: '5px'
-    },
+    padding: '5px',
+    maxHeight: '100%',
+    maxWidth: '100%'
+  },
+  imageLabel: {
+    display: 'inline-grid',
+    height: '100%',
+    width: '100%'
   }
 });
 
@@ -64,7 +57,7 @@ const RenderWizardRadios = props => {
       <Grid className="questionTextContainer" container item xs={12}>
         <Typography className="questionText" variant="h5">{questionText}</Typography>
       </Grid>
-      <div style={{ width: '80%', borderBottom: '2px dotted white', margin: '10px auto' }} />
+      <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
       <Grid className="outerAnswers" item xs={12}>
         <Grow timeout={500} in={true}>
           <Grid container className="quizOptionsGrid" justify="center" alignItems="center">
@@ -77,7 +70,6 @@ const RenderWizardRadios = props => {
                     className="quizOption"
                     control={
                       <Field
-                        classes={{ root: 'radio' }}
                         name={questionName}
                         icon={<Avatar className="radio">{(String.fromCharCode(97 + key)).toUpperCase()}</Avatar>}
                         color="primary"
@@ -103,7 +95,7 @@ const RenderNormalRadios = props => {
       <Grid className="questionTextContainer" container item xs={12}>
         <Typography className="questionText" variant="h5">{questionText}</Typography>
       </Grid>
-      <div style={{ width: '80%', borderBottom: '2px dotted white', margin: '10px auto' }} />
+      <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
       <Grid className="outerAnswers" item xs={12}>
         <Grow timeout={500} in={true}>
           <Grid container className="quizOptionsGrid" justify="center" alignItems="center">
@@ -115,7 +107,7 @@ const RenderNormalRadios = props => {
                       classes={{ root: classes.quizOption, label: classes.label }}
                       label={option.label}
                       className="quizOption"
-                      control={<NormalRadio icon={<Avatar>{(String.fromCharCode(97 + key)).toUpperCase()}</Avatar>} className="radio" />}
+                      control={<NormalRadio icon={<Avatar className="radio">{(String.fromCharCode(97 + key)).toUpperCase()}</Avatar>} />}
                       value={option.value}
                       onClick={handleChange}
                     />
@@ -133,25 +125,24 @@ const RenderImageRadios = props => {
   const { options, classes, questionName, questionText } = props;
   return (
     <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-      <Grid className="questionTextContainer" item xs={12}>
+      <Grid className="questionTextContainer" container item xs={12}>
         <Typography className="questionText" variant="h5">{questionText}</Typography>
       </Grid>
-      <div style={{ width: '80%', borderBottom: '2px dotted white', margin: '10px auto' }} />
+      <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
       <Grid className="outerAnswers" item xs={12}>
         <Grow timeout={500} in={true}>
-          <Grid container className="quizOptionsGrid" container justify="center" alignItems="center">
+          <Grid container className="quizOptionsGrid" justify="center" alignItems="center">
             {
               options.map((option, key) => (
                 <Grid className="answer" key={key} item xs={12} sm={12} md={12} lg={12}>
                   <FormControlLabel
-                    classes={{ root: classes.quizOption, label: classes.label }}
+                    classes={{ root: classes.quizOption, label: classes.imageLabel }}
                     className="quizOption"
                     label={<img className={classes.image} src={option.imageSrc} />}
                     control={
                       <Field
-                        classes={{ root: 'radio' }}
                         name={questionName}
-                        icon={<Avatar>{(String.fromCharCode(97 + key)).toUpperCase()}</Avatar>}
+                        icon={<Avatar className="radio">{(String.fromCharCode(97 + key)).toUpperCase()}</Avatar>}
                         color="primary"
                         component={Radio}
                         type="radio"

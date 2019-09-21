@@ -31,6 +31,8 @@ class Quiz extends React.Component {
       values: '',
       pageProgress: 0,
       isFetching: false,
+      numPages: 0,
+      currentPage: 0
     }
   }
 
@@ -73,9 +75,11 @@ class Quiz extends React.Component {
           }
           return errors;
         }}>
-        <Typography variant="h5">You did it!</Typography>
-        <SignUpForm
-          firstName={this.state.values.firstName} />
+        <Grid className="signUpForm" item>
+          <Typography variant="h5">You did it!</Typography>
+          <SignUpForm
+            firstName={this.state.values.firstName} />
+        </Grid>
       </Wizard.Page>
     )
   }
@@ -165,7 +169,10 @@ class Quiz extends React.Component {
   }
 
   getPageProgress(pageProgress) {
-    this.setState({ pageProgress: pageProgress });
+    this.setState({
+      currentPage: pageProgress.currentPage + 1,
+      numPages: pageProgress.numPages
+    });
   }
 
   onSubmit = (values) => {
@@ -181,21 +188,24 @@ class Quiz extends React.Component {
     const { isFetching } = this.props;
     return (
       <div className="bodyContent">
-        <Grid container alignItems="center" justify="center" className="question">
+        <Grid container alignItems="center" className="question" spacing={16}>
+          <Grid container item className="questionNumber">
+            {this.state.brain && (this.state.currentPage <= this.state.numPages) && <Typography variant="h5" className="questionNumberText">Question {this.state.currentPage}/{this.state.numPages}</Typography>}
+          </Grid>
+          <div style={{ width: '50%', borderBottom: '1px solid #e91e63', margin: '10px auto 0px auto' }} />
           <Grid item className="pearAvatarContainer">
             <Slide in={true} direction="right">
               <img className="pearAvatar" src={require('../../assets/dress_business_casual.png')} />
             </Slide>
-            {/* <Skeleton variant="circle" width={200} height={200} /> */}
-          </Grid>
-          <Grid item className="quizInfo">
-            <h2>Hi hey hello</h2>
+            <Grid item className="quizInfo">
+              <h2>Let's get you pear-ed!</h2>
+            </Grid>
           </Grid>
         </Grid>
         <div className="quizContent">
-          <RightCarrot/>
+          <RightCarrot />
           {!this.state.brain && <NormalRadios
-            questionText={"Let's get you pear-ed! To start, which style best fits your personality?"}
+            questionText={"Which best describes you?"}
             questionName="brain"
             handleChange={this.handleChange}
             options={[
@@ -212,8 +222,8 @@ class Quiz extends React.Component {
             <this.QuizQuestions />
           </Suspense>}
         </div>
-        <ProgressNumber progress={this.state.pageProgress} />
-        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress}>Test</LinearProgress>
+        {/* <ProgressNumber progress={this.state.pageProgress} />
+        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress}>Test</LinearProgress> */}
       </div>
     )
   }

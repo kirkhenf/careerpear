@@ -38,6 +38,10 @@ export default class Wizard extends React.Component {
       page: 0,
       values: props.initialValues || {}
     }
+    this.props.getPageProgress({
+      currentPage: this.state.page,
+      numPages: props.children[0].length
+    })
   }
 
   // next = values => {
@@ -62,7 +66,11 @@ export default class Wizard extends React.Component {
       page: Math.max(state.page - 1, 0)
     }))
     ReactGA.ga('send', 'pageview', '/quiz/' + this.brainType() + '/' + (this.state.page));
-    this.props.getPageProgress((this.state.page - 1) / (React.Children.count(children) - 1) * 100);
+    // this.props.getPageProgress((this.state.page - 1) / (React.Children.count(children) - 1) * 100);
+    this.props.getPageProgress({
+      currentPage: this.state.page - 1,
+      numPages: React.Children.count(children) - 1
+    });
   }
 
   /**
@@ -101,7 +109,10 @@ export default class Wizard extends React.Component {
       this.props.addSomething(e.getState().values);
       if(!isLastPage) ReactGA.ga('send', 'pageview', '/quiz/' + this.brainType() + '/' + (this.state.page));
       else ReactGA.ga('send', 'pageview', '/quiz/signup');
-      this.props.getPageProgress((this.state.page + 1) / (React.Children.count(children) - 1) * 100);
+      this.props.getPageProgress({
+        currentPage: this.state.page + 1,
+        numPages: React.Children.count(children) -1
+      });
     }
   }
 

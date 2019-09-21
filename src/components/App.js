@@ -23,8 +23,8 @@ import withAuthentication from './Authentication/withAuthentication.js';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#297A6D',
-      contrastText: '#ffffff'
+      main: '#77a6f7',
+      contrastText: 'black'
     },
     secondary: {
       main: '#ffffff',
@@ -51,13 +51,6 @@ const theme = createMuiTheme({
       xl: 1920
     }
   }
-  // overrides: {
-  //   MuiButton: { // Name of the component ⚛️ / style sheet
-  //     text: { // Name of the rule
-  //       color: 'blue', // Some CSS
-  //     },
-  //   },
-  // },
 });
 
 function initializeReactGA() {

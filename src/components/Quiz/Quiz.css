@@ -6,8 +6,8 @@
 }
 
 .pearAvatarContainer {
-    flex: 1;
-    padding-top: 75px;
+    flex: 4;
+    margin: 8px !important;
 }
 
 .pearAvatar {
@@ -18,7 +18,7 @@
 
 .quizInfo {
     flex: 1;
-    height: 100%;
+    text-align: center;
 }
 
 .question {
@@ -26,6 +26,8 @@
     background-color: white;
     display: flex;
     flex-direction: column;
+    margin: 0px !important;
+    padding: 0px! important;
 }
 
 .quizProgress {
@@ -41,6 +43,21 @@
     display: block !important;
 }
 
-.quizOptionGrid {
-    padding: 8px;
+.questionNumber {
+    flex: 0.75;
+    /* padding: 15px; */
+    width: 90%;
+    text-align: center;
+}
+
+.questionNumberText {
+    color: #e91e63 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: auto !important;
+    padding: 0px 15px 0px 15px;
+}
+
+.signUpForm {
+    margin: auto;
 }
