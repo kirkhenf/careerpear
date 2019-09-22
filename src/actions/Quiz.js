@@ -36,18 +36,27 @@ export function addQuizResults(results, history, brain) {
                         results.uid = user.uid;
                         results.created = fStore.Timestamp.fromDate(new Date());
                         results.updated = results.created;
-                        if (brain == 0) generateLogicalTraits(user, results);
-                        else generateCreativePersona(user, results);
-
-                        var quizValues = _.omit(results, ['email', 'firstName', 'lastName', 'passwordOne']);
-                        fStore.collection('quizResults').add(quizValues).then((data) => {
-                            //dispatch successful write, tell isFetching false
+                        if (brain == 0) generateLogicalTraits(user, results).then(function (data) {
                             dispatch({ type: SUCCESFUL_WRITE, payload: data });
-                            history.push(routes.HOME);
-                        }).catch((error) => {
-                            //dispatch error
-                            dispatch({ type: ERROR, error: error });
-                        });
+                            sendHome(history)
+                        }).catch(function (error) {
+                            console.log(error)
+                        })
+                        else generateCreativePersona(user, results).then(function (data) {
+                            dispatch({ type: SUCCESFUL_WRITE, payload: data });
+                            sendHome(history)
+                        }).catch(function (error) {
+                            console.log(error)
+                        })
+                        // // var quizValues = _.omit(results, ['email', 'firstName', 'lastName', 'passwordOne']);
+                        // // fStore.collection('quizResults').add(quizValues).then((data) => {
+                        // //     //dispatch successful write, tell isFetching false
+                        // dispatch({ type: SUCCESFUL_WRITE, payload: data });
+                        // history.push(routes.HOME);
+                        // }).catch((error) => {
+                        //     //dispatch error
+                        //     dispatch({ type: ERROR, error: error });
+                        // });
                     } else {
                         return "You're not logged in."
                     }
@@ -61,11 +70,15 @@ export function addQuizResults(results, history, brain) {
     }
 }
 
+export function sendHome(history) {
+    history.push(routes.HOME);
+}
+
 export function getQuizResults() {
 
 }
 
-export function generateCreativePersona(user, values) {
+function generateCreativePersona(user, values) {
     var rawResults = _.omit(values, ['email', 'firstName', 'created', 'lastName', 'passwordOne', 'uid', 'updated']);
     var creativeResults = [];
     Object.keys(rawResults).map(function (key) {
@@ -77,9 +90,9 @@ export function generateCreativePersona(user, values) {
 
     //get token and make fetch
     var fBase = getFirebase();
-    fBase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+    return fBase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
         var bearer = 'Bearer ' + idToken;
-        fetch('https://us-central1-careerpear-10c55.cloudfunctions.net/generateCreativePersona', {
+        return fetch('https://us-central1-careerpear-10c55.cloudfunctions.net/generateCreativePersona', {
             method: 'POST',
             withCredentials: true,
             credentials: 'include',
@@ -90,17 +103,15 @@ export function generateCreativePersona(user, values) {
             },
             body: JSON.stringify(creativeResults)
         })
-            .then(response => response.json())
-            .then(responseJson => {
-                console.log(responseJson);
+            .then((response) => {
+                return response.json();
             })
     }).catch(function (error) {
         console.log(error)
     });
-
 }
 
-export function generateLogicalTraits(user, values) {
+function generateLogicalTraits(user, values) {
     console.log(values);
     var rawResults = _.omit(values, ['email', 'firstName', 'created', 'lastName', 'passwordOne', 'uid', 'updated']);
     var logicalResults = [];
@@ -116,9 +127,9 @@ export function generateLogicalTraits(user, values) {
 
     //get token and make fetch
     var fBase = getFirebase();
-    fBase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+    return fBase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
         var bearer = 'Bearer ' + idToken;
-        fetch('https://us-central1-careerpear-10c55.cloudfunctions.net/generateLogicalTraits', {
+        return fetch('https://us-central1-careerpear-10c55.cloudfunctions.net/generateLogicalTraits', {
             method: 'POST',
             withCredentials: true,
             credentials: 'include',
@@ -129,9 +140,8 @@ export function generateLogicalTraits(user, values) {
             },
             body: JSON.stringify(logicalResults)
         })
-            .then(response => response.json())
-            .then(responseJson => {
-                console.log(responseJson);
+            .then((response) => {
+                return response.json();
             })
     }).catch(function (error) {
         console.log(error)

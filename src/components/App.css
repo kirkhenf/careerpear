@@ -61,10 +61,6 @@
   text-align: center;
 }
 
-Button {
-  /* width: 100%; */
-}
-
 .withLine {
   width:inherit;
   position: relative;

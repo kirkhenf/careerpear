@@ -2,12 +2,18 @@ import React, { Suspense } from 'react'
 import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography'
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button'
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux'
-import LinearProgress from '@material-ui/core/LinearProgress'
 import useFetch from 'fetch-suspense';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import PlayArrow from '@material-ui/icons/PlayArrow'
 import ReactGA from 'react-ga';
+import { useState, useEffect } from 'react';
+import Grid from '@material-ui/core/Grid'
+import Slide from '@material-ui/core/Slide';
+import Grow from "@material-ui/core/Grow"
+import Hidden from '@material-ui/core/Hidden';
 
 // Page imports
 import Wizard from './Wizard'
@@ -26,11 +32,13 @@ class Quiz extends React.Component {
       values: '',
       pageProgress: 0,
       isFetching: false,
+      numPages: 0,
+      currentPage: 0
     }
   }
 
   componentDidMount() {
-    ReactGA.ga('send', 'pageview', '/Quiz');
+    ReactGA.ga('send', 'pageview', '/quiz');
   }
 
   handleChange = (event) => {
@@ -68,9 +76,10 @@ class Quiz extends React.Component {
           }
           return errors;
         }}>
-        <Typography variant="h5">You did it!</Typography>
-        <SignUpForm
-          firstName={this.state.values.firstName} />
+        <Grid className="signUpForm" item>
+          <SignUpForm />
+          <Button className="submitButton" color="secondary" variant="contained" type="submit">Submit</Button>
+        </Grid>
       </Wizard.Page>
     )
   }
@@ -84,7 +93,8 @@ class Quiz extends React.Component {
     var options = [];
     const { isFetching } = this.props;
     var values = this.state.values;
-    if (brain == 0) { // Logical Quiz
+
+    if (brain == 0) {
       return (
         <Wizard
           brain={brain}
@@ -108,17 +118,37 @@ class Quiz extends React.Component {
               )
             )),
             <Wizard.Page key={value.questionId}>
-              <WizardRadios
-                questionText={value.question}
-                questionName={value.questionId}
-                options={options}
-              />
+              <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+                <Grid className="questionTextContainer" container item xs={12}>
+                  <Typography className="questionText" variant="h5">{value.question}</Typography>
+                </Grid>
+                <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+                <Grid className="outerAnswers" item xs={12}>
+                  <Grow timeout={500} in={true}>
+                    <WizardRadios
+                      questionText={value.question}
+                      questionName={value.questionId}
+                      options={options}
+                    />
+                  </Grow>
+                </Grid>
+              </Grid >
             </Wizard.Page>
           ))}
-          {this.getSubmissionPage()}
+          <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+            <Grid className="questionTextContainer" container item xs={12}>
+              <Typography className="questionText" variant="h5">You did it! Sign up to view your results</Typography>
+            </Grid>
+            <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+            <Grid className="outerAnswers" item xs={12}>
+              <Grow timeout={500} in={true}>
+                {this.getSubmissionPage()}
+              </Grow>
+            </Grid>
+          </Grid >
         </Wizard>
       )
-    } else if (brain == 1) // Creative quiz
+    } else if (brain == 1) {
       return (
         <Wizard
           brain={brain}
@@ -140,17 +170,37 @@ class Quiz extends React.Component {
               )
             )),
             <Wizard.Page key={value.questionId}>
-              <ImageRadios
-                questionText={value.question}
-                questionName={value.questionId}
-                options={options}
-              />
+              <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+                <Grid className="questionTextContainer" container item xs={12}>
+                  <Typography className="questionText" variant="h5">{value.question}</Typography>
+                </Grid>
+                <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+                <Grid className="outerAnswers" item xs={12}>
+                  <Grow timeout={500} in={true}>
+                    <ImageRadios
+                      questionText={value.question}
+                      questionName={value.questionId}
+                      options={options}
+                    />
+                  </Grow>
+                </Grid>
+              </Grid >
             </Wizard.Page>
           ))}
-          {this.getSubmissionPage()}
+          <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+            <Grid className="questionTextContainer" container item xs={12}>
+              <Typography className="questionText" variant="h5">You did it! Sign up to view your results</Typography>
+            </Grid>
+            <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+            <Grid className="outerAnswers" item xs={12}>
+              <Grow timeout={500} in={true}>
+                {this.getSubmissionPage()}
+              </Grow>
+            </Grid>
+          </Grid >
         </Wizard>
       )
-    return (wizardArray);
+    } else return wizardArray;
   }
 
   quizData = require('../../config/questions.json');
@@ -160,7 +210,10 @@ class Quiz extends React.Component {
   }
 
   getPageProgress(pageProgress) {
-    this.setState({ pageProgress: pageProgress });
+    this.setState({
+      currentPage: pageProgress.currentPage + 1,
+      numPages: pageProgress.numPages
+    });
   }
 
   onSubmit = (values) => {
@@ -175,28 +228,57 @@ class Quiz extends React.Component {
   render() {
     const { isFetching } = this.props;
     return (
-      <div className="bodyContent">
-        <div className="quizContent">
-          {!this.state.brain && <NormalRadios
-            questionText={"Let's get you pear-ed! To start, which style best fits your personality?"}
-            questionName="brain"
-            handleChange={this.handleChange}
-            options={[
-              {
-                value: "0",
-                label: "Logical"
-              },
-              {
-                value: "1",
-                label: "Creative"
-              }
-            ]} />}
+      <Grid container className="bodyContent">
+        <Hidden xsDown>
+          <Grid sm={6} item container alignItems="center" className="leftContainer" spacing={16}>
+            <Grid container item className="questionNumber">
+              {this.state.brain && (this.state.currentPage <= this.state.numPages) && <Typography variant="h5" className="questionNumberText">Question {this.state.currentPage}/{this.state.numPages}</Typography>}
+            </Grid>
+            <div style={{ width: '50%', borderBottom: '1px solid #e91e63', margin: '10px auto 0px auto' }} />
+            <Grid item className="pearAvatarContainer">
+              <Slide in={true} direction="right">
+                <img className="pearAvatar" src={require('../../assets/dress_business_casual.png')} />
+              </Slide>
+              <Grid item className="quizInfo">
+                <h2>Let's get you pear-ed!</h2>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Hidden>
+        <Grid xs={12} sm={6} item className="rightContainer">
+          <Hidden xsDown><RightCarrot /></Hidden>
+          {!this.state.brain &&
+            <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+              <Grid className="questionTextContainer" container item xs={12}>
+                <Typography className="questionText" variant="h5">Which best describes you?</Typography>
+              </Grid>
+              <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+              <Grid className="outerAnswers" item xs={12}>
+                <Grow timeout={500} in={true}>
+                  <NormalRadios
+                    questionName="brain"
+                    handleChange={this.handleChange}
+                    options={[
+                      {
+                        value: "0",
+                        label: "Logical"
+                      },
+                      {
+                        value: "1",
+                        label: "Creative"
+                      }
+                    ]} />
+                </Grow>
+              </Grid>
+            </Grid>
+          }
           {this.state.brain && <Suspense fallback={<CircularProgress />}>
             <this.QuizQuestions />
           </Suspense>}
-        </div>
-        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress} />
-      </div>
+        </Grid>
+        {/* <ProgressNumber progress={this.state.pageProgress} />
+        <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress}>Test</LinearProgress> */}
+      </Grid >
     )
   }
 }
@@ -211,6 +293,46 @@ function mapDispatchToProps(dispatch) {
   return {
     addQuizResults: (quizResults, history, brain) => dispatch(addQuizResults(quizResults, history, brain))
   }
+}
+
+const RightCarrot = () => {
+  const { width } = useWindowDimensions();
+  var halfpoint = width / 2;
+  var style = {
+    position: 'absolute',
+    left: halfpoint - 14,
+    top: '75px',
+    fontSize: '40px',
+    color: 'white'
+  }
+  return (
+    <PlayArrow style={style} />
+  );
+}
+
+
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
+
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
 }
 
 export default compose(

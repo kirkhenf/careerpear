@@ -13,7 +13,8 @@ const CREATIVE = 1;
 const LOCICAL = 0;
 
 const clear = ([children, page, previous, reset], state, { changeValue }) => {
-  if(page != 0) {var element = React.Children.toArray(children)[page - 1].props.children.props.questionName;
+  if (page != 0) {
+    var element = React.Children.toArray(children)[page - 1].props.children.props.children[2].props.children.props.children.props.questionName;
     previous();
     changeValue(state, element, () => undefined)
   } else {
@@ -25,7 +26,7 @@ export default class Wizard extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired
   }
-  
+
   static Page = ({ children }) => this.getChildren(children)
 
   static getChildren = children => {
@@ -38,6 +39,10 @@ export default class Wizard extends React.Component {
       page: 0,
       values: props.initialValues || {}
     }
+    this.props.getPageProgress({
+      currentPage: this.state.page,
+      numPages: props.children[0].length
+    })
   }
 
   // next = values => {
@@ -51,7 +56,7 @@ export default class Wizard extends React.Component {
   // }
 
   brainType = () => {
-    if(this.props.brain === CREATIVE) {
+    if (this.props.brain === CREATIVE) {
       return 'creative'
     } else return 'logical'
   }
@@ -62,7 +67,11 @@ export default class Wizard extends React.Component {
       page: Math.max(state.page - 1, 0)
     }))
     ReactGA.ga('send', 'pageview', '/quiz/' + this.brainType() + '/' + (this.state.page));
-    this.props.getPageProgress((this.state.page - 1) / (React.Children.count(children) - 1) * 100);
+    // this.props.getPageProgress((this.state.page - 1) / (React.Children.count(children) - 1) * 100);
+    this.props.getPageProgress({
+      currentPage: this.state.page - 1,
+      numPages: React.Children.count(children) - 1
+    });
   }
 
   /**
@@ -99,9 +108,12 @@ export default class Wizard extends React.Component {
         values
       }))
       this.props.addSomething(e.getState().values);
-      if(!isLastPage) ReactGA.ga('send', 'pageview', '/quiz/' + this.brainType() + '/' + (this.state.page));
-      else ReactGA.ga('send', 'pageview', '/quiz/SignUp');
-      this.props.getPageProgress((this.state.page + 1) / (React.Children.count(children) - 1) * 100);
+      if (!isLastPage) ReactGA.ga('send', 'pageview', '/quiz/' + this.brainType() + '/' + (this.state.page));
+      else ReactGA.ga('send', 'pageview', '/quiz/signup');
+      this.props.getPageProgress({
+        currentPage: this.state.page + 1,
+        numPages: React.Children.count(children) - 1
+      });
     }
   }
 
@@ -122,22 +134,16 @@ export default class Wizard extends React.Component {
         }}
       >
         {({ handleSubmit, previous, next, form, form: { mutators: { clear } }, submitting, values }) => (
-          <form onSubmit={handleSubmit}>
+          <form style={{ height: '100%', width: '100%' }} onSubmit={handleSubmit}>
             {activePage}
-            <Grid item xs={12}>
-              <Grid container spacing={16} justify="center">
-                  <Fab color="secondary" onClick={() => clear(children, page, () => this.previous(), reset)} style={{ position: 'fixed', bottom: '30px', left: '15px' }}>
-                    <ChevronLeftIcon />
-                  </Fab>
-                {/* {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>} */}
-                {isLastPage && (
-                  <Grid item>
-                    <Button color="primary" variant="contained" type="submit" disabled={isFetching}>Submit</Button>
-                  </Grid>
-                )}
-              </Grid>
-            </Grid>
-            <FormSpy onChange={() => next(values, form)} subscription={{ values: true }}/>
+            <Fab color="secondary" onClick={() => clear(children, page, () => this.previous(), reset)} style={{ position: 'fixed', bottom: '30px', left: '15px' }}>
+              <ChevronLeftIcon />
+            </Fab>
+            {/* {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>} */}
+            {/* {isLastPage && (
+              <Button className="submitButton" color="secondary" variant="contained" type="submit" disabled={isFetching}>Submit</Button>
+            )} */}
+            <FormSpy onChange={() => next(values, form)} subscription={{ values: true }} />
             {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
           </form>
         )}

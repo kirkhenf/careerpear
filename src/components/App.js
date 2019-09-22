@@ -23,12 +23,12 @@ import withAuthentication from './Authentication/withAuthentication.js';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#297A6D',
-      contrastText: '#ffffff'
+      main: '#77a6f7',
+      contrastText: 'black'
     },
     secondary: {
       main: '#ffffff',
-      contrastText: '#297A6D',
+      contrastText: '#e91e63',
     }
   },
   status: {
@@ -51,13 +51,6 @@ const theme = createMuiTheme({
       xl: 1920
     }
   }
-  // overrides: {
-  //   MuiButton: { // Name of the component ⚛️ / style sheet
-  //     text: { // Name of the rule
-  //       color: 'blue', // Some CSS
-  //     },
-  //   },
-  // },
 });
 
 function initializeReactGA() {
@@ -77,7 +70,7 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}>
         <Router>
           <div className="page">
-            <Navigation />
+            {/* <Navigation /> */}
             <div className="content">
               <Route exact path={routes.LANDING} component={() => <LandingPage />} />
               <Route exact path={routes.SIGN_UP} component={() => <SignUpPage />} />
