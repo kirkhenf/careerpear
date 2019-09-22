@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography'
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button'
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux'
 import LinearProgress from '@material-ui/core/LinearProgress'
@@ -77,9 +78,8 @@ class Quiz extends React.Component {
           return errors;
         }}>
         <Grid className="signUpForm" item>
-          <Typography variant="h5">You did it!</Typography>
-          <SignUpForm
-            firstName={this.state.values.firstName} />
+          <SignUpForm />
+          <Button className="submitButton" color="secondary" variant="contained" type="submit">Submit</Button>
         </Grid>
       </Wizard.Page>
     )
@@ -136,7 +136,17 @@ class Quiz extends React.Component {
               </Grid >
             </Wizard.Page>
           ))}
-          {this.getSubmissionPage()}
+          <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+            <Grid className="questionTextContainer" container item xs={12}>
+              <Typography className="questionText" variant="h5">You did it! Sign up to view your results</Typography>
+            </Grid>
+            <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+            <Grid className="outerAnswers" item xs={12}>
+              <Grow timeout={500} in={true}>
+                {this.getSubmissionPage()}
+              </Grow>
+            </Grid>
+          </Grid >
         </Wizard>
       )
     } else if (brain == 1) {
@@ -178,7 +188,17 @@ class Quiz extends React.Component {
               </Grid >
             </Wizard.Page>
           ))}
-          {this.getSubmissionPage()}
+          <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+            <Grid className="questionTextContainer" container item xs={12}>
+              <Typography className="questionText" variant="h5">You did it! Sign up to view your results</Typography>
+            </Grid>
+            <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+            <Grid className="outerAnswers" item xs={12}>
+              <Grow timeout={500} in={true}>
+                {this.getSubmissionPage()}
+              </Grow>
+            </Grid>
+          </Grid >
         </Wizard>
       )
     } else return wizardArray;
@@ -224,7 +244,7 @@ class Quiz extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        <div className="quizContent">
+        <div className="rightContainer">
           <RightCarrot />
           {!this.state.brain &&
             <Grid container justify="flex-end" className="questionGrid" spacing={16}>
@@ -233,9 +253,7 @@ class Quiz extends React.Component {
               </Grid>
               <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
               <Grid className="outerAnswers" item xs={12}>
-
                 <Grow timeout={500} in={true}>
-
                   <NormalRadios
                     questionName="brain"
                     handleChange={this.handleChange}
@@ -291,29 +309,7 @@ const RightCarrot = () => {
   );
 }
 
-const ProgressNumber = (pageProgress) => {
 
-  const { width } = useWindowDimensions();
-  var currentWidth = (width * pageProgress.progress / 100);
-  var style = {
-    position: 'absolute',
-    left: '0px',
-    bottom: '0px',
-    width: currentWidth,
-    textAlign: 'center',
-    transition: 'width 0.5s',
-    lineHeight: 'normal',
-    marginBottom: '0px',
-    fontSize: '10px',
-    color: 'white',
-    zIndex: '1',
-  }
-  return (
-    <div style={style}>
-      {Math.round(pageProgress.progress)}%
-    </div>
-  );
-}
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;

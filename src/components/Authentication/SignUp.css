@@ -1,3 +1,7 @@
 .signUpLink {
     text-align: center;
 }
+
+[class*='MuiOutlined'] {
+    border-color: white !important;
+}

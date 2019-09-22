@@ -61,3 +61,30 @@
 .signUpForm {
     margin: auto;
 }
+
+.rightContainer {
+    flex: 1;
+    text-align: center;
+    background-color: #77a6f7;
+}
+
+.questionGrid {
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0px !important;
+    flex-direction: column;
+    display: flex;
+    align-content: space-between;
+    flex-wrap: nowrap !important;
+}
+
+.signUpForm {
+    width: 90% !important;
+    margin: auto !important;
+}
+
+.submitButton {
+    margin-top: 16px !important;
+    position: initial;
+    width: 100%;
+} 
