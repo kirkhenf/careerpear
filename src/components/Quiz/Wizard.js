@@ -13,7 +13,8 @@ const CREATIVE = 1;
 const LOCICAL = 0;
 
 const clear = ([children, page, previous, reset], state, { changeValue }) => {
-  if(page != 0) {var element = React.Children.toArray(children)[page - 1].props.children.props.questionName;
+  if(page != 0) {
+    var element = React.Children.toArray(children)[page - 1];
     previous();
     changeValue(state, element, () => undefined)
   } else {

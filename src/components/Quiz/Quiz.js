@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Grid from '@material-ui/core/Grid'
 import Slide from '@material-ui/core/Slide';
+import Grow from "@material-ui/core/Grow"
 
 // Page imports
 import Wizard from './Wizard'
@@ -93,7 +94,8 @@ class Quiz extends React.Component {
     var options = [];
     const { isFetching } = this.props;
     var values = this.state.values;
-    if (brain == 0) { // Logical Quiz
+
+    if (brain == 0) {
       return (
         <Wizard
           brain={brain}
@@ -117,17 +119,27 @@ class Quiz extends React.Component {
               )
             )),
             <Wizard.Page key={value.questionId}>
-              <WizardRadios
-                questionText={value.question}
-                questionName={value.questionId}
-                options={options}
-              />
+              <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+                <Grid className="questionTextContainer" container item xs={12}>
+                  <Typography className="questionText" variant="h5">{value.question}</Typography>
+                </Grid>
+                <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+                <Grid className="outerAnswers" item xs={12}>
+                  <Grow timeout={500} in={true}>
+                    <WizardRadios
+                      questionText={value.question}
+                      questionName={value.questionId}
+                      options={options}
+                    />
+                  </Grow>
+                </Grid>
+              </Grid >
             </Wizard.Page>
           ))}
           {this.getSubmissionPage()}
         </Wizard>
       )
-    } else if (brain == 1) // Creative quiz
+    } else if (brain == 1) {
       return (
         <Wizard
           brain={brain}
@@ -149,17 +161,27 @@ class Quiz extends React.Component {
               )
             )),
             <Wizard.Page key={value.questionId}>
-              <ImageRadios
-                questionText={value.question}
-                questionName={value.questionId}
-                options={options}
-              />
+              <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+                <Grid className="questionTextContainer" container item xs={12}>
+                  <Typography className="questionText" variant="h5">{value.question}</Typography>
+                </Grid>
+                <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+                <Grid className="outerAnswers" item xs={12}>
+                  <Grow timeout={500} in={true}>
+                    <ImageRadios
+                      questionText={value.question}
+                      questionName={value.questionId}
+                      options={options}
+                    />
+                  </Grow>
+                </Grid>
+              </Grid >
             </Wizard.Page>
           ))}
           {this.getSubmissionPage()}
         </Wizard>
       )
-    return (wizardArray);
+    } else return wizardArray;
   }
 
   quizData = require('../../config/questions.json');
@@ -188,7 +210,7 @@ class Quiz extends React.Component {
     const { isFetching } = this.props;
     return (
       <div className="bodyContent">
-        <Grid container alignItems="center" className="question" spacing={16}>
+        <Grid container alignItems="center" className="leftContainer" spacing={16}>
           <Grid container item className="questionNumber">
             {this.state.brain && (this.state.currentPage <= this.state.numPages) && <Typography variant="h5" className="questionNumberText">Question {this.state.currentPage}/{this.state.numPages}</Typography>}
           </Grid>
@@ -204,27 +226,40 @@ class Quiz extends React.Component {
         </Grid>
         <div className="quizContent">
           <RightCarrot />
-          {!this.state.brain && <NormalRadios
-            questionText={"Which best describes you?"}
-            questionName="brain"
-            handleChange={this.handleChange}
-            options={[
-              {
-                value: "0",
-                label: "Logical"
-              },
-              {
-                value: "1",
-                label: "Creative"
-              }
-            ]} />}
+          {!this.state.brain &&
+            <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+              <Grid className="questionTextContainer" container item xs={12}>
+                <Typography className="questionText" variant="h5">Which best describes you?</Typography>
+              </Grid>
+              <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+              <Grid className="outerAnswers" item xs={12}>
+
+                <Grow timeout={500} in={true}>
+
+                  <NormalRadios
+                    questionName="brain"
+                    handleChange={this.handleChange}
+                    options={[
+                      {
+                        value: "0",
+                        label: "Logical"
+                      },
+                      {
+                        value: "1",
+                        label: "Creative"
+                      }
+                    ]} />
+                </Grow>
+              </Grid>
+            </Grid>
+          }
           {this.state.brain && <Suspense fallback={<CircularProgress />}>
             <this.QuizQuestions />
           </Suspense>}
         </div>
         {/* <ProgressNumber progress={this.state.pageProgress} />
         <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress}>Test</LinearProgress> */}
-      </div>
+      </div >
     )
   }
 }

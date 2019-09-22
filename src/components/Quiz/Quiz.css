@@ -21,7 +21,7 @@
     text-align: center;
 }
 
-.question {
+.leftContainer {
     flex: 1;
     background-color: white;
     display: flex;
