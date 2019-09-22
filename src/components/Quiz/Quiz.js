@@ -5,16 +5,15 @@ import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import { firebaseConnect } from 'react-redux-firebase';
 import { compose } from 'redux'
-import LinearProgress from '@material-ui/core/LinearProgress'
 import useFetch from 'fetch-suspense';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PlayArrow from '@material-ui/icons/PlayArrow'
 import ReactGA from 'react-ga';
 import { useState, useEffect } from 'react';
-import Skeleton from '@material-ui/lab/Skeleton';
 import Grid from '@material-ui/core/Grid'
 import Slide from '@material-ui/core/Slide';
 import Grow from "@material-ui/core/Grow"
+import Hidden from '@material-ui/core/Hidden';
 
 // Page imports
 import Wizard from './Wizard'
@@ -229,23 +228,25 @@ class Quiz extends React.Component {
   render() {
     const { isFetching } = this.props;
     return (
-      <div className="bodyContent">
-        <Grid container alignItems="center" className="leftContainer" spacing={16}>
-          <Grid container item className="questionNumber">
-            {this.state.brain && (this.state.currentPage <= this.state.numPages) && <Typography variant="h5" className="questionNumberText">Question {this.state.currentPage}/{this.state.numPages}</Typography>}
-          </Grid>
-          <div style={{ width: '50%', borderBottom: '1px solid #e91e63', margin: '10px auto 0px auto' }} />
-          <Grid item className="pearAvatarContainer">
-            <Slide in={true} direction="right">
-              <img className="pearAvatar" src={require('../../assets/dress_business_casual.png')} />
-            </Slide>
-            <Grid item className="quizInfo">
-              <h2>Let's get you pear-ed!</h2>
+      <Grid container className="bodyContent">
+        <Hidden xsDown>
+          <Grid sm={6} item container alignItems="center" className="leftContainer" spacing={16}>
+            <Grid container item className="questionNumber">
+              {this.state.brain && (this.state.currentPage <= this.state.numPages) && <Typography variant="h5" className="questionNumberText">Question {this.state.currentPage}/{this.state.numPages}</Typography>}
+            </Grid>
+            <div style={{ width: '50%', borderBottom: '1px solid #e91e63', margin: '10px auto 0px auto' }} />
+            <Grid item className="pearAvatarContainer">
+              <Slide in={true} direction="right">
+                <img className="pearAvatar" src={require('../../assets/dress_business_casual.png')} />
+              </Slide>
+              <Grid item className="quizInfo">
+                <h2>Let's get you pear-ed!</h2>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <div className="rightContainer">
-          <RightCarrot />
+        </Hidden>
+        <Grid xs={12} sm={6} item className="rightContainer">
+          <Hidden xsDown><RightCarrot /></Hidden>
           {!this.state.brain &&
             <Grid container justify="flex-end" className="questionGrid" spacing={16}>
               <Grid className="questionTextContainer" container item xs={12}>
@@ -274,10 +275,10 @@ class Quiz extends React.Component {
           {this.state.brain && <Suspense fallback={<CircularProgress />}>
             <this.QuizQuestions />
           </Suspense>}
-        </div>
+        </Grid>
         {/* <ProgressNumber progress={this.state.pageProgress} />
         <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress}>Test</LinearProgress> */}
-      </div >
+      </Grid >
     )
   }
 }

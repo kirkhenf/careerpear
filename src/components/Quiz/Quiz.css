@@ -22,7 +22,6 @@
 }
 
 .leftContainer {
-    flex: 1;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -63,7 +62,6 @@
 }
 
 .rightContainer {
-    flex: 1;
     text-align: center;
     background-color: #77a6f7;
 }
