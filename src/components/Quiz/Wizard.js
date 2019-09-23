@@ -1,16 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, FormSpy } from 'react-final-form'
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import arrayMutators from 'final-form-arrays'
 import Fab from '@material-ui/core/Fab';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ReactGA from 'react-ga';
 
 const CREATIVE = 1;
-const LOCICAL = 0;
+const LOGICAL = 0;
+
+const styles = theme => ({
+  backButton: {
+    [theme.breakpoints.down('sm')]: {
+      top: '10px',
+      left: '10px'
+    },
+  }
+});
 
 const clear = ([children, page, previous, reset], state, { changeValue }) => {
   if (page != 0) {
@@ -22,7 +28,7 @@ const clear = ([children, page, previous, reset], state, { changeValue }) => {
   }
 }
 
-export default class Wizard extends React.Component {
+export class Wizard extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired
   }
@@ -118,7 +124,7 @@ export default class Wizard extends React.Component {
   }
 
   render() {
-    const { children, reset, isFetching } = this.props
+    const { children, reset, isFetching, classes } = this.props
     const { page, values } = this.state
     const activePage = React.Children.toArray(children)[page]
     const isLastPage = page === React.Children.count(children) - 1
@@ -136,7 +142,7 @@ export default class Wizard extends React.Component {
         {({ handleSubmit, previous, next, form, form: { mutators: { clear } }, submitting, values }) => (
           <form style={{ height: '100%', width: '100%' }} onSubmit={handleSubmit}>
             {activePage}
-            <Fab color="secondary" onClick={() => clear(children, page, () => this.previous(), reset)} style={{ position: 'fixed', bottom: '30px', left: '15px' }}>
+            <Fab color="secondary" classes={{ root: classes.backButton }} onClick={() => clear(children, page, () => this.previous(), reset)} style={{ position: 'fixed', bottom: '30px', left: '15px' }}>
               <ChevronLeftIcon />
             </Fab>
             {/* {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>} */}
@@ -151,3 +157,5 @@ export default class Wizard extends React.Component {
     )
   }
 }
+
+export default withStyles(styles)(Wizard)
