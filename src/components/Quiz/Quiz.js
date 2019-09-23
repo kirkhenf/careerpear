@@ -14,6 +14,8 @@ import Grid from '@material-ui/core/Grid'
 import Slide from '@material-ui/core/Slide';
 import Grow from "@material-ui/core/Grow"
 import Hidden from '@material-ui/core/Hidden';
+import { withStyles } from '@material-ui/core/styles';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 
 // Page imports
 import Wizard from './Wizard'
@@ -23,6 +25,34 @@ import { ImageRadios, NormalRadios, WizardRadios } from './RenderRadios'
 import { addQuizResults } from '../../actions';
 
 const required = value => (value ? undefined : 'Required')
+
+const styles = theme => ({
+  questionTextContainer: {
+    flex: '0.75 !important',
+    width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: 'white'
+    },
+  },
+  questionText: {
+    color: 'white',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 'auto',
+    padding: '0px 15px 0px 15px',
+    [theme.breakpoints.down('sm')]: {
+      color: 'black',
+      fontSize: '1.2rem',
+      margin: 'auto'
+    },
+  },
+  downArrow: {
+    fontSize: '5rem',
+    marginTop: '-2.2rem',
+    color: 'white',
+    alignSelf: 'center'
+  }
+});
 
 class Quiz extends React.Component {
   constructor(props) {
@@ -91,7 +121,7 @@ class Quiz extends React.Component {
     } else var data = useFetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getLogicalQuiz', { method: 'GET' });
     var wizardArray = [];
     var options = [];
-    const { isFetching } = this.props;
+    const { isFetching, classes } = this.props;
     var values = this.state.values;
 
     if (brain == 0) {
@@ -119,10 +149,16 @@ class Quiz extends React.Component {
             )),
             <Wizard.Page key={value.questionId}>
               <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-                <Grid className="questionTextContainer" container item xs={12}>
-                  <Typography className="questionText" variant="h5">{value.question}</Typography>
+                <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
+                  <Hidden smUp>
+                    {(this.state.currentPage <= this.state.numPages) ? <Typography variant="h5" className="questionNumberTextMobile">Question {this.state.currentPage}/{this.state.numPages}</Typography> : null}
+                  </Hidden>
+                  <Typography classes={{ root: classes.questionText }} variant="h5">{value.question}</Typography>
                 </Grid>
-                <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+                <div>
+                  <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
+                  <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
+                </div>
                 <Grid className="outerAnswers" item xs={12}>
                   <Grow timeout={500} in={true}>
                     <WizardRadios
@@ -136,10 +172,16 @@ class Quiz extends React.Component {
             </Wizard.Page>
           ))}
           <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-            <Grid className="questionTextContainer" container item xs={12}>
-              <Typography className="questionText" variant="h5">You did it! Sign up to view your results</Typography>
+            <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
+              <Hidden smUp>
+                <Typography variant="h5" className="questionNumberTextMobile">Finished!</Typography>
+              </Hidden>
+              <Typography classes={{ root: classes.questionText }} variant="h5">You did it! Sign up to view your results</Typography>
             </Grid>
-            <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+            <div>
+              <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
+              <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
+            </div>
             <Grid className="outerAnswers" item xs={12}>
               <Grow timeout={500} in={true}>
                 {this.getSubmissionPage()}
@@ -171,10 +213,16 @@ class Quiz extends React.Component {
             )),
             <Wizard.Page key={value.questionId}>
               <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-                <Grid className="questionTextContainer" container item xs={12}>
-                  <Typography className="questionText" variant="h5">{value.question}</Typography>
+                <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
+                  <Hidden smUp>
+                    {(this.state.currentPage <= this.state.numPages) ? <Typography variant="h5" className="questionNumberTextMobile">Question {this.state.currentPage}/{this.state.numPages}</Typography> : null}
+                  </Hidden>
+                  <Typography classes={{ root: classes.questionText }} variant="h5">{value.question}</Typography>
                 </Grid>
-                <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+                <div>
+                  <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
+                  <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
+                </div>
                 <Grid className="outerAnswers" item xs={12}>
                   <Grow timeout={500} in={true}>
                     <ImageRadios
@@ -188,10 +236,16 @@ class Quiz extends React.Component {
             </Wizard.Page>
           ))}
           <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-            <Grid className="questionTextContainer" container item xs={12}>
-              <Typography className="questionText" variant="h5">You did it! Sign up to view your results</Typography>
+            <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
+              <Hidden smUp>
+                <Typography variant="h5" className="questionNumberTextMobile">Finished!</Typography>
+              </Hidden>
+              <Typography classes={{ root: classes.questionText }} variant="h5">You did it! Sign up to view your results</Typography>
             </Grid>
-            <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+            <div>
+              <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
+              <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
+            </div>
             <Grid className="outerAnswers" item xs={12}>
               <Grow timeout={500} in={true}>
                 {this.getSubmissionPage()}
@@ -226,7 +280,7 @@ class Quiz extends React.Component {
   });
 
   render() {
-    const { isFetching } = this.props;
+    const { isFetching, classes } = this.props;
     return (
       <Grid container className="bodyContent">
         <Hidden xsDown>
@@ -249,10 +303,13 @@ class Quiz extends React.Component {
           <Hidden xsDown><RightCarrot /></Hidden>
           {!this.state.brain &&
             <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-              <Grid className="questionTextContainer" container item xs={12}>
-                <Typography className="questionText" variant="h5">Which best describes you?</Typography>
+              <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
+                <Typography classes={{ root: classes.questionText }} variant="h5">Which best describes you?</Typography>
               </Grid>
-              <div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} />
+              <div>
+                <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
+                <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
+              </div>
               <Grid className="outerAnswers" item xs={12}>
                 <Grow timeout={500} in={true}>
                   <NormalRadios
@@ -337,5 +394,6 @@ function useWindowDimensions() {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  withStyles(styles),
   withRouter,
   firebaseConnect())(Quiz)

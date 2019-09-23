@@ -86,3 +86,10 @@
     position: initial;
     width: 100%;
 } 
+
+.questionNumberTextMobile {
+    color: #e91e63 !important;
+    font-size: 1rem !important;
+    width: 100%;
+    align-self: center !important;
+}
