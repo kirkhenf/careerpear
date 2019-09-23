@@ -51,6 +51,11 @@ const styles = theme => ({
     marginTop: '-2.2rem',
     color: 'white',
     alignSelf: 'center'
+  },
+  dividers: {
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: -'2.2rem'
+    }, 
   }
 });
 
@@ -155,7 +160,7 @@ class Quiz extends React.Component {
                   </Hidden>
                   <Typography classes={{ root: classes.questionText }} variant="h5">{value.question}</Typography>
                 </Grid>
-                <div>
+                <div className="divider">
                   <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
                   <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
                 </div>
@@ -178,7 +183,7 @@ class Quiz extends React.Component {
               </Hidden>
               <Typography classes={{ root: classes.questionText }} variant="h5">You did it! Sign up to view your results</Typography>
             </Grid>
-            <div>
+            <div className="divider">
               <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
               <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
             </div>
@@ -219,7 +224,7 @@ class Quiz extends React.Component {
                   </Hidden>
                   <Typography classes={{ root: classes.questionText }} variant="h5">{value.question}</Typography>
                 </Grid>
-                <div>
+                <div className="divider">
                   <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
                   <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
                 </div>
@@ -242,7 +247,7 @@ class Quiz extends React.Component {
               </Hidden>
               <Typography classes={{ root: classes.questionText }} variant="h5">You did it! Sign up to view your results</Typography>
             </Grid>
-            <div>
+            <div className="divider">
               <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
               <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
             </div>
@@ -306,7 +311,7 @@ class Quiz extends React.Component {
               <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
                 <Typography classes={{ root: classes.questionText }} variant="h5">Which best describes you?</Typography>
               </Grid>
-              <div>
+              <div className="divider">
                 <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
                 <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
               </div>

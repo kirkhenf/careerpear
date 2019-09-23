@@ -93,3 +93,9 @@
     width: 100%;
     align-self: center !important;
 }
+
+@media only screen and (max-width: 600px) {
+    .divider {
+      margin-bottom: -2.2rem;
+    }
+  }
