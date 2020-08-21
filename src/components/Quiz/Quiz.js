@@ -55,7 +55,7 @@ const styles = theme => ({
   dividers: {
     [theme.breakpoints.down('sm')]: {
       marginBottom: -'2.2rem'
-    }, 
+    },
   }
 });
 
@@ -121,145 +121,76 @@ class Quiz extends React.Component {
 
   QuizQuestions = () => {
     var brain = this.state.brain;
-    if (brain == 1) {
-      var data = useFetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getCreativeQuiz', { method: 'GET' });
-    } else var data = useFetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getLogicalQuiz', { method: 'GET' });
+    var data = useFetch('https://us-central1-careerpear-10c55.cloudfunctions.net/getLogicalQuiz', { method: 'GET' });
     var wizardArray = [];
     var options = [];
     const { isFetching, classes } = this.props;
     var values = this.state.values;
-
-    if (brain == 0) {
-      return (
-        <Wizard
-          brain={brain}
-          onSubmit={this.onSubmit}
-          addSomething={(values => this.addSomething(values, ))}
-          getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
-          isFetching={isFetching}
-          reset={this.reset}
-        >
-          {data.map(value => (
-            options = [],
-            value.choices.forEach(choice => (
-              options.push(
-                {
-                  label: choice.option,
-                  value: JSON.stringify({
-                    weight: choice.weight,
-                    traitId: value.traitId
-                  })
-                }
-              )
-            )),
-            <Wizard.Page key={value.questionId}>
-              <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-                <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
-                  <Hidden smUp>
-                    {(this.state.currentPage <= this.state.numPages) ? <Typography variant="h5" className="questionNumberTextMobile">Question {this.state.currentPage}/{this.state.numPages}</Typography> : null}
-                  </Hidden>
-                  <Typography classes={{ root: classes.questionText }} variant="h5">{value.question}</Typography>
-                </Grid>
-                <div className="divider">
-                  <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
-                  <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
-                </div>
-                <Grid className="outerAnswers" item xs={12}>
-                  <Grow timeout={500} in={true}>
-                    <WizardRadios
-                      questionText={value.question}
-                      questionName={value.questionId}
-                      options={options}
-                    />
-                  </Grow>
-                </Grid>
-              </Grid >
-            </Wizard.Page>
-          ))}
-          <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-            <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
-              <Hidden smUp>
-                <Typography variant="h5" className="questionNumberTextMobile">Finished!</Typography>
-              </Hidden>
-              <Typography classes={{ root: classes.questionText }} variant="h5">You did it! Sign up to view your results</Typography>
-            </Grid>
-            <div className="divider">
-              <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
-              <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
-            </div>
-            <Grid className="outerAnswers" item xs={12}>
-              <Grow timeout={500} in={true}>
-                {this.getSubmissionPage()}
-              </Grow>
-            </Grid>
-          </Grid >
-        </Wizard>
-      )
-    } else if (brain == 1) {
-      return (
-        <Wizard
-          brain={brain}
-          onSubmit={this.onSubmit}
-          addSomething={(values => this.addSomething(values, ))}
-          getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
-          isFetching={isFetching}
-          reset={this.reset}
-        >
-          {data.map(value => (
-            options = [],
-            value.choices.forEach(choice => (
-              options.push(
-                {
-                  label: choice.personaDebug,
-                  value: choice.personaId,
-                  imageSrc: choice.imgUrl
-                }
-              )
-            )),
-            <Wizard.Page key={value.questionId}>
-              <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-                <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
-                  <Hidden smUp>
-                    {(this.state.currentPage <= this.state.numPages) ? <Typography variant="h5" className="questionNumberTextMobile">Question {this.state.currentPage}/{this.state.numPages}</Typography> : null}
-                  </Hidden>
-                  <Typography classes={{ root: classes.questionText }} variant="h5">{value.question}</Typography>
-                </Grid>
-                <div className="divider">
-                  <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
-                  <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
-                </div>
-                <Grid className="outerAnswers" item xs={12}>
-                  <Grow timeout={500} in={true}>
-                    <ImageRadios
-                      questionText={value.question}
-                      questionName={value.questionId}
-                      options={options}
-                    />
-                  </Grow>
-                </Grid>
-              </Grid >
-            </Wizard.Page>
-          ))}
-          <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-            <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
-              <Hidden smUp>
-                <Typography variant="h5" className="questionNumberTextMobile">Finished!</Typography>
-              </Hidden>
-              <Typography classes={{ root: classes.questionText }} variant="h5">You did it! Sign up to view your results</Typography>
-            </Grid>
-            <div className="divider">
-              <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
-              <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
-            </div>
-            <Grid className="outerAnswers" item xs={12}>
-              <Grow timeout={500} in={true}>
-                {this.getSubmissionPage()}
-              </Grow>
-            </Grid>
-          </Grid >
-        </Wizard>
-      )
-    } else return wizardArray;
+    return (
+      <Wizard
+        brain={brain}
+        onSubmit={this.onSubmit}
+        addSomething={(values => this.addSomething(values, ))}
+        getPageProgress={(pageProgress => this.getPageProgress(pageProgress))}
+        isFetching={isFetching}
+        reset={this.reset}
+      >
+        {data.map(value => (
+          options = [],
+          value.choices.forEach(choice => (
+            options.push(
+              {
+                label: choice.option,
+                value: JSON.stringify({
+                  weight: choice.weight,
+                  traitId: value.traitId
+                })
+              }
+            )
+          )),
+          <Wizard.Page key={value.questionId}>
+            <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+              <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
+                <Hidden smUp>
+                  {(this.state.currentPage <= this.state.numPages) ? <Typography variant="h5" className="questionNumberTextMobile">Question {this.state.currentPage}/{this.state.numPages}</Typography> : null}
+                </Hidden>
+                <Typography classes={{ root: classes.questionText }} variant="h5">{value.question}</Typography>
+              </Grid>
+              <div className="divider">
+                <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
+                <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
+              </div>
+              <Grid className="outerAnswers" item xs={12}>
+                <Grow timeout={500} in={true}>
+                  <WizardRadios
+                    questionText={value.question}
+                    questionName={value.questionId}
+                    options={options}
+                  />
+                </Grow>
+              </Grid>
+            </Grid >
+          </Wizard.Page>
+        ))}
+        <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+          <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
+            <Hidden smUp>
+              <Typography variant="h5" className="questionNumberTextMobile">Finished!</Typography>
+            </Hidden>
+            <Typography classes={{ root: classes.questionText }} variant="h5">You did it! Sign up to view your results</Typography>
+          </Grid>
+          <div className="divider">
+            <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
+            <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
+          </div>
+          <Grid className="outerAnswers" item xs={12}>
+            <Grow timeout={500} in={true}>
+              {this.getSubmissionPage()}
+            </Grow>
+          </Grid>
+        </Grid >
+      </Wizard>
+    )
   }
 
   quizData = require('../../config/questions.json');
@@ -291,52 +222,26 @@ class Quiz extends React.Component {
         <Hidden xsDown>
           <Grid sm={6} item container alignItems="center" className="leftContainer" spacing={16}>
             <Grid container item className="questionNumber">
-              {this.state.brain && (this.state.currentPage <= this.state.numPages) && <Typography variant="h5" className="questionNumberText">Question {this.state.currentPage}/{this.state.numPages}</Typography>}
+              {this.state.currentPage <= this.state.numPages && <Typography variant="h5" className="questionNumberText">Question {this.state.currentPage}/{this.state.numPages}</Typography>}
             </Grid>
             <div style={{ width: '50%', borderBottom: '1px solid #e91e63', margin: '10px auto 0px auto' }} />
             <Grid item className="pearAvatarContainer">
-              <Slide in={true} direction="right">
-                <img className="pearAvatar" src={require('../../assets/dress_business_casual.png')} />
-              </Slide>
-              <Grid item className="quizInfo">
-                <h2>Let's get you pear-ed!</h2>
-              </Grid>
+              <div className="innerPearContainer">
+                <Slide in={true} direction="right">
+                  <img className="pearAvatar" src={require('../../assets/dress_business_casual.png')} />
+                </Slide>
+                <Grid item className="quizInfo">
+                  <h2>Let's get you pear-ed!</h2>
+                </Grid>
+              </div>
             </Grid>
           </Grid>
         </Hidden>
         <Grid xs={12} sm={6} item className="rightContainer">
           <Hidden xsDown><RightCarrot /></Hidden>
-          {!this.state.brain &&
-            <Grid container justify="flex-end" className="questionGrid" spacing={16}>
-              <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
-                <Typography classes={{ root: classes.questionText }} variant="h5">Which best describes you?</Typography>
-              </Grid>
-              <div className="divider">
-                <Hidden smDown><div style={{ width: '50%', borderBottom: '1px solid white', margin: '10px auto 0px auto' }} /></Hidden>
-                <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
-              </div>
-              <Grid className="outerAnswers" item xs={12}>
-                <Grow timeout={500} in={true}>
-                  <NormalRadios
-                    questionName="brain"
-                    handleChange={this.handleChange}
-                    options={[
-                      {
-                        value: "0",
-                        label: "Logical"
-                      },
-                      {
-                        value: "1",
-                        label: "Creative"
-                      }
-                    ]} />
-                </Grow>
-              </Grid>
-            </Grid>
-          }
-          {this.state.brain && <Suspense fallback={<CircularProgress />}>
+          <Suspense fallback={<CircularProgress />}>
             <this.QuizQuestions />
-          </Suspense>}
+          </Suspense>
         </Grid>
         {/* <ProgressNumber progress={this.state.pageProgress} />
         <LinearProgress className="progressBar" variant="determinate" value={this.state.pageProgress}>Test</LinearProgress> */}

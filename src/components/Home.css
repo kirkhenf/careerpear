@@ -85,7 +85,7 @@
     margin-top: 16px !important;
     position: initial;
     width: 100%;
-}
+} 
 
 .questionNumberTextMobile {
     color: #e91e63 !important;
@@ -94,14 +94,8 @@
     align-self: center !important;
 }
 
-.innerPearContainer {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
 @media only screen and (max-width: 600px) {
     .divider {
-        margin-bottom: -2.2rem;
+      margin-bottom: -2.2rem;
     }
-}
+  }
