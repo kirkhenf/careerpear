@@ -142,7 +142,7 @@ export class Wizard extends React.Component {
         {({ handleSubmit, previous, next, form, form: { mutators: { clear } }, submitting, values }) => (
           <form style={{ height: '100%', width: '100%' }} onSubmit={handleSubmit}>
             {activePage}
-            <Fab color="secondary" classes={{ root: classes.backButton }} onClick={() => clear(children, page, () => this.previous(), reset)} style={{ position: 'fixed', bottom: '30px', left: '15px' }}>
+            <Fab disabled={page == 0} color="secondary" classes={{ root: classes.backButton }} onClick={() => clear(children, page, () => this.previous(), reset)} style={{ position: 'fixed', bottom: '15px', left: '15px' }}>
               <ChevronLeftIcon />
             </Fab>
             {/* {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>} */}
