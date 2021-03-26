@@ -56,29 +56,6 @@
     box-sizing: border-box;
 }
 
-.appbar {
-    box-shadow: none !important;
-    background-color: transparent !important;
-    position: relative !important;
-    transition: background-color 300ms ease-in-out;
-    -moz-transition: background-color 300ms ease-in-out;
-    -webkit-transition: background-color 300ms ease-in-out;
-    -o-transition: background-color 300ms ease-in-out;
-}
-
-.appbarsmall {
-    box-shadow: none !important;
-    background-color: transparent !important;
-}
-
-.appbar:hover {
-    background-color: rgba(255, 255, 255, 0.85) !important;
-}
-
-.pearLogo {
-    margin: auto;
-}
-
 .banner_content {
     position: relative;
     z-index: 10;

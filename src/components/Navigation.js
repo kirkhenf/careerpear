@@ -20,13 +20,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MediaQuery from 'react-responsive';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import { SignInForm, SignInLink } from './Authentication/SignIn';
+import { SignInForms, SignInLink } from './Authentication/SignIn';
 import CloseIcon from '@material-ui/icons/Close';
 import { PasswordForgetLink, PasswordForgetForm } from './Authentication/PasswordForget';
 import { SignUpForm, SignUpLink, SignUpButton } from './Authentication/SignUp';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux'
 import { firebaseConnect } from 'react-redux-firebase'
+import FullScreenDialog from './FullScreenDialog';
+import Hidden from '@material-ui/core/Hidden';
 
 var ResponsiveDialog = withMobileDialog({ breakpoint: 'xs' })(Dialog);
 
@@ -86,9 +88,9 @@ class Navigation extends React.Component {
       case 'login':
         return (
           <div>
-            <SignInForm firebase={this.props.firebase} />
+            <SignInForms firebase={this.props.firebase} />
             <PasswordForgetLink parentMethod={this.handleModalClick} />
-            <SignUpLink parentMethod={this.handleModalClick} />
+            {/* <SignUpLink parentMethod={this.handleModalClick} /> */}
           </div>
         )
       case 'pwForget':
@@ -166,75 +168,88 @@ class Navigation extends React.Component {
 
     return (
       <div className="nav">
-        <AppBar position="static" color="secondary">
-          <Toolbar>
-            <Typography variant="h6" color="inherit" className='topBar'>
-              <Link to={routes.LANDING}>
-                <MediaQuery minWidth={600} minDeviceWidth={600}>
-                  {(matches) => {
-                    if (matches) {
-                      return <img className="pearLogo" alt="" src={require('../assets/careerpear-green-banner-fruit.png')} />;
-                    } else {
-                      return <img className="pearLogo" alt="" src={require('../assets/careerpear-green-fruit.png')} />;
-                    }
-                  }}
-                </MediaQuery>
-              </Link>
-            </Typography>
-            {authUser
-              ?
-              < div className="navButtons">
-                <Button component={Link} to={routes.HOME}>Home</Button>
-                <IconButton
-                  aria-owns={isModal ? 'menu-appbar' : null}
-                  aria-haspopup="true"
-                  onClick={(e) => onClickButton(e)}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={isModal}
-                  onClose={handleClose}
-                >
-                  <SignOutButton />
-                  <MenuItem onClick={(e) => onClickButton(e)}><Link to={routes.ACCOUNT}>My Account</Link></MenuItem>
-                </Menu>
+        <Hidden xsDown>
+          <AppBar onMouseOver={() => (document.getElementById('pearLogo').src = require('../assets/careerpear-green-banner-fruit.png'))}
+            onMouseOut={() => (document.getElementById('pearLogo').src = require('../assets/careerpear-white-banner-fruit.png'))} className="appbar" position="static">
+            <Toolbar className="navContainer">
+              <div className="leftNav" />
+              <div className="midNav">
+                <Link to={routes.LANDING}>
+                  <img id='pearLogo' className='pearLogo' alt="careerpear_logo" src={require('../assets/careerpear-white-banner-fruit.png')} />
+                </Link>
               </div>
-              : <div className="navButtons">
-                {/* <Button color="primary" variant="contained">Sign In</Button> */}
-                <Button onClick={this.handleOpen}>Log In</Button>
-                <ResponsiveDialog
-                  fullWidth={true}
-                  maxWidth={'sm'}
-                  className="loginModal"
-                  open={this.state.open}
-                  onClose={this.handleClose}
-                >
-                  <DialogTitle>{this.getModalTitle()}</DialogTitle>
-                  <DialogContent>
-                    {this.renderSwitch(this.state.param)}
-                  </DialogContent>
-                  <DialogActions>
-                    <IconButton onClick={this.handleClose} color="primary" autoFocus>
-                      <CloseIcon />
-                    </IconButton>
-                  </DialogActions>
-                </ResponsiveDialog>
+
+              {authUser
+                ? <div className="rightNav">
+                  <Button component={Link} to={routes.HOME}>Home</Button>
+                  <IconButton
+                    aria-owns={isModal ? 'menu-appbar' : null}
+                    aria-haspopup="true"
+                    onClick={(e) => onClickButton(e)}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={isModal}
+                    onClose={handleClose}
+                  >
+                    <SignOutButton />
+                    <MenuItem onClick={(e) => onClickButton(e)}><Link to={routes.ACCOUNT}>My Account</Link></MenuItem>
+                  </Menu>
+                </div>
+                :
+                <div className="rightNav">
+                  <Button onClick={this.handleOpen}>Sign In</Button>
+                  <ResponsiveDialog
+                    fullWidth={true}
+                    maxWidth={'sm'}
+                    className="loginModal"
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                  >
+                    <DialogTitle>{this.getModalTitle()}</DialogTitle>
+                    <DialogContent>
+                      {this.renderSwitch(this.state.param)}
+                    </DialogContent>
+                    <DialogActions>
+                      <IconButton onClick={this.handleClose} color="primary" autoFocus>
+                        <CloseIcon />
+                      </IconButton>
+                    </DialogActions>
+                  </ResponsiveDialog>
+                </div>
+              }
+            </Toolbar>
+          </AppBar>
+        </Hidden>
+        <Hidden smUp>
+          <AppBar className="appbarsmall" position="static">
+            <Toolbar className="navContainer">
+              <div className="leftNav">
+                <FullScreenDialog />
               </div>
-            }
-          </Toolbar>
-        </AppBar>
+              <div className="midNav">
+                <Link to={routes.LANDING}>
+                  <img id='pearLogo' className='pearLogo' alt="careerpear_logo" src={require('../assets/careerpear-white-fruit.png')} />
+                </Link>
+              </div>
+              <div className="rightNav">
+                {/* <Button>Sign In</Button> */}
+              </div>
+            </Toolbar>
+          </AppBar>
+        </Hidden>
       </div >
     )
   }

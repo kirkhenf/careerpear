@@ -44,7 +44,7 @@ export default function FullScreenDialog() {
                             </IconButton>
                         </div>
                         <div className="rightNav">
-                            <Button>Login</Button>
+                            <Button>Sign In</Button>
                         </div>
                     </Toolbar>
                 </AppBar>

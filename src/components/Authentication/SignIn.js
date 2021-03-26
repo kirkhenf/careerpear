@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
@@ -7,8 +8,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import MailOutline from '@material-ui/icons/MailOutline';
-import LockOpenOutlined from '@material-ui/icons/LockOpenOutlined';
+import { withStyles } from '@material-ui/core/styles';
 
 // Page imports
 import "./SignIn.css"
@@ -21,6 +21,24 @@ const SignInPage = ({ history, firebase }) =>
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
+
+const styles = {
+  cssOutlinedInput: {
+    
+  },
+  test: {
+    color: 'pink !important',
+    '& label': {
+      color: 'white',
+      '& .shrink' : {
+        color: 'pink !important'
+      }
+    },
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: 'beige'
+    }
+  }
+};
 
 const INITIAL_STATE = {
   email: '',
@@ -63,6 +81,9 @@ class SignInForm extends Component {
       error,
     } = this.state;
 
+    const { classes } = this.props;
+    console.log(classes);
+
     const isInvalid =
       password === '' ||
       email === '';
@@ -72,29 +93,20 @@ class SignInForm extends Component {
         <form onSubmit={this.onSubmit}>
           <Grid container spacing={16}>
             <Grid item xs={12}>
-              <TextField className="input" variant="outlined" label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
+              <TextField className="input" color="primary" variant="outlined" label="Email" value={email} type="text" id="email" placeholder="" onChange={event => this.setState(byPropKey('email', event.target.value))}
                 InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <MailOutline color="primary"/>
-                    </InputAdornment>
-                  ),
+                  classes: {
+                    root: classes.test,
+                    focused: classes.cssFocused,
+                  },
                 }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField className="input" variant="outlined" label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <LockOpenOutlined color="primary" />
-                    </InputAdornment>
-                  ),
-                }}
-              />
+              <TextField className="input" color="secondary" variant="outlined" label="Password" value={password} type="password" id="password" placeholder="" onChange={event => this.setState(byPropKey('password', event.target.value))} />
             </Grid>
             <Grid item xs={12}>
-              <Button fullWidth color="primary" variant="contained" disabled={isInvalid} type="submit">Log In</Button>
+              <Button fullWidth color="secondary" variant="contained" disabled={isInvalid} type="submit">Log In</Button>
             </Grid>
             {error && <p>{error.message}</p>}
           </Grid>
@@ -109,15 +121,18 @@ const SignInLink = ({ optionalText, parentMethod }) =>
     {optionalText}<Link to="#">Back to login</Link>
   </p>
 
-
 export default compose(
+  withStyles(styles),
   withRouter,
   firebaseConnect(), // withFirebase can also be used
   connect(({ firebase: { auth } }) => ({ auth }))
 )(SignInForm)
 
+const SignInForms = withStyles(styles)(SignInForm);
+
 export {
   SignInForm,
+  SignInForms,
   SignInLink
 };
 

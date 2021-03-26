@@ -24,8 +24,33 @@ a {
 
 .nav {
     z-index: 1;
+    width: 100%;
 }
 
 .signUpButton {
     margin-top: 4px !important;
+}
+
+
+.appbar {
+    box-shadow: none !important;
+    background-color: transparent !important;
+    position: relative !important;
+    transition: background-color 300ms ease-in-out;
+    -moz-transition: background-color 300ms ease-in-out;
+    -webkit-transition: background-color 300ms ease-in-out;
+    -o-transition: background-color 300ms ease-in-out;
+}
+
+.appbarsmall {
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.appbar:hover {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.pearLogo {
+    margin: auto;
 }

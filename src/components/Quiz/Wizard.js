@@ -104,9 +104,11 @@ export class Wizard extends React.Component {
     }
   }
 
-  next = (values, e) => {
+  next = (values, previous, e) => {
     const { page } = this.state
-    if (!(this.count(e.getState().values) <= page)) {
+    const { children } = this.props
+    console.log(values);
+    if (values.dirty) {
       const { children } = this.props
       const isLastPage = page === React.Children.count(children) - 1;
       this.setState(state => ({
@@ -149,7 +151,7 @@ export class Wizard extends React.Component {
             {/* {isLastPage && (
               <Button className="submitButton" color="secondary" variant="contained" type="submit" disabled={isFetching}>Submit</Button>
             )} */}
-            <FormSpy onChange={() => next(values, form)} subscription={{ values: true }} />
+            <FormSpy onChange={(values, previous) => next(values, previous, form)} subscription={{ values: true, touched:true, dirty:true }} />
             {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
           </form>
         )}

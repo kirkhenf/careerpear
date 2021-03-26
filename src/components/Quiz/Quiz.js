@@ -149,7 +149,7 @@ class Quiz extends React.Component {
             )
           )),
           <Wizard.Page key={value.questionId}>
-            <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+            <Grid container justify="flex-end" className="questionGrid" spacing={1}>
               <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
                 <Hidden smUp>
                   {(this.state.currentPage <= this.state.numPages) ? <Typography variant="h5" className="questionNumberTextMobile">Question {this.state.currentPage}/{this.state.numPages}</Typography> : null}
@@ -172,7 +172,7 @@ class Quiz extends React.Component {
             </Grid >
           </Wizard.Page>
         ))}
-        <Grid container justify="flex-end" className="questionGrid" spacing={16}>
+        <Grid container justify="flex-end" className="questionGrid" spacing={1}>
           <Grid classes={{ item: classes.questionTextContainer }} container item xs={12}>
             <Hidden smUp>
               <Typography variant="h5" className="questionNumberTextMobile">Finished!</Typography>
@@ -220,7 +220,7 @@ class Quiz extends React.Component {
     return (
       <Grid container className="bodyContent">
         <Hidden xsDown>
-          <Grid sm={6} item container alignItems="center" className="leftContainer" spacing={16}>
+          <Grid sm={6} item container alignItems="center" className="leftContainer" spacing={1}>
             <Grid container item className="questionNumber">
               {this.state.currentPage <= this.state.numPages && <Typography variant="h5" className="questionNumberText">Question {this.state.currentPage}/{this.state.numPages}</Typography>}
             </Grid>
