@@ -7,7 +7,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ReactGA from 'react-ga';
 
 const CREATIVE = 1;
-const LOGICAL = 0;
 
 const styles = theme => ({
   backButton: {
@@ -19,7 +18,7 @@ const styles = theme => ({
 });
 
 const clear = ([children, page, previous, reset], state, { changeValue }) => {
-  if (page != 0) {
+  if (page !== 0) {
     var element = React.Children.toArray(children)[page - 1].props.children.props.children[2].props.children.props.children.props.questionName;
     previous();
     changeValue(state, element, () => undefined)
@@ -104,9 +103,9 @@ export class Wizard extends React.Component {
     }
   }
 
-  next = (values, e) => {
+  next = (values, previous, e) => {
     const { page } = this.state
-    if (!(this.count(e.getState().values) <= page)) {
+    if (values.dirty) {
       const { children } = this.props
       const isLastPage = page === React.Children.count(children) - 1;
       this.setState(state => ({
@@ -124,10 +123,10 @@ export class Wizard extends React.Component {
   }
 
   render() {
-    const { children, reset, isFetching, classes } = this.props
+    const { children, reset, classes } = this.props
     const { page, values } = this.state
     const activePage = React.Children.toArray(children)[page]
-    const isLastPage = page === React.Children.count(children) - 1
+    // const isLastPage = page === React.Children.count(children) - 1
     return (
       <Form
         initialValues={values}
@@ -142,14 +141,14 @@ export class Wizard extends React.Component {
         {({ handleSubmit, previous, next, form, form: { mutators: { clear } }, submitting, values }) => (
           <form style={{ height: '100%', width: '100%' }} onSubmit={handleSubmit}>
             {activePage}
-            <Fab disabled={page == 0} color="secondary" classes={{ root: classes.backButton }} onClick={() => clear(children, page, () => this.previous(), reset)} style={{ position: 'fixed', bottom: '15px', left: '15px' }}>
+            <Fab disabled={page === 0} color="secondary" classes={{ root: classes.backButton }} onClick={() => clear(children, page, () => this.previous(), reset)} style={{ position: 'fixed', bottom: '15px', left: '15px' }}>
               <ChevronLeftIcon />
             </Fab>
             {/* {!isLastPage && <Grid item><Button color="primary" variant="contained" type="submit">Next</Button></Grid>} */}
             {/* {isLastPage && (
               <Button className="submitButton" color="secondary" variant="contained" type="submit" disabled={isFetching}>Submit</Button>
             )} */}
-            <FormSpy onChange={() => next(values, form)} subscription={{ values: true }} />
+            <FormSpy onChange={(values, previous) => next(values, previous, form)} subscription={{ values: true, touched:true, dirty:true }} />
             {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
           </form>
         )}

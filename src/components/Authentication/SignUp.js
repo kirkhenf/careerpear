@@ -102,7 +102,7 @@ const styles = theme => ({
       }
     },
     '& .MuiOutlinedInput-root': {
-      backgroundColor: 'beige'
+      backgroundColor: 'transparent'
     }
   },
   input: {
@@ -137,7 +137,7 @@ class SignUpFormNoStyle extends Component {
       lastName === '';
 
     return (
-      <Grid container spacing={16}>
+      <Grid container spacing={1}>
         <Grid item xs={12}>
             <Field
               variant="outlined"

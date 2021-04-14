@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 import Grow from "@material-ui/core/Grow"
 import Hidden from '@material-ui/core/Hidden';
+import Slider from '@material-ui/core/Slider';
 import PlayArrow from '@material-ui/icons/PlayArrow'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import { useState, useEffect } from 'react';
@@ -17,6 +18,17 @@ import { useState, useEffect } from 'react';
 import withAuthorization from './Authentication/withAuthorization';
 import './Home.css'
 
+const trait1Marks = [
+  {
+    value: 0,
+    label: 'Test',
+  },
+  {
+    value: 100,
+    label: 'Test',
+  },
+];
+
 
 const styles = theme => ({
   questionTextContainer: {
@@ -24,6 +36,35 @@ const styles = theme => ({
     width: '100%',
     [theme.breakpoints.down('sm')]: {
       backgroundColor: 'white'
+    },
+  },
+  disabledButton : {
+    root: {
+      color: '#52af77',
+      height: 8,
+    },
+    thumb: {
+      height: 24,
+      width: 24,
+      backgroundColor: '#fff',
+      border: '2px solid currentColor',
+      marginTop: -8,
+      marginLeft: -12,
+      '&:focus, &:hover, &$active': {
+        boxShadow: 'inherit',
+      },
+    },
+    active: {},
+    valueLabel: {
+      left: 'calc(-50% + 4px)',
+    },
+    track: {
+      height: 8,
+      borderRadius: 4,
+    },
+    rail: {
+      height: 8,
+      borderRadius: 4,
     },
   },
   questionText: {
@@ -105,7 +146,7 @@ class HomePage extends Component {
 
   getPersonaName() {
     if (this.state.results) {
-      if(this.state.results.persona) {
+      if (this.state.results.persona) {
         return "You are " + this.state.results.persona.personaName;
       } else return "You are..."
     }
@@ -143,6 +184,43 @@ class HomePage extends Component {
                 <Hidden smUp><ArrowDropDown classes={{ root: classes.downArrow }} /></Hidden>
               </div>
               <Grid className="outerAnswers" item xs={12}>
+                <Grid>
+                  <Typography id="discrete-slider" gutterBottom>
+                    Trait 1
+                </Typography>
+                  <Slider
+                    defaultValue={30}
+                    // getAriaValueText={valuetext}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    step={25}
+                    marks={trait1Marks}
+                    track={false}
+                    min={0}
+                    max={100}
+                    disabled
+                    classes={{ disabled: classes.disabledButton }}
+                  />
+                </Grid>
+                <Grid>
+                  <Typography id="discrete-slider" gutterBottom>
+                    Trait 2
+                </Typography>
+                  <Slider
+                    defaultValue={30}
+                    // getAriaValueText={valuetext}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    track={false}
+                    step={25}
+                    marks={trait1Marks}
+                    min={0}
+                    max={100}
+                    disabled
+                    classes={{ disabled: classes.disabledButton }}
+                  />
+                </Grid>
+
                 {this.getLogicalTraits()}
               </Grid>
             </Grid>
@@ -202,7 +280,7 @@ const RightCarrot = () => {
 }
 
 export default compose(
-  withAuthorization(authCondition),
+  // withAuthorization(authCondition),
   withStyles(styles),
   connect(mapStateToProps, mapDispatchToProps)
 )(HomePage);
