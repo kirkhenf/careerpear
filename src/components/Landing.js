@@ -36,7 +36,7 @@ class LandingContent extends Component {
       <div className="background">
         <div className="banner_content">
           <img height="100" src={require('../assets/careerpear-green-fruit.png')} />
-          <h1 className="subtext">Coming Summer 2021</h1>
+          <h1 className="subtext">Launching Summer 2021</h1>
         </div>
         <div className="footer">
           <a href="mailto:contact@careerpear.com" className="subtext">Get in Touch</a> <a className="divider">|</a> <a target="_" href="https://www.instagram.com/careerpear/"><InstagramIcon className="instaIcon" className="subtext" /></a>
